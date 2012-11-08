@@ -3,7 +3,7 @@
 class navigation_vtdu extends navigation_vtdu_parent {
 
 	public function cleartmp() {
-		$aFiles = glob( $this->getConfig()->getConfigParam( 'sCompileDir' ) . '/*' );
+		$aFiles = glob( $this->getConfig()->getConfigParam('sCompileDir').'/*');
 		$i = 0;
 		$fs = 0;
 		foreach ($aFiles as $file) {
