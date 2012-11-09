@@ -1,12 +1,12 @@
 Functions:
 ====================
 * clearing tmp/ folder and displaying amount of deleted files and their filesize
-![clear tmp](https://raw.github.com/vanilla-thunder/vt-devutils/master/screenshot1.jpg)
+![clear tmp](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot1.jpg)
 * resetting module templates records from metadata.php
 * resetting template blocks records from metadata.php
 * resetting module files records from metadata.php
 * resetting module settings records from metadata.php
-![resetting module caches](https://raw.github.com/vanilla-thunder/vt-devutils/master/screenshot2.jpg)
+![resetting module caches](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot2.jpg)
 
 
 Installation:
