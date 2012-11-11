@@ -1,4 +1,4 @@
-Functions:
+vt DevUtils for OXID eSales 4.6
 ====================
 * clearing tmp/ folder and displaying amount of deleted files and their filesize
 ![clear tmp](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot1.jpg)
@@ -10,13 +10,13 @@ Functions:
 
 
 Installation:
-====================
+------------
 put the vt-devutils folder into the modules directory in your shop.
 You will find the code snippet in the module description in OXID backend
 
 
-vt Dev Utils (module for OXID eSales)
-====================
+LICENSE AGREEMEN
+------------
 Copyright (C) 2012  Marat Bedoev
 
 This program is free software;
