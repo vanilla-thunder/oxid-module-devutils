@@ -1,5 +1,4 @@
-vt DevUtils for OXID eSales 4.7
-====================
+# vt DevUtils for OXID eSales 4.7
 * clearing tmp/ folder and displaying amount of deleted files and their filesize
 ![clear tmp](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot1.jpg)
 * resetting module templates records from metadata.php
@@ -11,15 +10,22 @@ vt DevUtils for OXID eSales 4.7
 ![scratchpad](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot3.jpg)
 
 
-Installation:
-------------
-put the vt-devutils folder into the modules directory in your shop.
-You will find the code snippet in the module description in OXID backend
+## INSTALLATION
+copy the content of the "copy_this" folder into the shop root directory  
+**if you are uploading files via ftp, switch to the binary transfer mode**  
+### ssh shell + git client:
+navigate into the modules directory
+clone remote git repo and switch to the "module" branch.  
+this commands works for debian and centos:
+<pre>
+git clone git://github.com/vanilla-thunder/vt-devutils.git
+cd vt-devutils/
+git checkout module
+</pre>
 
 
-LICENSE AGREEMEN
-------------
-Copyright (C) 2012  Marat Bedoev
+##LICENSE AGREEMEN
+Copyright (C) 2012-2013  Marat Bedoev
 
 This program is free software;
 you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
