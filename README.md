@@ -1,4 +1,4 @@
-vt DevUtils for OXID eSales 4.6
+vt DevUtils for OXID eSales 4.7
 ====================
 * clearing tmp/ folder and displaying amount of deleted files and their filesize
 ![clear tmp](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot1.jpg)
@@ -7,6 +7,7 @@ vt DevUtils for OXID eSales 4.6
 * resetting module files records from metadata.php
 * resetting module settings records from metadata.php
 ![resetting module caches](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot2.jpg)
+* php/framework scratchpad for quick testing some functions eg. creating/loading and managing objects
 
 
 Installation:
