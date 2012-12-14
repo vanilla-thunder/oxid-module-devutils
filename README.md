@@ -8,6 +8,7 @@ vt DevUtils for OXID eSales 4.7
 * resetting module settings records from metadata.php
 ![resetting module caches](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot2.jpg)
 * php/framework scratchpad for quick testing some functions eg. creating/loading and managing objects
+![scratchpad](https://raw.github.com/vanilla-thunder/vt-devutils/screenshots/screenshot3.jpg)
 
 
 Installation:
