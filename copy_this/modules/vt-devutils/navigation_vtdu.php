@@ -3,17 +3,29 @@
 class navigation_vtdu extends navigation_vtdu_parent {
 
 	public function cleartmp() {
-		$aFiles = glob( $this->getConfig()->getConfigParam( 'sCompileDir' ) . '/*' );
+		$cfg = oxRegistry::get("oxConfig");
+		$dir = $cfg->getConfigParam("sCompileDir") . "*";
+
 		$i = 0;
 		$fs = 0;
-		foreach ($aFiles as $file) {
-			$fs += filesize($file);
-			unlink($file);
-			$i++;
+		$path[] = $dir;
+
+		while (count($path) != 0) {
+			$v = array_shift($path);
+			foreach (glob($v) as $item) {
+				if (is_dir($item)) {
+					$path[] = $item . '/*';
+				} elseif (is_file($item)) {
+					$fs += filesize($item);
+					unlink($item);
+					$i++;
+				}
+			}
 		}
-		$fs = number_format($fs/1024/1024, 2);
+
+		$fs = number_format($fs / 1024 / 1024, 2);
 		$this->_aViewData['cleartmpmsg'] = "$i files ( $fs MB )  deleted";
-		//$this->_aViewData['deletedfiles'] = $aFiles;
+		
 	}
 
 }

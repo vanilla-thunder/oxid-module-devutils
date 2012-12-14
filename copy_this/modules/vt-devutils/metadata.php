@@ -32,6 +32,12 @@ $aModule = array(
 		  'module_config' => 'vt-devutils/module_config_vtdu',
 		  'oxmodule' => 'vt-devutils/oxmodule_vtdu'
 	 ),
+    'files' => array(
+        'vtdu_scratchpad' => 'vt-devutils/admin/vtdu_scratchpad.php'
+    ),
+    'templates' => array(
+        'vtdu_scratchpad.tpl' => 'vt-devutils/out/tpl/vtdu_scratchpad.tpl'
+    ),
 	 'blocks' => array(
 		  array('template' => 'bottomnaviitem.tpl', 'block' => 'admin_bottomnavicustom', 'file' => 'admin_bottomnavicustom.tpl')
 	 )
