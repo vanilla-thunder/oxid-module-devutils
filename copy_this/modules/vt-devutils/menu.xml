@@ -2,6 +2,7 @@
 <OX>
 	<OXMENU id="NAVIGATION_ESHOPADMIN">
 		<MAINMENU id="mxextensions">
+			<SUBMENU id="vtdu_logs" cl="vtdu_logs" />
 			<SUBMENU id="vtdu_scratchpad" cl="vtdu_scratchpad" />
 		</MAINMENU>
 	</OXMENU>
