@@ -35,6 +35,4 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>
 
-<!-- Piwik Image Tracker -->
-![piwik](http://noreflection.ma-be.info/piwik.php?idsite=2&amp;rec=1)
-<!-- End Piwik -->
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/5cb0804cef1875e9cbdbed8e2397e4dc "githalytics.com")](http://githalytics.com/vanilla-thunder/vt-devutils)
