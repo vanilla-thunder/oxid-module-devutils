@@ -36,5 +36,5 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>
 
 <!-- Piwik Image Tracker -->
-<img src="http://noreflection.ma-be.info/piwik.php?idsite=2&amp;rec=1" style="border:0" width="0" height="0" alt="" />
+![piwik](http://noreflection.ma-be.info/piwik.php?idsite=2&amp;rec=1)
 <!-- End Piwik -->
