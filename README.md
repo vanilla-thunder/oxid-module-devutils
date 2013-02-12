@@ -34,3 +34,7 @@ either version 3 of the License, or (at your option) any later version.
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>
+
+<!-- Piwik Image Tracker -->
+<img src="http://noreflection.ma-be.info/piwik.php?idsite=2&amp;rec=1" style="border:0" width="0" height="0" alt="" />
+<!-- End Piwik -->
