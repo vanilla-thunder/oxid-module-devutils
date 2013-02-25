@@ -13,32 +13,33 @@
  * You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>
  */
 $aModule = array(
-	'id' => 'vt-devutils',
-	'title' => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">VT</strong> Dev Utils',
-	'description' => 'some helpful functions for OXID developing:
-			<ul><li>clearing tmp folder</li><li>resetting template, blocks, settings and file records for modules</li></ul><hr/>
-			<h2>Installation:</h2>edit <strong>out/admin/header.tpl</strong> and append this code the the <strong>&lt;ul&gt;</strong> list:<br/>
-			<textarea cols="80" rows="7"><li class="sep">
-<a href="[{$oViewConf->getSelfLink()}]&cl=navigation&amp;item=header.tpl&amp;fnc=cleartmp" id="cleartmplink" target="header" class="rc"><b>clear tmp</b></a>
-</li>
-[{if $cleartmpmsg}]<li class="sep"><a id="deletedfilesmsg" class="rc" style="color:#FF3600"><b>[{$cleartmpmsg}]</b></a></li>[{/if}]</textarea>',
-	'thumbnail' => 'oxid-vt.jpg',
-	'version' => '1.0',
-	'author' => 'Marat Bedoev',
-	'email' => 'oxid@marat-bedoev.net',
-	'url' => 'https://github.com/vanilla-thunder/',
-	'extend' => array(
-		'navigation' => 'vt-devutils/navigation_vtdu',
-		'module_config' => 'vt-devutils/module_config_vtdu',
-		'oxmodule' => 'vt-devutils/oxmodule_vtdu'
+	'id'            => 'vt-devutils',
+	'title'         => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">VT</strong> Dev Utils',
+	'description'   => 'some helpful functions for OXID developing:
+                            <ul><li>clearing tmp folder</li><li>resetting template, blocks, settings and file records for modules</li></ul><hr/>
+                            <h2>Installation:</h2>edit <strong>out/admin/header.tpl</strong> and append this code the the <strong>&lt;ul&gt;</strong> list:<br/>
+                            <textarea cols="80" rows="7"><li class="sep">
+                            <a href="[{$oViewConf->getSelfLink()}]&cl=navigation&amp;item=header.tpl&amp;fnc=cleartmp" id="cleartmplink" target="header" class="rc"><b>clear tmp</b></a>
+                            </li>
+                            [{if $cleartmpmsg}]<li class="sep"><a id="deletedfilesmsg" class="rc" style="color:#FF3600"><b>[{$cleartmpmsg}]</b></a></li>[{/if}]</textarea>',
+	'thumbnail'     => 'oxid-vt.jpg',
+	'version'       => '1.0',
+	'author'        => 'Marat Bedoev',
+	'email'         => 'oxid@marat-bedoev.net',
+	'url'           => 'https://github.com/vanilla-thunder/',
+	'extend'        => array(
+		'navigation'    => 'vt-devutils/extend/navigation_vtdu',
+		'module_config' => 'vt-devutils/extend/module_config_vtdu',
+		'oxmodule'      => 'vt-devutils/extend/oxmodule_vtdu',
+                'thankyou'      => 'vt-devutils/extend/thankyou_vtdu',
 	),
 	'files' => array(
-		'vtdu_logs' => 'vt-devutils/admin/vtdu_logs.php',
-		'vtdu_scratchpad' => 'vt-devutils/admin/vtdu_scratchpad.php',
+		'vtdu_logs'         => 'vt-devutils/admin/vtdu_logs.php',
+		'vtdu_scratchpad'   => 'vt-devutils/admin/vtdu_scratchpad.php',
 	),
 	'templates' => array(
-		'vtdu_logs.tpl' => 'vt-devutils/out/tpl/vtdu_logs.tpl',
-		'vtdu_scratchpad.tpl' => 'vt-devutils/out/tpl/vtdu_scratchpad.tpl'
+		'vtdu_logs.tpl'         => 'vt-devutils/out/tpl/vtdu_logs.tpl',
+		'vtdu_scratchpad.tpl'   => 'vt-devutils/out/tpl/vtdu_scratchpad.tpl'
 	),
 	'blocks' => array(
 		array('template' => 'bottomnaviitem.tpl', 'block' => 'admin_bottomnavicustom', 'file' => 'admin_bottomnavicustom.tpl'),
