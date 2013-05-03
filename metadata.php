@@ -22,6 +22,7 @@ $aModule = array(
 	'email'       => 'oxid@marat-bedoev.net',
 	'url'         => 'https://github.com/vanilla-thunder/',
 	'extend'      => array(
+		'oxviewconfig'  => 'vt-devutils/extend/oxviewconfig_vtdu',
 		'navigation'    => 'vt-devutils/extend/navigation_vtdu',
 		'module_config' => 'vt-devutils/extend/module_config_vtdu',
 		'oxmodule'      => 'vt-devutils/extend/oxmodule_vtdu'
