@@ -70,16 +70,12 @@ class vtdu extends oxAdminView
 		$i = 0;
 		$fs = 0;
 
-		while (count($pattern) != 0) {
-			$v = array_shift($path);
-			foreach (glob($v) as $item) {
-				if (is_dir($item)) {
-					$path[] = $item . '/*';
-				} elseif (is_file($item)) {
-					$fs += filesize($item);
-					unlink($item);
-					$i++;
-				}
+		foreach (glob($pattern) as $item) {
+			if (is_file($item))
+			{
+				$fs += filesize($item);
+				unlink($item);
+				$i++;
 			}
 		}
 
@@ -93,7 +89,7 @@ class vtdu extends oxAdminView
 		$pattern = $cfg->getConfigParam("sCompileDir") . "oxpec_langcache_*";
 
 		foreach (glob($pattern) as $item) {
-			if (!is_dir($item)) {
+			if (is_file($item)) {
 				unlink($item);
 			}
 		}
