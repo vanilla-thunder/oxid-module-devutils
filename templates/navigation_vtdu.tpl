@@ -4,13 +4,13 @@
     #vtduframe {
         width: 200px;
         height: 300px;
+        margin-top: -150px;
         margin-left: 0;
         position: fixed;
-        bottom: 100px;
+        top: 50%;
         left: -200px;
         -webkit-transition:all 1s ease;
         -moz-transition:all 1s ease;
-		background: white;
     }
     #vtduframe iframe {
         width: 198px;
@@ -22,7 +22,7 @@
     }
     #vtduicon {
         position: absolute;
-        bottom: 0;
+        top: 50%;
         right: -40px;
         z-index: 999;
         width: 30px;
