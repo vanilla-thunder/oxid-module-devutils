@@ -35,8 +35,8 @@ $aModule = array(
 		//'vtscratchpad'=>'vt-devutils/core/vtscratchpad.php',
 	),
 	'templates'   => array(
+		'navigation_vtdu.tpl' => 'vt-devutils/templates/navigation_vtdu.tpl',
 		'vtdu.tpl'            => 'vt-devutils/templates/vtdu.tpl',
-		'vtdu_navigation.tpl' => 'vt-devutils/templates/vtdu_navigation.tpl',
 		'vtdu_logs.tpl'       => 'vt-devutils/templates/vtdu_logs.tpl',
 		'vtdu_scratchpad.tpl' => 'vt-devutils/templates/vtdu_scratchpad.tpl'
 	),
