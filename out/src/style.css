@@ -5,20 +5,48 @@ body {
     padding:0; margin: 0;
 }
 p {margin: 0.5em 0 0 0;}
+a {text-decoration: none;}
 
-.loading {background: url(../spinner.gif) center center no-repeat transparent !important;}
+/* debugsettings */
+.loading { background: url(../spinner.gif) center center no-repeat transparent !important; }
+#debugsettings a { display: inline-block; width: 40px; height: 40px; border: 1px solid black; padding: 5px 3px 3px 5px; margin: 0 5px 5px 0;}
+#debugsettings a.on { background-color: #85fa85; }
+
 
 /* jquery ui changes */
-.ui-accordion .ui-accordion-content {padding: 10px;}
-.ui-accordion .ui-accordion-header {
-	padding-top: .2em;
-	padding-bottom: .2em;
-}
-/*
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
-	background: inherit;
-}
+.ui-tooltip { background: #85fa85; }
+
+/* accordion stuff */
+.ui-accordion .ui-accordion-content { padding: 10px; }
+.ui-accordion .ui-accordion-header  { padding-top: .2em; padding-bottom: .2em; }
+.ui-button.ui-state-active { background: #CAECA7; }
+
+/**
+*10 CSS Notifications
+*Author:http://www.paulund.co.uk/
+*Created:30/05/11
 */
-.ui-button.ui-state-active {
-	background: #CAECA7;
+
+/*Setup all boxes*/
+.info,.success,.error,.warning,.tip,.secure,.message,.download,.purchase,.print{
+	margin:5px; padding:5px 25px 5px 5px;
+	-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;
+	-moz-box-shadow: 4px 4px #dfe1d8;-webkit-box-shadow: 4px 4px #dfe1d8;box-shadow: 4px 4px #dfe1d8;
+	background-position: right center; background-repeat: no-repeat;
 }
+
+/*Styling for text inside boxes*/
+h4 { margin:5px 5px 5px 80px;padding:0; font-size:16px; }
+p { font-size:10px; color:#000; margin:5px 5px 5px 80px; }
+
+/*Boxes*/
+.info    {border:1px solid #0e7fad;color:#0e7fad;background-color:#c0e9fa;background-image:url('../images/info.png'); }
+.success {border:1px solid #4f8746;color:#4f8746;background-color:#d4ffcd;background-image:url('../images/success.png'); }
+.error   {border:1px solid #641f1a;color:#641f1a;background-color:#ffd2d4;background-image:url('../images/error.png'); }
+.warning {border:1px solid #9d9c49;color:#9d9c49;background-color:#fdfdcb;background-image:url('../images/warning.png'); }
+.tip     {border:1px solid #c77d10;color:#c77d10;background-color:#f9d69e;background-image:url('../images/tip.png'); }
+.secure  {border:1px solid #9638f1;color:#9638f1;background-color:#e5cefc;background-image:url('../images/secure.png'); }
+.message {border:1px solid #000000;color:#000000;background-color:#efefef;background-image:url('../images/message.png'); }
+.download{border:1px solid #04b5eb;color:#04b5eb;background-color:#f7f7f7;background-image:url('../images/download.png'); }
+.purchase{border:1px solid #426164;color:#426164;background-color:#c2e1e3;background-image:url('../images/purchase.png'); }
+.print   {border:1px solid #3c4b5e;color:#3c4b5e;background-color:#c8d9e3;background-image:url('../images/print.png'); }

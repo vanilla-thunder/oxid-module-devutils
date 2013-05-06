@@ -22,10 +22,12 @@ $aModule = array(
 	'email'       => 'oxid@marat-bedoev.net',
 	'url'         => 'https://github.com/vanilla-thunder/',
 	'extend'      => array(
-		'oxviewconfig'  => 'vt-devutils/extend/oxviewconfig_vtdu',
-		'navigation'    => 'vt-devutils/extend/navigation_vtdu',
+		//'oxviewconfig'  => 'vt-devutils/extend/oxviewconfig_vtdu',
 		'module_config' => 'vt-devutils/extend/module_config_vtdu',
-		'oxmodule'      => 'vt-devutils/extend/oxmodule_vtdu'
+		'navigation'    => 'vt-devutils/extend/navigation_vtdu',
+		'oxmodule'      => 'vt-devutils/extend/oxmodule_vtdu',
+		'oxviewconfig'  => 'vt-devutils/extend/oxviewconfig_vtdu',
+		'thankyou'      => 'vt-devutils/extend/thankyou_vtdu',
 	),
 	'files'       => array(
 		'vtdu'            => 'vt-devutils/files/vtdu.php',
@@ -36,7 +38,8 @@ $aModule = array(
 	),
 	'templates'   => array(
 		'navigation_vtdu.tpl' => 'vt-devutils/templates/navigation_vtdu.tpl',
-		'vtdu.tpl'            => 'vt-devutils/templates/vtdu.tpl',
+		'vtdu_frame.tpl'      => 'vt-devutils/templates/vtdu_frame.tpl',
+		'vtdu_ajax.tpl'       => 'vt-devutils/templates/vtdu_ajax.tpl',
 		'vtdu_logs.tpl'       => 'vt-devutils/templates/vtdu_logs.tpl',
 		'vtdu_scratchpad.tpl' => 'vt-devutils/templates/vtdu_scratchpad.tpl'
 	),

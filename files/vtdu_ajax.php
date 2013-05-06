@@ -6,7 +6,7 @@ class vtdu extends oxAdminView
 	{
 		parent::render();
 
-		if(oxRegistry::getConfig()->getRequestParameter("ajax")) { return "vtdu_ajax.tpl"; }
+
 		return "vtdu_frame.tpl";
 	}
 
@@ -33,9 +33,9 @@ class vtdu extends oxAdminView
 		}
 
 		$fs = number_format($fs / 1024 / 1024, 2);
-		$this->_aViewData['content'] = "$i files ( $fs MB )  deleted";
-	}
+		$this->_aViewData['cleartmpmsg'] = "$i files ( $fs MB )  deleted";
 
+	}
 	public function clearsmarty()
 	{
 		$cfg = oxRegistry::get("oxConfig");
@@ -59,9 +59,8 @@ class vtdu extends oxAdminView
 		}
 
 		$fs = number_format($fs / 1024 / 1024, 2);
-		$this->_aViewData['content'] = "$i files ( $fs MB )  deleted";
+		$this->_aViewData['cleartmpmsg'] = "$i files ( $fs MB )  deleted";
 	}
-
 	public function clearphp()
 	{
 		$cfg = oxRegistry::get("oxConfig");
@@ -84,9 +83,8 @@ class vtdu extends oxAdminView
 		}
 
 		$fs = number_format($fs / 1024 / 1024, 2);
-		$this->_aViewData['content'] = "$i files ( $fs MB )  deleted";
+		$this->_aViewData['cleartmpmsg'] = "$i files ( $fs MB )  deleted";
 	}
-
 	public function clearlang()
 	{
 		$cfg = oxRegistry::get("oxConfig");
@@ -98,9 +96,8 @@ class vtdu extends oxAdminView
 			}
 		}
 
-		$this->_aViewData['content'] = "lang cache clear!";
+		$this->_aViewData['cleartmpmsg'] = "lang cache clear!";
 	}
-
 	public function clearconfig()
 	{
 		$cfg = oxRegistry::get("oxConfig");
@@ -112,7 +109,7 @@ class vtdu extends oxAdminView
 			}
 		}
 
-		$this->_aViewData['content'] = "config cache clear!";
+		$this->_aViewData['cleartmpmsg'] = "config cache clear!";
 	}
 
 	public function getDebugSettings()
@@ -126,22 +123,12 @@ class vtdu extends oxAdminView
 
 		return $aSettings;
 	}
-
-	public function toggleDebugSetting()
+	public function updateDebugSettings()
 	{
 		$cfg = oxRegistry::getConfig();
-		$sVarName = $cfg->getRequestParameter("setting");
-		$sVarValue = (!$cfg->getConfigParam($sVarName)) ? "true":"false";
-		
-		$cfg->saveShopConfVar("bool", $sVarName, $sVarValue, null, "module:vt-devutils");
-		$oLang = oxRegistry::getLang();
-		$string = $oLang->translateString($sVarName."_".$sVarValue);
-		
-		$this->_aViewData['content'] = $string;
-
-		//$sVarvalue = $cfg->getRequestParameter("varvalue");
+		$sVarname = $cfg->getRequestParameter("varname");
+		$sVarvalue = $cfg->getRequestParameter("varvalue");
 	}
-	
 	public function setDebugLvl()
 	{
 		$cfg = oxRegistry::getConfig();
