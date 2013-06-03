@@ -40,18 +40,22 @@
 			'thankyou'      => 'vt-devutils/extend/thankyou_vtdu',
 		),
 		'files'       => array(
-			'vtdu'            => 'vt-devutils/controller/vtdu.php',
 			'vtdu_logs'       => 'vt-devutils/controller/vtdu_logs.php',
 			'vtdu_scratchpad' => 'vt-devutils/controller/vtdu_scratchpad.php',
-			/* frontend controller */
-			//'vtscratchpad'=>'vt-devutils/core/vtscratchpad.php',
+
+			'vtdu'            => 'vt-devutils/controller/vtdu.php', // dev utils self
+			'vtdu_fe'         => 'vt-devutils/controller/vtdu_fe.php', // frontend controller
+			'vtdu_be'         => 'vt-devutils/controller/vtdu_be.php', // backend controller
 		),
 		'templates'   => array(
-			'navigation_vtdu.tpl' => 'vt-devutils/views/navigation_vtdu.tpl',
-			'vtdu_frame.tpl'      => 'vt-devutils/views/vtdu_frame.tpl',
+			'navigation_vtdu.tpl' => 'vt-devutils/views/admin/navigation_vtdu.tpl',
+
+			'vtdu_logs.tpl'       => 'vt-devutils/views/admin/vtdu_logs.tpl',
+			'vtdu_scratchpad.tpl' => 'vt-devutils/views/admin/vtdu_scratchpad.tpl',
+
 			'vtdu_ajax.tpl'       => 'vt-devutils/views/vtdu_ajax.tpl',
-			'vtdu_logs.tpl'       => 'vt-devutils/views/vtdu_logs.tpl',
-			'vtdu_scratchpad.tpl' => 'vt-devutils/views/vtdu_scratchpad.tpl'
+			'vtdu_fe.tpl'         => 'vt-devutils/views/vtdu_fe.tpl',
+			'vtdu_be.tpl'         => 'vt-devutils/views/admin/vtdu_be.tpl',
 		),
 		'blocks'      => array(
 			array('template' => 'headitem.tpl', 'block' => 'admin_headitem_inccss', 'file' => '/views/blocks/admin_headitem_inccss.tpl'),

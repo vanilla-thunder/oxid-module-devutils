@@ -34,9 +34,9 @@
 				<div id="debugsettings" class="row-fluid">
 					[{foreach from=$oView->getDebugSettings() key="key" item="val"}]
 						<div class="span4">
-						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu&fnc=toggledebugsetting&setting=[{$key}]&ajax=1" class="ajax [{if $val}]on[{/if}]" title="[{oxmultilang ident='SHOP_MODULE_'|cat:$key}]">
-							<img id="[{$key}]" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/")}]debugsetting_[{$key}][{if $val}]_on[{/if}].png"/>
-						</a></div>
+							<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu_fe&fnc=toggledebugsetting&setting=[{$key}]&ajax=1" class="ajax [{if $val}]on[{/if}]" title="[{oxmultilang ident='SHOP_MODULE_'|cat:$key}]">
+								<img id="[{$key}]" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/")}]debugsetting_[{$key}][{if $val}]_on[{/if}].png"/>
+							</a></div>
 					[{/foreach}]
 				</div>
 			</div>
@@ -50,24 +50,24 @@
 			<div class="accordion-inner">
 				<div class="row-fluid">
 					<div class="span6">
-						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu&fnc=clearlang&ajax=1" class="ajax btn btn-block" title="[{oxmultilang ident='vtdu_clearlang'}]" data-toggle="tooltip" data-placement="bottom">
+						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu_fe&fnc=clearLang&ajax=1" class="ajax btn btn-block" title="[{oxmultilang ident='vtdu_clearlang'}]" data-toggle="tooltip" data-placement="bottom">
 							<img id="" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/clearlang.png")}]"/> lang
 						</a>
 					</div>
 					<div class="span6">
-						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu&fnc=clearphp&ajax=1" class="ajax btn btn-block" title="[{oxmultilang ident='vtdu_clearphp'}]" data-toggle="tooltip" data-placement="bottom">
+						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu_fe&fnc=clearPhp&ajax=1" class="ajax btn btn-block" title="[{oxmultilang ident='vtdu_clearphp'}]" data-toggle="tooltip" data-placement="bottom">
 							<img id="" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/clearphp.png")}]"/> php
 						</a>
 					</div>
 				</div>
 				<div class="row-fluid">
 					<div class="span6">
-						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu&fnc=cleartmp&ajax=1" class="ajax btn btn-block" title="[{oxmultilang ident='vtdu_cleartmp'}]" data-toggle="tooltip">
+						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu_fe&fnc=clearTmp&ajax=1" class="ajax btn btn-block" title="[{oxmultilang ident='vtdu_cleartmp'}]" data-toggle="tooltip">
 							<img id="" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/cleartmp.png")}]"/> all
 						</a>
 					</div>
 					<div class="span6">
-						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu&fnc=clearsmarty&ajax=1" class="ajax btn btn-block" title="[{oxmultilang ident='vtdu_clearsmarty'}]" data-toggle="tooltip">
+						<a href="[{$oViewConf->getSelfLink()}]&cl=vtdu_fe&fnc=clearTpl&ajax=1" class="ajax btn btn-block" title="[{oxmultilang ident='vtdu_clearsmarty'}]" data-toggle="tooltip">
 							<img id="" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/clearsmarty.png")}]"/> tpl
 						</a>
 					</div>
@@ -87,16 +87,16 @@
 <script type="text/javascript">
 	function generatenoty(type, text)
 	{
-  		var n = noty({
-  			type: type,
-  			text: text,
-    		dismissQueue: true,
-    		timeout: 1500,
-    		modal: false,
-  			layout: 'center',
-  			theme: 'defaultTheme'
-  		});
-  	}
+		var n = noty({
+			type: type,
+			text: text,
+			dismissQueue: true,
+			timeout: 1500,
+			modal: false,
+			layout: 'center',
+			theme: 'defaultTheme'
+		});
+	}
 
 	$(function ()
 	{
@@ -105,13 +105,13 @@
 
 		$("a.ajax").on("click",function(event) {
 			event.preventDefault();
-			$.get($(this).attr("href"), function(data) { 
+			$.get($(this).attr("href"), function(data) {
 				generatenoty("information", data);
 			});
 			$(this).toggleClass("on");
 		});
-    	
-    	/*$( document ).tooltip({ position: { my: "right top", at: "right top", of: "body", collision: "fit" } });*/
+
+		/*$( document ).tooltip({ position: { my: "right top", at: "right top", of: "body", collision: "fit" } });*/
 		//$("#debugsettings").on("click","");
 	});
 </script>
