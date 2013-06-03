@@ -15,21 +15,10 @@
 	 * Author:     Marat Bedoev <oxid@marat.ws>
 	 */
 
-	class vtdu extends oxAdminDetails
+	class vtdu extends oxConfig
 	{
-		public function render()
-		{
-			parent::render();
 
-			if (oxRegistry::getConfig()->getRequestParameter("ajax"))
-			{
-				return "vtdu_ajax.tpl";
-			}
-
-			return "vtdu_frame.tpl";
-		}
-
-		public function cleartmp()
+		public function clearTmp()
 		{
 			$cfg = oxRegistry::get("oxConfig");
 			$pattern = $cfg->getConfigParam("sCompileDir") . "*";
@@ -56,10 +45,10 @@
 			}
 
 			$fs = number_format($fs / 1024 / 1024, 2);
-			$this->addTplParam("content", "$i files ( $fs MB )  deleted");
+			return "$i files ( $fs MB )  deleted";
 		}
 
-		public function clearsmarty()
+		public function clearTpl()
 		{
 			$pattern = oxRegistry::get("oxConfig")->getConfigParam("sCompileDir") . "smarty/*.php";
 
@@ -77,10 +66,10 @@
 			}
 
 			$fs = number_format($fs / 1024 / 1024, 2);
-			$this->addTplParam("content", "$i files ( $fs MB )  deleted");
+			return "$i files ( $fs MB )  deleted";
 		}
 
-		public function clearphp()
+		public function clearPhp()
 		{
 			$pattern = oxRegistry::get("oxConfig")->getConfigParam("sCompileDir") . "oxpec_*";
 
@@ -98,15 +87,14 @@
 			}
 
 			$fs = number_format($fs / 1024 / 1024, 2);
-			$this->addTplParam("content", "$i files ( $fs MB )  deleted");
+			return "$i files ( $fs MB )  deleted";
 		}
 
-		public function clearlang()
+		public function clearLang()
 		{
 			oxRegistry::get("oxUtils")->resetLanguageCache();
-			$this->addTplParam("content", "lang cache clear!");
+			return "lang cache clear!";
 		}
-
 
 
 		public function getDebugSettings()
@@ -121,17 +109,15 @@
 			return $aSettings;
 		}
 
-		public function toggleDebugSetting()
+		public function toggleDebugSetting($sVarName)
 		{
 			$cfg = oxRegistry::getConfig();
-			$sVarName = $cfg->getRequestParameter("setting");
 			$sVarValue = (!$cfg->getConfigParam($sVarName)) ? "true" : "false";
-
 			$cfg->saveShopConfVar("bool", $sVarName, $sVarValue, NULL, "module:vt-devutils");
 			//$oLang = oxRegistry::getLang();
 			//$string = $oLang->translateString($sVarName . "_" . $sVarValue);
-			$string ="OK";
-			$this->addTplParam("content", $string );
+			$string = "OK";
+			return $string;
 		}
 
 		public function setDebugLvl()
@@ -140,19 +126,18 @@
 			//$iDebug = intval($cfg->getRequestParameter("vtdebuglvl"));
 			$iDebug = 7;
 
-			$sCustConfig = getShopBasePath().'/cust_config.inc.php';
+			$sCustConfig = getShopBasePath() . '/cust_config.inc.php';
 
-			if(file_exists($sCustConfig) && is_readable($sCustConfig))
+			if (file_exists($sCustConfig) && is_readable($sCustConfig))
 			{
 				include $sCustConfig;
-				$sData = '$this->iDebug = '.$iDebug.';';
+				$sData = '$this->iDebug = ' . $iDebug . ';';
 				file_put_contents($sCustConfig, $sData, FILE_APPEND | LOCK_EX);
-			}
-			else
+			} else
 			{
 
-				$sData = '<?php $this->iDebug = '.$iDebug.';';
-				file_put_contents($sCustConfig,$sData);
+				$sData = '<?php $this->iDebug = ' . $iDebug . ';';
+				file_put_contents($sCustConfig, $sData);
 			}
 
 			$this->cleartmp();

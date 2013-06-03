@@ -32,6 +32,6 @@
     }
 </style>
 <div id="vtduframe">
-    <iframe src="[{ $oViewConf->getSelfLink()|replace:'&amp;':'&'|oxaddparams:'cl=vtdu'}]"/></iframe>
+    <iframe src="[{ $oViewConf->getSelfLink()|replace:'&amp;':'&'|oxaddparams:'cl=vtdu_be'}]"/></iframe>
     <img id="vtduicon" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/vtduicon.png")}]"/>
 </div>
