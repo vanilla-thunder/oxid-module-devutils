@@ -1,5 +1,9 @@
 [{$smarty.block.parent}]
 <script>
-console.log("currect class: [{$oView->getClassName()}]");  
-console.log("main template: [{$oView->getTemplateName()}]");
+	[{if $oViewConf->getVTdebugSetting("bShowCl")}]
+		console.log("class: [{$oView->getClassName()}]");
+	[{/if}]
+	[{if $oViewConf->getVTdebugSetting("bShowTpl")}]
+		console.log("template: [{$oView->getTemplateName()}]");
+	[{/if}]
 </script>

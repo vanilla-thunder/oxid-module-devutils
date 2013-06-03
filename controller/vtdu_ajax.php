@@ -98,6 +98,8 @@ class vtdu extends oxAdminView
 
 		$this->_aViewData['cleartmpmsg'] = "lang cache clear!";
 	}
+
+	/*
 	public function clearconfig()
 	{
 		$cfg = oxRegistry::get("oxConfig");
@@ -111,7 +113,7 @@ class vtdu extends oxAdminView
 
 		$this->_aViewData['cleartmpmsg'] = "config cache clear!";
 	}
-
+*/
 	public function getDebugSettings()
 	{
 		$cfg = oxRegistry::getConfig();
