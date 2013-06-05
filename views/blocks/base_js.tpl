@@ -12,11 +12,12 @@
 	#vtduframe {
 		width: 200px;
 		height: 200px;
-		margin-top: -150px;
+		/*margin-top: -150px;*/
 		margin-left: 0;
 		position: fixed;
 		bottom: 80px;
-		left: -198px;
+		left: 0px;
+		/*left: -198px;*/
 		-webkit-transition:all 1s ease;
 		-moz-transition:all 1s ease;
 	}
@@ -25,9 +26,10 @@
 		height: 200px;
 		border: 0;
 	}
+	/*
 	#vtduframe:hover{
 		margin-left:199px;
-	}
+	}*/
 	#vtduicon {
 		position: absolute;
 		bottom: 0%;
@@ -41,6 +43,6 @@
 </style>
 <div id="vtduframe">
 	<iframe src="[{ $oViewConf->getSelfLink()|replace:'&amp;':'&'|oxaddparams:'cl=vtdu_fe'}]"></iframe>
-	<img id="vtduicon" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/vtduicon.png")}]"/>
+	[{* <img id="vtduicon" src="[{$oViewConf->getModuleUrl("vt-devutils","out/icons/vtduicon.png")}]"/> *}]
 </div>
 [{/if}]

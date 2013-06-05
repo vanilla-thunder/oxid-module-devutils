@@ -29,3 +29,13 @@ a {text-decoration: none;}
 }
 div.in + .accordion-heading .accordion-toggle {background: #4f8746;}
 #collapseOne a img { width: 30px !important; height: 30px !important;}
+
+/* logs frame */
+
+.log {
+	min-height: 350px;
+	max-height: 450px;
+	margin-bottom: 20px;
+	outline: 1px solid black;
+
+}
