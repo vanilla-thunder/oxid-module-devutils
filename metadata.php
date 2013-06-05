@@ -65,35 +65,21 @@
 
 		),
 		'settings'    => array(
-			// logs
-			array('group' => 'vtduExLog', 'name' => 'bExLog', 'type' => 'bool', 'position' => 1, 'value' => true),
-			array('group' => 'vtduExLog', 'name' => 'iExLog', 'type' => 'str', 'position' => 2, 'value' => '10'),
-			array('group' => 'vtduErrLog', 'name' => 'bErrLog', 'type' => 'bool', 'position' => 3, 'value' => true),
-			array('group' => 'vtduErrLog', 'name' => 'sErrLog', 'type' => 'str', 'position' => 4, 'value' => '/var/log/...'),
-			array('group' => 'vtduErrLog', 'name' => 'iErrLog', 'type' => 'str', 'position' => 5, 'value' => '10'),
-			array('group' => 'vtduSQLLog', 'name' => 'bDbLog', 'type' => 'bool', 'position' => 6, 'value' => false),
-			array('group' => 'vtduSQLLog', 'name' => 'sDbLog', 'type' => 'str', 'position' => 7, 'value' => '/var/log/mysql.log'),
-			array('group' => 'vtduSQLLog', 'name' => 'iDbLog', 'type' => 'str', 'position' => 8, 'value' => '10'),
-			array('group' => 'vtduMailLog', 'name' => 'bMailLog', 'type' => 'bool', 'position' => 9, 'value' => false),
-			array('group' => 'vtduMailLog', 'name' => 'sMailLog', 'type' => 'str', 'position' => 10, 'value' => '/var/log/mails'),
-			array('group' => 'vtduMailLog', 'name' => 'iMailLog', 'type' => 'str', 'position' => 11, 'value' => '10'),
-			array('group' => 'vtduCust1Log', 'name' => 'bCust1Log', 'type' => 'bool', 'position' => 12, 'value' => false),
-			array('group' => 'vtduCust1Log', 'name' => 'sCust1Name', 'type' => 'str', 'position' => 13, 'value' => 'Custom log 1'),
-			array('group' => 'vtduCust1Log', 'name' => 'sCust1Log', 'type' => 'str', 'position' => 14, 'value' => ''),
-			array('group' => 'vtduCust1Log', 'name' => 'iCust1Log', 'type' => 'str', 'position' => 15, 'value' => '10'),
-			array('group' => 'vtduCust2Log', 'name' => 'bCust2Log', 'type' => 'bool', 'position' => 16, 'value' => false),
-			array('group' => 'vtduCust2Log', 'name' => 'sCust2Name', 'type' => 'str', 'position' => 17, 'value' => 'Custom log 2'),
-			array('group' => 'vtduCust2Log', 'name' => 'sCust2Log', 'type' => 'str', 'position' => 18, 'value' => ''),
-			array('group' => 'vtduCust2Log', 'name' => 'iCust2Log', 'type' => 'str', 'position' => 19, 'value' => '10'),
-			array('group' => 'vtduCust3Log', 'name' => 'bCust3Log', 'type' => 'bool', 'position' => 20, 'value' => false),
-			array('group' => 'vtduCust3Log', 'name' => 'sCust3Name', 'type' => 'str', 'position' => 21, 'value' => 'Custom log 3'),
-			array('group' => 'vtduCust3Log', 'name' => 'sCust3Log', 'type' => 'str', 'position' => 22, 'value' => ''),
-			array('group' => 'vtduCust3Log', 'name' => 'iCust3Log', 'type' => 'str', 'position' => 23, 'value' => '10'),
-
-
 			/* debug settings */
 			array('group' => 'vtduDebug', 'name' => 'bShowCl', 'type' => 'bool', 'position' => 1, 'value' => true),
 			array('group' => 'vtduDebug', 'name' => 'bShowTpl', 'type' => 'bool', 'position' => 2, 'value' => true),
 			array('group' => 'vtduDebug', 'name' => 'bKeepBasket', 'type' => 'bool', 'position' => 3, 'value' => true),
+			// logs
+			array('group' => 'vtduExLog', 'name' => 'bExLog', 'type' => 'bool', 'position' => 1, 'value' => true),
+			array('group' => 'vtduExLog', 'name' => 'iExLog', 'type' => 'str',  'position' => 2, 'value' => '10'),
+			array('group' => 'vtduSrvErrLog', 'name' => 'bSrvErrLog', 'type' => 'bool', 'position' => 3, 'value' => true),
+			array('group' => 'vtduSrvErrLog', 'name' => 'sSrvErrLog', 'type' => 'str',  'position' => 4, 'value' => '/var/log/error.log'),
+			array('group' => 'vtduSrvErrLog', 'name' => 'iSrvErrLog', 'type' => 'str',  'position' => 5, 'value' => '10'),
+			array('group' => 'vtduSQLLog',  'name' => 'bSqlLog', 'type' => 'bool', 'position' => 6, 'value' => false),
+			array('group' => 'vtduSQLLog',  'name' => 'sSqlLog', 'type' => 'str',  'position' => 7, 'value' => '/var/log/mysql.log'),
+			array('group' => 'vtduSQLLog',  'name' => 'iSqlLog', 'type' => 'str',  'position' => 8, 'value' => '10'),
+			array('group' => 'vtduMailLog', 'name' => 'bMailLog', 'type' => 'bool', 'position' => 9, 'value' => false),
+			array('group' => 'vtduMailLog', 'name' => 'sMailLog', 'type' => 'str',  'position' => 10, 'value' => '/var/log/mails'),
+			array('group' => 'vtduMailLog', 'name' => 'iMailLog', 'type' => 'str',  'position' => 11, 'value' => '10'),
 		)
 	);
