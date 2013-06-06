@@ -71,10 +71,10 @@
 			array('group' => 'vtduDebug', 'name' => 'bKeepBasket', 'type' => 'bool', 'position' => 3, 'value' => true),
 			// logs
 			array('group' => 'vtduExLog', 'name' => 'bExLog', 'type' => 'bool', 'position' => 1, 'value' => true),
-			array('group' => 'vtduExLog', 'name' => 'iExLog', 'type' => 'str',  'position' => 2, 'value' => '10'),
+			array('group' => 'vtduExLog', 'name' => 'iExLog', 'type' => 'str',  'position' => 2, 'value' => '5'),
 			array('group' => 'vtduSrvErrLog', 'name' => 'bSrvErrLog', 'type' => 'bool', 'position' => 3, 'value' => true),
 			array('group' => 'vtduSrvErrLog', 'name' => 'sSrvErrLog', 'type' => 'str',  'position' => 4, 'value' => '/var/log/error.log'),
-			array('group' => 'vtduSrvErrLog', 'name' => 'iSrvErrLog', 'type' => 'str',  'position' => 5, 'value' => '10'),
+			array('group' => 'vtduSrvErrLog', 'name' => 'iSrvErrLog', 'type' => 'str',  'position' => 5, 'value' => '5'),
 			array('group' => 'vtduSQLLog',  'name' => 'bSqlLog', 'type' => 'bool', 'position' => 6, 'value' => false),
 			array('group' => 'vtduSQLLog',  'name' => 'sSqlLog', 'type' => 'str',  'position' => 7, 'value' => '/var/log/mysql.log'),
 			array('group' => 'vtduSQLLog',  'name' => 'iSqlLog', 'type' => 'str',  'position' => 8, 'value' => '10'),

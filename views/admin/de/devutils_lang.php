@@ -18,16 +18,16 @@ $aLang = array(
 
     // log settings
     'SHOP_MODULE_GROUP_vtduExLog' => 'Exception Log',
-    'SHOP_MODULE_bExLog' => 'Exception Log',
+    'SHOP_MODULE_bExLog' => 'Exception Log anzeigen',
     'SHOP_MODULE_iExLog' => 'Anzahl der angezeigten Log-Einträge',
     
     'SHOP_MODULE_GROUP_vtduSrvErrLog' => 'Webserver Error Log',
-    'SHOP_MODULE_bSrvErrLog' => 'Log anzeigen',
+    'SHOP_MODULE_bSrvErrLog' => 'Webserver Error Log anzeigen',
     'SHOP_MODULE_sSrvErrLog' => 'Pfad zur Log Datei',
     'SHOP_MODULE_iSrvErrLog' => 'Anzahl der angezeigten Log-Einträge',
     
     'SHOP_MODULE_GROUP_vtduSQLLog' => 'Datenbank Error Log',
-    'SHOP_MODULE_bSqlLog' => 'Log anzeigen',
+    'SHOP_MODULE_bSqlLog' => 'Mysql Log anzeigen',
     'SHOP_MODULE_sSqlLog' => 'Pfad zur Log Datei',
     'SHOP_MODULE_iSqlLog' => 'Anzahl der angezeigten Log-Einträge',
     

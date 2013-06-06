@@ -11,33 +11,58 @@
 		<link rel="stylesheet" media="screen" href="[{$oViewConf->getModuleUrl('vt-devutils','out/css/vt-devutils.css') }]?[{$smarty.now}]">
 	</head>
 	<body>
-		<div class="container fullheight">
-			<div class="row">
+		<div class="container-fluid">
+			<div class="row-fluid">
 				[{if $ExLog}]
 					<div class="span6 log">
-						<h2>exception log</h2><hr/>
-						[{foreach from=$ExLog item=ex}]
-							[{$ex|var_dump}]<hr/>
-						[{/foreach}]
+						<h2  class="text-center">exception log</h2>
+						<div class="accordion" id="exceptionlog">
+							[{foreach from=$ExLog item=ex name=exlog}]
+								<div class="accordion-group">
+									<div id="exception[{$smarty.foreach.exlog.iteration}]" class="accordion-body collapse [{if $smarty.foreach.exlog.last}]in[{/if}]">
+										<pre class="accordion-inner">[{$ex->text}]</pre>
+									</div>
+									<div class="accordion-heading">
+										<a class="accordion-toggle" data-toggle="collapse" data-parent="#exceptionlog" href="#exception[{$smarty.foreach.exlog.iteration}]">
+											[{$ex->header}]
+										</a>
+									</div>
+								</div>
+							[{/foreach}]
+						</div>
 					</div>
 				[{/if}]
+
 				[{if $SrvErrLog}]
 					<div class="span6 log">
-						<h2>webserver error log</h2><hr/>
-						[{$SrvErrLog}]
+						<h2  class="text-center">webserver error log</h2>
+						<table class="table table-striped table-condensed">
+							[{foreach from=$SrvErrLog item=log}]
+								<tr style="margin-top: 5px;">
+									<th>[{$log->date}]</th>
+									<th>[{$log->type}]</th>
+									<th>[{$log->client}]</th>
+								</tr>
+								<tr class="[{$log->type}]">
+									<td colspan="3">[{$log->text}]</td>
+								</tr>
+							[{/foreach}]
+						</table>
 					</div>
 				[{/if}]
-			</div>
-			<div class="row">
 				[{if $SqlLog}]
 					<div class="span6 log">
-						<h2>MySQL log</h2><hr/>
+						<h2  class="text-center">MySQL log</h2>
+						<table class="table table-striped">
+							…
+						</table>
 						[{$SqlLog}]
 					</div>
 				[{/if}]
 				[{if $MailLog}]
 					<div class="span6 log">
-						<h2>mail log</h2><hr/>
+						<h2>mail log</h2>
+						<hr/>
 						[{$MailLog}]
 					</div>
 				[{/if}]

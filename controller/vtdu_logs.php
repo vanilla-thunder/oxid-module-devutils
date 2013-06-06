@@ -14,7 +14,7 @@
 	{
 		parent::init();
 		$cfg = oxRegistry::getConfig();
-		$this->_sExLog = $cfg->getConfigParam('sShopDir') . 'log/EXCEPTION_LOG.txt';
+		$this->_sExLog     = ( $cfg->getConfigParam('bSrvErrLog')) ? $cfg->getConfigParam('sShopDir') . 'log/EXCEPTION_LOG.txt'            : false;
 		$this->_sSrvErrLog = ( $cfg->getConfigParam('bSrvErrLog')) ? $cfg->getConfigParam('sShopDir') . $cfg->getConfigParam('sSrvErrLog') : false;
 		$this->_sSqlLog    = ( $cfg->getConfigParam('bSqlLog')   ) ? $cfg->getConfigParam('sShopDir') . $cfg->getConfigParam('sSqlLog')    : false;
 		$this->_sMailsLog  = ( $cfg->getConfigParam('bMailLog')  ) ? $cfg->getConfigParam('sShopDir') . $cfg->getConfigParam('sMailLog')   : false;
@@ -27,7 +27,7 @@
 
 
 			$this->_aViewData['ExLog']     = $this->getExceptionLog();
-			$this->_aViewData['SrvErrLog'] = "ok";
+			$this->_aViewData['SrvErrLog'] = $this->getErrorLog();
 			$this->_aViewData['SqlLog']    = "ok";
 			$this->_aViewData['MailLog']   = "ok";
 
@@ -48,25 +48,53 @@
 
 		public function getExceptionLog()
 		{
+			if (!$this->_sSrvErrLog)
+				return false;
+
 			$cfg = oxRegistry::getConfig();
+
 			if ( !file_exists($this->_sExLog) || !is_readable($this->_sExLog) )
-			{
-				return "ERROR: file does not exist od is not readable";
-			}
+				return array( (object) array( "header" => "ERROR: file does not exist od is not readable", "text" => "perhaps you had no exceptions yet?") );
+
+			$iExLog = intval($cfg->getConfigParam("iExLog"));
+			$iExLog = $iExLog ? $iExLog : 10;
 
 			$sData = file_get_contents($this->_sExLog);
 			$aData = explode("---------------------------------------------", $sData);
-			$aData = array_slice($aData, -10, 10);
+			$aData = array_slice($aData, -$iExLog-1, $iExLog);
 
-			return array("ok1","ok2",count($aData));
+			array_walk($aData, array($this, '_prepareExLog'));
+
+			return $aData;
+		}
+		private function _prepareExLog(&$item, $key)
+		{
+			$aEx = explode("Stack Trace:",trim($item));
+			$item = (object) array(
+				"header" => str_replace("[0]:","<br/><small>",$aEx[0])."</small>",
+				"text" => trim($aEx[1])
+			);
 		}
 
 		public function getErrorLog()
 		{
-			if (!$this->_sErrorLog)
+			if (!$this->_sSrvErrLog)
 				return false;
 
-			$aErrorLog = file($this->_sErrorLog);
+			$cfg = oxRegistry::getConfig();
+
+			if ( !file_exists($this->_sSrvErrLog) || !is_readable($this->_sSrvErrLog) )
+				return array( "ERROR: file does not exist od is not readable", "please check the path set in module settings");
+
+			$iSrvErrLog = intval($cfg->getConfigParam("iSrvErrLog"));
+			$iSrvErrLog = $iSrvErrLog ? $iSrvErrLog : 10;
+
+			$aData = file($this->_sSrvErrLog);
+			$aData = array_slice($aData, -$iSrvErrLog);
+
+			array_walk($aData, array($this, '_prepareSrvErrLog'));
+
+			return $aData;
 
 			$aParsedLog = array();
 			$x = 0;
@@ -117,5 +145,22 @@
 		  */
 			}
 
+		}
+		private function _prepareSrvErrLog(&$item, $key)
+		{
+			//$aEx = preg_split ("(\[client [\d\.]+\])",$item);
+			//$aEx = preg_split ("(\sin\s)",$item);
+			$aLog = explode("] ", $item, 4);
+			//preg_match("([a-zA-Z0-9\s\.\:]+)", $item, $date);
+			$aSearch = array(" in ", " referer:");
+			$aReplace = array("<br/>in ", "<br/>referer:<small>");
+			$aEx = array(
+				"date"   => trim(substr($aLog[0],1)),
+				"type"   => trim(substr($aLog[1],1)),
+				"client" => trim(substr($aLog[2],1)),
+				"text"   => str_replace($aSearch, $aReplace, trim($aLog[3]))."</small>"
+			);
+
+			$item = (object) $aEx;
 		}
 	}
