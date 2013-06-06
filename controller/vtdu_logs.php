@@ -15,9 +15,9 @@
 		parent::init();
 		$cfg = oxRegistry::getConfig();
 		$this->_sExLog     = ( $cfg->getConfigParam('bSrvErrLog')) ? $cfg->getConfigParam('sShopDir') . 'log/EXCEPTION_LOG.txt'            : false;
-		$this->_sSrvErrLog = ( $cfg->getConfigParam('bSrvErrLog')) ? $cfg->getConfigParam('sShopDir') . $cfg->getConfigParam('sSrvErrLog') : false;
-		$this->_sSqlLog    = ( $cfg->getConfigParam('bSqlLog')   ) ? $cfg->getConfigParam('sShopDir') . $cfg->getConfigParam('sSqlLog')    : false;
-		$this->_sMailsLog  = ( $cfg->getConfigParam('bMailLog')  ) ? $cfg->getConfigParam('sShopDir') . $cfg->getConfigParam('sMailLog')   : false;
+		$this->_sSrvErrLog = ( $cfg->getConfigParam('bSrvErrLog')) ? $cfg->getConfigParam('sSrvErrLog') : false;
+		$this->_sSqlLog    = ( $cfg->getConfigParam('bSqlLog')   ) ? $cfg->getConfigParam('sSqlLog')    : false;
+		$this->_sMailsLog  = ( $cfg->getConfigParam('bMailLog')  ) ? $cfg->getConfigParam('sMailLog')   : false;
 	}
 		public function render()
 		{
@@ -82,6 +82,10 @@
 				return false;
 
 			$cfg = oxRegistry::getConfig();
+
+			// relative path?
+			if(substr($this->_sSrvErrLog, 0,1) != "/")
+				$this->_sSrvErrLog = $cfg->getConfigParam('sShopDir') . $this->_sSrvErrLog;
 
 			if ( !file_exists($this->_sSrvErrLog) || !is_readable($this->_sSrvErrLog) )
 				return array( "ERROR: file does not exist od is not readable", "please check the path set in module settings");
