@@ -28,8 +28,8 @@
 
 			$this->_aViewData['ExLog']     = $this->getExceptionLog();
 			$this->_aViewData['SrvErrLog'] = $this->getErrorLog();
-			$this->_aViewData['SqlLog']    = "ok";
-			$this->_aViewData['MailLog']   = "ok";
+			$this->_aViewData['SqlLog']    = false;
+			$this->_aViewData['MailLog']   = false;
 
 			//var_dump("<h2>".$this->_sExLogPath."</h2>");
 			//$this->getExceptionLog();
@@ -61,7 +61,8 @@
 
 			$sData = file_get_contents($this->_sExLog);
 			$aData = explode("---------------------------------------------", $sData);
-			$aData = array_slice($aData, -$iExLog-1, $iExLog);
+			$aData = array_slice($aData, -($iExLog+1));
+			array_pop($aData); // cut last empty array element
 
 			array_walk($aData, array($this, '_prepareExLog'));
 
