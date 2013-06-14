@@ -1,8 +1,0 @@
-[{$content}]
-[{if $success}]<div class="success">[{$success}]</div>[{/if}]
-[{if $info}]<div class="success">[{$info}]</div>[{/if}]
-[{if $error}]<div class="success">[{$error}]</div>[{/if}]
-[{if $warning}]<div class="success">[{$warning}]</div>[{/if}]
-[{if $tip}]<div class="success">[{$tip}]</div>[{/if}]
-[{if $secure}]<div class="success">[{$secure}]</div>[{/if}]
-[{if $message}]<div class="success">[{$message}]</div>[{/if}]
