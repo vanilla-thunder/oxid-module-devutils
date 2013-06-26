@@ -21,7 +21,7 @@
 		'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">VT</strong> Dev Utils',
 		'description' => 'some helpful functions for OXID developing',
 		'thumbnail'   => 'oxid-vt.jpg',
-		'version'     => '2.0 from 2013-30-05 / newest version: <img src="https://raw.github.com/vanilla-thunder/vt-devutils/module/version.jpg" /><br/>
+		'version'     => '2.0 from 2013-30-05 / newest version: <img src="https://raw.github.com/vanilla-thunder/vt-devutils/module/version.jpg" style="float:right;"/><br/>
 		 <a style="display: inline-block; padding: 1px 15px; background: #f0f0f0; border: 1px solid gray" href="https://github.com/vanilla-thunder/vt-devutils/" target="_blank">info</a> <a style="display: inline-block; padding: 1px 15px; background: #f0f0f0; border: 1px solid gray" href="https://github.com/vanilla-thunder/vt-devutils/archive/master.zip">download</a>',
 		'author'      => 'Marat Bedoev',
 		'email'       => 'oxid@marat.ws',
