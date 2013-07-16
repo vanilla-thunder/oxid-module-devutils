@@ -15,13 +15,7 @@
 	<div class="accordion-group">
 		<div id="collapseThree" class="accordion-body collapse">
 			<div class="accordion-inner">
-				<div id="debugsettings">
-					<div>Fusce sit amet sapien vitae justo pulvinar posuere quis in libero. Cras ut arcu vitae magna luctus pretium. Sed
-						quis dolor in sem egestas interdum. Nunc pharetra auctor metus, eu sollicitudin nisl tincidunt in. Proin odio
-						turpis, iaculis nec euismod nec, pharetra non augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						Nunc nulla ipsum, scelerisque non tempus non, dictum vel enim. Aliquam lobortis dolor sit amet massa ullamcorper
-						quis egestas sapien egestas.
-					</div>
+				<div class="row-fluid">
 				</div>
 			</div>
 		</div>

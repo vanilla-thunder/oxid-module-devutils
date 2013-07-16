@@ -1,6 +1,6 @@
 <?php
 
-	class module_config_vtdu extends module_config_vtdu_parent
+	class module_main_vtdu extends module_main_vtdu_parent
 	{
 
 		public function resetModuleSettings()

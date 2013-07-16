@@ -21,7 +21,7 @@
 		'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">VT</strong> Dev Utils',
 		'description' => 'some helpful functions for OXID developing',
 		'thumbnail'   => 'oxid-vt.jpg',
-		'version'     => '2.0 from 2013-30-05 / newest version: <img src="https://raw.github.com/vanilla-thunder/vt-devutils/module/version.jpg" style="float:right;"/><br/>
+		'version'     => '2.1 from 2013-16-07 / newest version: <img src="https://raw.github.com/vanilla-thunder/vt-devutils/module/version.jpg" style="float:right;"/><br/>
 		 <a style="display: inline-block; padding: 1px 15px; background: #f0f0f0; border: 1px solid gray" href="https://github.com/vanilla-thunder/vt-devutils/" target="_blank">info</a> <a style="display: inline-block; padding: 1px 15px; background: #f0f0f0; border: 1px solid gray" href="https://github.com/vanilla-thunder/vt-devutils/archive/master.zip">download</a>',
 		'author'      => 'Marat Bedoev',
 		'email'       => 'oxid@marat.ws',
@@ -32,20 +32,21 @@
 			'oxmodule'      => 'vt-devutils/extend/oxmodule_vtdu',
 
 			/* backend */
-			'module_config' => 'vt-devutils/extend/module_config_vtdu',
+			'module_main'   => 'vt-devutils/extend/module_main_vtdu',
 			'navigation'    => 'vt-devutils/extend/navigation_vtdu',
-
 
 			/* frontend */
 			'thankyou'      => 'vt-devutils/extend/thankyou_vtdu',
 		),
 		'files'       => array(
-			'vtdu_logs'       => 'vt-devutils/controller/vtdu_logs.php',
-			'vtdu_scratchpad' => 'vt-devutils/controller/vtdu_scratchpad.php',
+            'vtdu_events'     => 'vt-devutils/files/vtdu_events.php', // module events
 
-			'vtdu'            => 'vt-devutils/controller/vtdu.php', // dev utils self
-			'vtdu_fe'         => 'vt-devutils/controller/vtdu_fe.php', // frontend controller
-			'vtdu_be'         => 'vt-devutils/controller/vtdu_be.php', // backend controller
+			'vtdu_logs'       => 'vt-devutils/files/vtdu_logs.php',     // logs controller
+			'vtdu_scratchpad' => 'vt-devutils/files/vtdu_scratchpad.php',   // php scratchpad
+
+			'vtdu'            => 'vt-devutils/files/vtdu.php', // dev utils self
+			'vtdu_fe'         => 'vt-devutils/files/vtdu_fe.php', // frontend files
+			'vtdu_be'         => 'vt-devutils/files/vtdu_be.php', // backend files
 		),
 		'templates'   => array(
 			'navigation_vtdu.tpl' => 'vt-devutils/views/admin/navigation_vtdu.tpl',

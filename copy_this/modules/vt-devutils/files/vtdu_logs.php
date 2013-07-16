@@ -14,9 +14,13 @@
 	{
 		parent::init();
 		$cfg = oxRegistry::getConfig();
-		$this->_sExLog     = ( $cfg->getConfigParam('bSrvErrLog')) ? $cfg->getConfigParam('sShopDir') . 'log/EXCEPTION_LOG.txt'            : false;
+		$this->_sExLog     = ( $cfg->getConfigParam('bExLog'))     ? $cfg->getConfigParam('sShopDir') . 'log/EXCEPTION_LOG.txt' : false;
+
 		$this->_sSrvErrLog = ( $cfg->getConfigParam('bSrvErrLog')) ? $cfg->getConfigParam('sSrvErrLog') : false;
+		if(substr($this->_sSrvErrLog, 0,1) !== "/") $this->_sSrvErrLog = $cfg->getConfigParam('sShopDir') . $this->_sSrvErrLog; // relative path?
+
 		$this->_sSqlLog    = ( $cfg->getConfigParam('bSqlLog')   ) ? $cfg->getConfigParam('sSqlLog')    : false;
+
 		$this->_sMailsLog  = ( $cfg->getConfigParam('bMailLog')  ) ? $cfg->getConfigParam('sMailLog')   : false;
 	}
 		public function render()
@@ -26,7 +30,7 @@
 
 
 
-			$this->_aViewData['ExLog']     = $this->getExceptionLog();
+			$this->_aViewData['ExLog']     = ($this->_sExLog) ? $this->getExceptionLog() : false;;
 			$this->_aViewData['SrvErrLog'] = $this->getErrorLog();
 			$this->_aViewData['SqlLog']    = false;
 			$this->_aViewData['MailLog']   = false;
@@ -48,7 +52,7 @@
 
 		public function getExceptionLog()
 		{
-			if (!$this->_sSrvErrLog)
+			if (!$this->_sExLog)
 				return false;
 
 			$cfg = oxRegistry::getConfig();
@@ -66,27 +70,41 @@
 
 			array_walk($aData, array($this, '_prepareExLog'));
 
-			return $aData;
+			return ($aData) ? $aData : array( (object) array("header" => "exception log is empty", "text" => "don't worry, be happy!") );
 		}
 		private function _prepareExLog(&$item, $key)
 		{
 			$aEx = explode("Stack Trace:",trim($item));
 			$item = (object) array(
 				"header" => str_replace("[0]:","<br/><small>",$aEx[0])."</small>",
-				"text" => trim($aEx[1])
+				"text" => htmlentities(trim($aEx[1]))
 			);
 		}
+		public function restartExceptionLog()
+		{
+			$oldname = basename($this->_sExLog);
+			$newname = substr($oldname, 0,-4)."_".date("Y-m-d").substr($oldname,-4);
+
+			$backup = file_get_contents($this->_sExLog);
+
+			if(empty($backup))
+			{
+				$this->addTplParam("exLogEmpty",true);
+				return;
+			}
+
+			file_put_contents(str_replace($oldname, $newname, $this->_sExLog), $backup, FILE_APPEND); // backup actual content
+			file_put_contents($this->_sExLog, ''); // create new log file
+
+			$this->addTplParam("exLogRestart",$newname);
+		}
+
 
 		public function getErrorLog()
 		{
-			if (!$this->_sSrvErrLog)
-				return false;
+			if (!$this->_sSrvErrLog)   return false;
 
 			$cfg = oxRegistry::getConfig();
-
-			// relative path?
-			if(substr($this->_sSrvErrLog, 0,1) != "/")
-				$this->_sSrvErrLog = $cfg->getConfigParam('sShopDir') . $this->_sSrvErrLog;
 
 			if ( !file_exists($this->_sSrvErrLog) || !is_readable($this->_sSrvErrLog) )
 				return array( "ERROR: file does not exist od is not readable", "please check the path set in module settings");
@@ -99,57 +117,7 @@
 
 			array_walk($aData, array($this, '_prepareSrvErrLog'));
 
-			return $aData;
-
-			$aParsedLog = array();
-			$x = 0;
-			foreach ($aErrorLog as $row)
-			{
-				/*
-					 $dateA = strpos($row,"[")+1;
-					 $dateB = strpos($row,"]");
-					 $aParsedLog[$x][] = substr($row, $dateA, $dateB-$dateA);
-
-					 $typeA = strpos($row,"[", $dateA)+1;
-					 $typeB = strpos($row,"]", $typeA);
-					 $aParsedLog[$x][] = substr($row, $typeA, $typeB-$typeA);
-
-					 $errTypeA = strpos($row,"]", $typeB+1)+1;
-					 $errTypeB = strpos($row,":", $errTypeA);
-					 $aParsedLog[$x][] = substr($row, $errTypeA, $errTypeB-$errTypeA);
-
-					 //$msgA = strpos($row,"]", $errTypeB+1)+1;
-					 $msgB = strpos($row,", referer");
-					 $aParsedLog[$x][] = trim(substr($row, $errTypeB+1, $msgB-$errTypeB-1));
-
-					 $aParsedLog[$x][] = $row;
-					 $x++;
-					*/
-				/*
-			  $regex = '/^\[([^\]]+)\] \[([^\]]+)\] (?:\[client ([^\]]+)\])?\s*(.*)$/i';
-			  $matches = Array();
-			  preg_match($regex, $aErrorLog, $matches);
-
-			  $date = $matches[1]; //Date and time
-			  $severity = $matches[2]; // severity
-			  $client = $matches[3]; // client addr (if present)
-			  $msg = $matches[4]; // log message
-
-			  $aParsedLog[$date][] = $severity;
-			  $aParsedLog[$date][] = $client;
-			  $aParsedLog[$date][] = $msg;
-			}
-			return $aParsedLog;
-
-
-			echo"<pre>";
-			for ($i = count($aErrorLog) - 10; $i < count($aErrorLog); $i++) {
-			  echo $aErrorLog[$i];
-			}
-			echo "</pre>";
-		  */
-			}
-
+			return ($aData) ? $aData : array( (object) array("date" => "", "type" => "", "client" => "", "text" => "webserver error log is empty") );
 		}
 		private function _prepareSrvErrLog(&$item, $key)
 		{
@@ -167,5 +135,22 @@
 			);
 
 			$item = (object) $aEx;
+		}
+		public function restartSrvErrLog()
+		{
+			if(!$this->_sSrvErrLog) return false;
+
+			$backup = file($this->_sSrvErrLog);
+
+			if(empty($backup))
+			{
+				$this->addTplParam("srvErrLogEmpty",true);
+				return;
+			}
+
+			file_put_contents($this->_sSrvErrLog."_".date("Y-m-d"), $backup, FILE_APPEND); // backup actual content
+			file_put_contents($this->_sSrvErrLog, ''); // create new log file
+
+			$this->addTplParam("srvErrLogRestart",basename($this->_sSrvErrLog)."_".date("Y-m-d"));
 		}
 	}

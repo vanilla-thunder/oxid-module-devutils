@@ -15,7 +15,9 @@
 			<div class="row-fluid">
 				[{if $ExLog}]
 					<div class="span6 log">
-						<h2  class="text-center">exception log</h2>
+						<h2  class="text-center">exception log <small><a href="[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdu_logs&fnc=restartExceptionLog" }]" title="rename log file so the shop will start new one">restart log</a></small></h2>
+						[{if $exLogRestart}]<p class="text-success">[{oxmultilang ident="VTDU_LOGS_EXLOGRESTART"}][{ $exLogRestart }]</p>[{/if}]
+						[{if $exLogEmpty}]<p class="text-error">[{oxmultilang ident="VTDU_LOGS_EXLOGEMPTY"}]</p>[{/if}]
 						<div class="accordion" id="exceptionlog">
 							[{foreach from=$ExLog item=ex name=exlog}]
 								<div class="accordion-group">
@@ -35,7 +37,9 @@
 
 				[{if $SrvErrLog}]
 					<div class="span6 log">
-						<h2  class="text-center">webserver error log</h2>
+						<h2  class="text-center">webserver error log <small><a href="[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdu_logs&fnc=restartSrvErrLog" }]" title="rename log file so the server will start new one">restart log</a></small></h2>
+						[{if $srvErrLogRestart}]<p class="text-success">[{oxmultilang ident="VTDU_LOGS_SRVERRLOGRESTART"}][{ $exLogRestart }]</p>[{/if}]
+						[{if $srvErrLogEmpty}]<p class="text-error">[{oxmultilang ident="VTDU_LOGS_SRVERRLOGEMPTY"}]</p>[{/if}]
 						<table class="table table-striped table-condensed">
 							[{foreach from=$SrvErrLog item=log}]
 								<tr style="margin-top: 5px;">
