@@ -1,4 +1,4 @@
-[vt] Dev Utils 2.0 for OXID eShop 4.7+
+[vt] Dev Utils 2.1 for OXID eShop 4.7+
 ===========
 
 ### check this page for detailed description, features and installation manual:
