@@ -48,6 +48,9 @@
 			'vtdu_fe'         => 'vt-devutils/files/vtdu_fe.php', // frontend files
 			'vtdu_be'         => 'vt-devutils/files/vtdu_be.php', // backend files
 		),
+		'events'      => array(
+			'onActivate' => 'vtdu_events::activate'
+		),
 		'templates'   => array(
 			'navigation_vtdu.tpl' => 'vt-devutils/views/admin/navigation_vtdu.tpl',
 
