@@ -58,7 +58,7 @@
 			$cfg = oxRegistry::getConfig();
 
 			if ( !file_exists($this->_sExLog) || !is_readable($this->_sExLog) )
-				return array( (object) array( "header" => "ERROR: file does not exist od is not readable", "text" => "perhaps you had no exceptions yet?") );
+				return array( (object) array( "header" => "ERROR: file does not exist or is not readable", "text" => "perhaps you had no exceptions yet?") );
 
 			$iExLog = intval($cfg->getConfigParam("iExLog"));
 			$iExLog = $iExLog ? $iExLog : 10;
@@ -107,7 +107,7 @@
 			$cfg = oxRegistry::getConfig();
 
 			if ( !file_exists($this->_sSrvErrLog) || !is_readable($this->_sSrvErrLog) )
-				return array( "ERROR: file does not exist od is not readable", "please check the path set in module settings");
+				return array( "ERROR: file does not exist or is not readable", "please check the path set in module settings");
 
 			$iSrvErrLog = intval($cfg->getConfigParam("iSrvErrLog"));
 			$iSrvErrLog = $iSrvErrLog ? $iSrvErrLog : 10;
