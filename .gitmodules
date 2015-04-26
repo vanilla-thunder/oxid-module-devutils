@@ -1,0 +1,16 @@
+[submodule "_dev-core/out/bower-angular"]
+	path = _dev-core/out/bower-angular
+	url = https://github.com/angular/bower-angular.git
+	branch = master
+[submodule "_dev-core/out/bower-material"]
+	path = _dev-core/out/bower-material
+	url = https://github.com/angular/bower-material.git
+	branch = master
+[submodule "_dev-core/out/bower-angular-animate"]
+	path = _dev-core/out/bower-angular-animate
+	url = https://github.com/angular/bower-angular-animate.git
+	branch = master
+[submodule "_dev-core/out/bower-angular-aria"]
+	path = _dev-core/out/bower-angular-aria
+	url = https://github.com/angular/bower-angular-aria.git
+	branch = master

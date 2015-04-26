@@ -1,0 +1,14 @@
+{
+  "name": "vt-devutils",
+  "version": "2.1",
+  "homepage": "http://marat.ws/",
+  "private": true,
+  "dependencies": {
+    "angular":         "*",
+    "angular-animate": "*",
+    "angular-aria":    "*",
+    "angular-material":"*",
+    "angular-ui-ace":  "bower",
+    "fontawesome":     "*"
+  }
+}

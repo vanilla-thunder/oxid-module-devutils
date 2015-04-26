@@ -1,0 +1,25 @@
+.container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+.left { float:left;}
+.right { float:right;}
+
+.md-button {
+    min-width: 10rem;
+    padding: 0.5rem;
+}
+
+/* mails */
+iframe { border-collapse: collapse; border: 1px solid #202020;}
+#text { white-space: pre-wrap; border: 1px solid #202020; }
+
+
+/* console */
+#editor, #output {
+    width: 100%;
+    min-height: 20rem;
+    border: 1px solid #cfcfcf;
+}
+#devutils-console .md-button { width: 100%; }
