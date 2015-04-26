@@ -34,16 +34,17 @@ class vtdev_console extends oxAdminView
 
     public function run()
     {
-        $cfg = oxRegistry::getConfig();
-
         $data = json_decode(file_get_contents('php://input'), true);
-
         $code = $data['code'];
-
-        $me = $user = oxRegistry::getConfig()->getUser();
+        
+        $cfg = oxRegistry::getConfig();
+        $me = $user = $cfg->getUser();
         $session = $user->getSession();
         $order = array_shift( $user->getOrders( 1 )->getArray() );
         $basket = $user->getSession()->getBasket();
+        $basket->load();
+        $basket->setPayment("oxidpayadvance");
+        $basket->calculateBasket();
 
         $fnc = function ( $code ) use ( $cfg, $me, $session, $order, $basket )
         {

@@ -18,6 +18,7 @@ iframe { border-collapse: collapse; border: 1px solid #202020;}
 
 /* console */
 #editor, #output {
+    white-space: pre-wrap;
     width: 100%;
     min-height: 20rem;
     border: 1px solid #cfcfcf;
