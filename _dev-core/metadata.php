@@ -32,7 +32,7 @@ $v = "";
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => '_dev-core',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb; padding: 0 2px;background:white;">VT dev</strong> _core',
+    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb; padding: 0 2px;background:white;">dev</strong> _core',
     'description' => '[vt] developent utilities core package. It is required for all other dev modules made by vanilla thunder.',
     'thumbnail'   => 'oxid-vt.jpg',
     'version'     => '0.9 (2015-03-19)',

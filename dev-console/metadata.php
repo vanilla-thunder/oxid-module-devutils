@@ -32,7 +32,7 @@ $v = "";
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-console',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">VT dev</strong> php console',
+    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> php console',
     'description' => 'php console for oxid eshop, grants full access to oxid framework for quck testing purposes',
     'thumbnail'   => 'oxid-vt.jpg',
     'version'     => '0.9 (2015-04-09)',

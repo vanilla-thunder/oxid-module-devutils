@@ -32,7 +32,7 @@ $v = "";
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-logs',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">VT dev</strong> logs',
+    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> logs',
     'description' => 'logs parser for oxid eshop',
     'thumbnail'   => 'oxid-vt.jpg',
     'version'     => '0.9 (2015-03-19)',

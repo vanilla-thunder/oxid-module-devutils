@@ -4,25 +4,27 @@
     <h1>[{$error|var_dump}]</h1>
 [{/if}]
 
-<div id="devutils-logs" layout="row" ng-controller="logsCtrl">
+<div class="container" id="devutils-logs" layout="column" layout-fill ng-controller="logsCtrl">
     <div flex>
-        <md-content class="md-padding" style="height: 400px;">
-            <pre>
-                [{$exLog|var_dump}]
-            </pre>
+        [{$exLog|var_dump}]
+        [{*
+        <md-content>
+        <pre>
+            
+        </pre>
         </md-content>
+        *}]
     </div>
     <div flex>
-        <md-content class="md-padding" style="height: 400px;">
-
-            <md-list>
+        [{*
+        <md-list>
                 <md-item ng-repeat="item in webserverlog">
                     <md-item-content>
-                        [{*
+                        <!--
                         <div class="md-tile-left">
                             <img ng-src="{{item.face}}" class="face" alt="{{item.who}}">
                         </div>
-                        *}]
+                        -->
                         <div class="md-tile-content">
                             <h3>{{item.header}}</h3>
                             <h4 ng-bind-html-unsafe="item.text"></h4>
@@ -31,8 +33,8 @@
                     </md-item-content>
                 </md-item>
             </md-list>
-
-        </md-content>
+*}]
+lalala
     </div>
 </div>
 
