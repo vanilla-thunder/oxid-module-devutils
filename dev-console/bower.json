@@ -1,11 +1,10 @@
 {
-  "name": "vt-devutils",
-  "version": "2.1",
+  "name": "vt-devutils - dev console",
+  "version": "0.9",
   "homepage": "https://github.com/vanilla-thunder/vt-devutils",
   "private": true,
   "dependencies": {
-    "angular": "*",
-    "lumx": "*",
-    "zeroclipboard": "*"
+    "ace-builds": "*",
+    "angular-ui-ace": "*"
   }
 }

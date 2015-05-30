@@ -30,13 +30,13 @@
 class vtdev_logs extends oxAdminView
 {
 
+    protected $_aModuleComponents = false;
     protected $_sThisTemplate  = 'vt_dev_logs.tpl';
 
     protected $_sExLog = null;
     protected $_sErrLog = null;
     //protected $_sSqlLog = null;
     //protected $_sMailsLog = null;
-
 
     public function init()
     {
@@ -56,10 +56,11 @@ class vtdev_logs extends oxAdminView
     {
         $cfg = oxRegistry::getConfig();
 
-        $this->addTplParam('exLog', $this->getExceptionLog());
-        //$this->addTplParam('errLog', $this->getErrorLog());
-        $this->addTplParam('SqlLog', false);
-        $this->addTplParam('MailLog', false);
+        //$this->addTplParam('exLog', $this->getExceptionLog());
+        $this->addTplParam('errlog', $this->_sErrLog);
+        $this->addTplParam('ip', $_SERVER['REMOTE_ADDR']);
+        
+        $this->addTplParam("module_components", ($this->_aModuleComponents ? ",".$this->_aModuleComponents : ''));
 
         //var_dump("<h2>".$this->_sExLogPath."</h2>");
         //$this->getExceptionLog();
@@ -81,52 +82,46 @@ class vtdev_logs extends oxAdminView
         $cfg = oxRegistry::getConfig();
         $sExLog = $cfg->getConfigParam('sShopDir') . 'log/EXCEPTION_LOG.txt';
 
-        if (!file_exists($this->_sExLog) || !is_readable($this->_sExLog))
+        if (!file_exists($sExLog) || !is_readable($sExLog))
         {
-            $this->addTplParam("error", (object)array("type" => "warning", "text" => "EXCEPTION_LOG.txt does not exist or is not readable"));
-            return false;
+            header('HTTP/1.1 500 Error reading ');
+            header('Content-Type: application/json; charset=UTF-8');
+            die(json_encode(array('error' => "EXCEPTION_LOG.txt does not exist or is not readable")));
         }
 
-        if ($sData = file_get_contents($this->_sExLog))
+        if ($sData = file_get_contents($sExLog))
         {
             $aData = explode("---------------------------------------------", $sData);
-            $aData = array_slice($aData, -11);
+            $aData = array_slice($aData, -101);
             array_pop($aData); // cut last empty array element
             foreach($aData as $key => $value)
             {
                 $aEx = explode("Stack Trace:", trim($value));
+                $aHeader = explode("[0]:",$aEx[0]);
                 $aData[$key] = (object)array(
-                    "header" => str_replace("[0]:", "<br/><b>", $aEx[0]) . "</b>",
-                    "text" => htmlentities(str_replace($cfg->getConfigParam("sShopDir"),"",trim($aEx[1])))
+                    "header" => str_replace($cfg->getConfigParam("sShopDir"),"",trim($aHeader[0])),
+                    "subheader" => str_replace($cfg->getConfigParam("sShopDir"),"",trim($aHeader[1])),
+                    "text" => htmlentities(str_replace($cfg->getConfigParam("sShopDir"),"",trim($aEx[1]))),
+                    "full" => $value
                 );
             }
-
-            return array_reverse($aData);
+            
+            $time = filemtime($sExLog);
+            echo json_encode(array_reverse($aData));
+            exit;
         }
 
-        return false;
-    }
-
-    public function clearExceptionLog()
-    {
-        file_put_contents($this->_sExLog, '');
-    }
-
-    public function backupExceptionLog()
-    {
-        $oldname = $this->_sExLog;
-        $newname = str_replace(".txt", "_".date("Y-m-d").".txt", $oldname);
-
-        rename($oldname,$newname);
-
-        //file_put_contents(str_replace($oldname, $newname, $this->_sExLog), file_get_contents($this->_sExLog), FILE_APPEND); // backup actual content
-        //$this->clearExceptionLog();
+            header('HTTP/1.1 500 Error reading ');
+            header('Content-Type: application/json; charset=UTF-8');
+            die(json_encode(array('error' => "something went wrong")));
     }
 
 
-    public function getWebserverErrorLog()
+    public function getErrorLog()
     {
         if (!$this->_sErrLog) return false;
+        
+        $cfg = oxRegistry::getConfig();
         if (!file_exists($this->_sErrLog) || !is_readable($this->_sErrLog))
         {
             $this->addTplParam("error", (object)array("type" => "warning", "text" => "file does not exist or is not readable"));
@@ -134,42 +129,40 @@ class vtdev_logs extends oxAdminView
         }
 
         $aData = file($this->_sErrLog);
-        $aData = array_slice($aData, -10);
-        array_walk($aData, array($this, '_prepareWebserverErrLog'));
+        $aData = array_slice($aData, -100);
+
+        foreach($aData as $key => $value)
+        {
+            /*
+            [Sat May 30 10:32:38 2015] [error] [client 79.222.227.99] 
+            PHP Fatal error:  Smarty error: [in vt_dev_footer.tpl line 7]: syntax error: unrecognized tag: $module_components:default:"'lumx'" (Smarty_Compiler.class.php, line 446) in /srv/ox/bla/core/smarty/Smarty.class.php on line 1093, referer: http://ox.marat.ws/bla/admin/index.php?editlanguage=0&force_admin_sid=5fdleoj00epaoe5d75d5hi6q01&stoken=C8D0F139&&cl=navigation&item=home.tpl
+            */
+            preg_match_all("/\[([^\]]*)\]/",$value, $header);
+            $msg = trim(str_replace(array_slice($header[0],0,3),'',$value));
+
+            // in: between " in" and " referer"
+            preg_match("/\sin\s\/(.*)\sreferer\:/",$msg, $in);
+            
+            // referer: after "referer"
+            preg_match("/\sreferer\:(.*)/",$msg, $in);
+            
+
+            $aErr = array(
+                "type" => $header[1][1],
+                "date" => $header[1][0],
+                "header" => substr($msg, 0, strpos($msg, " in /")),
+                "in" => str_replace($cfg->getConfigParam("sShopDir"),"","/".$in[1]),
+                //"in" => substr($msg, strpos($msg, " in /")+3, strpos($msg, ", referer: ")),
+                "referer" => substr($msg, strpos($msg, ", referer: ")+10),
+                "client" => $header[1][2]
+            );
+            $aData[$key] = (object) $aErr;
+            
+            // "in" => str_replace($cfg->getConfigParam("sShopDir"),"",substr($msg, strpos($msg, " in /")+3, strpos($msg, ", referer: "))),
+        }
 
         echo json_encode(array_reverse($aData));
         exit;
     }
-
-    private function _prepareWebserverErrLog(&$item, $key)
-    {
-        //echo print_r($item, true)."\n<hr/>";
-        preg_match_all("(\[[^\]]+\])",$item, $header);
-        $header = $header[0];
-
-        $conetnt = preg_split("/,/",trim(str_replace($header,'',$item)));
-
-        $aEx = array(
-            "date" => $header[0],
-            "type" => $header[1],
-            "client" => $header[2],
-            "header" => array_shift($conetnt),
-            "text" => implode("\n",$conetnt)
-        );
-
-        $item = (object)$aEx;
-    }
-
-    public function isErrorLogWritable()
-    {
-        return ($this->_sErrLog && file_exists($this->_sErrLog) && is_writable($this->_sErrLog)) ? true : false;
-    }
-
-    public function clearErrorLog()
-    {
-        if( $this->isErrorLogWritable() ) file_put_contents($this->_sErrLog, '');
-    }
-
-
 
 }

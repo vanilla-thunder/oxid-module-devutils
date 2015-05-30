@@ -40,11 +40,15 @@ $aModule = array(
     'email'       => 'oxid@marat.ws',
     'url'         => 'http://marat.ws',
     'extend'      => array(),
-    'files'       => array(),
+    'files'       => array(
+        'devuils' => 'vt-devutils/_dev-core/application/models/devuils.php'
+    ),
     'events'      => array(),
     'templates'   => array(
-        'vt_dev_header.tpl' => 'vt-devutils/_dev-core/application/views/admin/vt_dev_header.tpl',
-        'vt_dev_footer.tpl' => 'vt-devutils/_dev-core/application/views/admin/vt_dev_footer.tpl'
+        'vt_dev_header.tpl'  => 'vt-devutils/_dev-core/application/views/admin/vt_dev_header.tpl',
+        'vt_dev_footer.tpl'  => 'vt-devutils/_dev-core/application/views/admin/vt_dev_footer.tpl',
+        'vt_dev_angular_stuff.tpl'=> 'vt-devutils/_dev-core/application/views/admin/vt_dev_angular_stuff.tpl'
+        
     ),
     'blocks'      => array(),
     'settings'    => array()

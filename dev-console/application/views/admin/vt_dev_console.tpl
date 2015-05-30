@@ -1,57 +1,47 @@
 [{include file="vt_dev_header.tpl"}]
 
-[{oxscript include=$oViewConf->getModuleUrl("_dev-core","src/ace-builds/src-min-noconflict/ace.js")}]
-[{oxscript include=$oViewConf->getModuleUrl("_dev-core","src/angular-ui-ace/ui-ace.min.js")}]
+[{oxscript include=$oViewConf->getModuleUrl("dev-console","src/ace-builds/src-min-noconflict/ace.js")}]
+[{oxscript include=$oViewConf->getModuleUrl("dev-console","src/angular-ui-ace/ui-ace.min.js")}]
 
-<div class="container" id="devutils-console" layout="column" ng-controller="consoleCtrl">
-    <div>
-        <div id="editor" ui-ace="{theme:'github',mode:'php',onLoad: aceLoaded,}"></div>
-    </div>
-    <div>
-        <md-button class="md-raised md-warn" ng-click="eval();">run code</md-button>
-    </div>
-    <div>
+<div class="container">
+    <div class="card" flex-container="column">
+        <div id="editor" ui-ace="{theme:'github',mode:'php',onLoad: aceLoaded,blockScrolling: 'Infinity'}"></div>
+        <div flex-container="row"><button flex-item button class="btn btn--m btn--red btn--raised" lx-ripple ng-click="eval();">run code</button></div>
         <div id="output" ng-bind-html="output | html"></div>
     </div>
 </div>
-<script>
-    [{capture assign="ngCtrl"}]
 
-    var app = angular.module('devutils', ['ngMaterial', 'ui.ace']);
-    app.filter("html", ['$sce', function($sce) { return function(htmlCode){ return $sce.trustAsHtml(htmlCode); } }]);
-    app.controller("consoleCtrl", ['$scope', '$http', function ($scope, $http) {
+[{capture name=appdep}][{$smarty.capture.appdep}],'ui.ace'[{/capture}]
+[{capture assign="ng"}]
+    $scope.ace;
+    $scope.output;
 
-        $scope.ace;
-        $scope.output;
+    $scope.aceLoaded = function (_editor) {
+        _editor.$blockScrolling = 'Infinity';
+        $scope.ace = _editor.getSession();
+    };
 
-        $scope.aceLoaded = function (_editor) {
-            $scope.ace = _editor.getSession();
-        };
+    $scope.eval = function () {
+        var source = $scope.ace.getValue();
 
-        $scope.eval = function () {
-            var source = $scope.ace.getValue();
-
-            $http({
+        $http({
                 method: 'POST',
                 url: '[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdev_console&fnc=run"|replace:"&amp;":"&" }]',
                 data: {code: source},  // pass in data as strings
                 headers: {'Content-Type': 'application/json'}  // set the headers so angular passing info as form data (not request payload)
-            }).
-                    success(function (data, status, headers, config) {
-                        $scope.output = data.output;
-                        if (data.error) {
-                            alert(data.error);
-                        }
-                    }).
-                    error(function (data, status, headers, config) {
-                        $scope.output = status+' : '+data.error;
-                    });
-        };
-    }]);
+            })
+            .success(function (data, status, headers, config) {
+                $scope.output = data.output;
+                if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .error(function (data, status, headers, config) {
+                $scope.output = status+' : '+data.error;
+            });
+    };
+[{/capture}]
 
-    [{/capture}]
-</script>
-[{oxscript add=$ngCtrl}]
 
 [{*
 

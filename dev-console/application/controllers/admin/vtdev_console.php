@@ -30,8 +30,10 @@
 class vtdev_console extends oxAdminView
 {
 
+    protected $_aControllerComponents = ['$scope', '$http'];
+    
     protected $_sThisTemplate  = 'vt_dev_console.tpl';
-
+    
     public function run()
     {
         $data = json_decode(file_get_contents('php://input'), true);
