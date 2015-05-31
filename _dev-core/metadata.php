@@ -24,21 +24,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Version:    0.9
- * Author:     Marat Bedoev <oxid@marat.ws>
+ * Version:    1.0.0
+ * Author:     Marat Bedoev <m@marat.ws>
  */
 
-$v = "";
+$v = 'https://raw.githubusercontent.com/vanilla-thunder/vt-devutils/master/version.jpg';
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => '_dev-core',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb; padding: 0 2px;background:white;">dev</strong> _core',
-    'description' => '[vt] developent utilities core package. It is required for all other dev modules made by vanilla thunder.',
+    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb; padding: 0 2px;background:white;">dev</strong> <b>core</b>',
+    'description' => '[vt] developent utilities core package. It is required for all other dev modules from vt-devutils package.<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
     'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => '0.9 (2015-03-19)',
+    'version'     => '<img src="../modules/vt-devutils/version.jpg"/>',
     'author'      => 'Marat Bedoev',
-    'email'       => 'oxid@marat.ws',
-    'url'         => 'http://marat.ws',
+    'email'       => 'm@marat.ws',
+    'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
     'extend'      => array(),
     'files'       => array(
         'devuils' => 'vt-devutils/_dev-core/application/models/devuils.php'

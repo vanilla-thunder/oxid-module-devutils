@@ -1,20 +1,26 @@
 [{include file="vt_dev_header.tpl"}]
 
-<ons-page>
-   <ons-toolbar>
-      <div class="center">
-            <ons-toolbar-button ng-repeat="mail in mails" ng-click="select($index)">{{mail.title}}</ons-toolbar-button>
+<div class="card">
+   <div class="toolbar" flex-container="row">
+         <button ng-repeat="mail in mails" flex-item class="btn btn--l btn--blue btn--raised" lx-ripple ng-click="select( mail )">{{ mail.title }}</button>
+   </div>
+</div>
+<div class="container">
+   <div class="card">
+      <hr/>
+      <div class="toolbar" flex-container="row">
+         <div flex-item><h4>{{current.content.Subject}}</h4></div>
+         <div><button class="btn btn--m btn--blue btn--flat" lx-ripple ng-click="preview()">refresh</button></div>
       </div>
-   </ons-toolbar>
-   <h4>{{current.content.Subject}}</h4>
-            <ons-toolbar-button ng-click="preview()"><ons-icon icon="fa-refresh"></ons-icon></ons-toolbar-button>
-   <ons-row class="container">
-      <ons-col><iframe flex id="html"></iframe></ons-col>
-      <ons-col><div flex id="text" layout-padding ng-bind-html="current.content.AltBody | html"></div></ons-col>
-   </onx-row>
-</ons-page>
+      <hr/>
+      <div flex-container="row">
+         <iframe flex-item id="html"></iframe>
+         <div flex-item id="text" ng-bind-html="current.content.AltBody | html"></div>
+      </div>
+   </div>
+</div>
+   
 
-<script type="text/javascript">
 [{capture assign="ng"}]
    $scope.mails = [
       {
@@ -22,7 +28,7 @@
          fnc:    "sendRegisterEmail",
          content: []
       },{
-         title:  "register confm",
+         title:  "register confirm",
          fnc:    "sendRegisterConfirmEmail",
          content: []
       },{
@@ -49,22 +55,20 @@
                
    $scope.current = [];
                
-   $scope.select = function (index)
+   $scope.select = function (mail)
    {
-      console.log(index+" selected");
-      $scope.current = $scope.mails[index];
-      console.log($scope.current.title + " active");
+      $scope.current = mail;
       $scope.preview();
    };
 
    $scope.preview = function ()
    {
       //console.log("loading preview for " + $scope.current.title);
-      var $button = angular.element( document.getElementById("reload") ).find('i');
+      //var $button = angular.element( document.getElementById("reload") ).find('i');
           
       if ($scope.current.fnc)
       {
-         $button.addClass("fa-spin");
+         //$button.addClass("fa-spin");
             
          var url = '[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdev_mails&fnc=preview&mail=xxxxxx"|replace:"&amp;":"&" }]';
          url = url.replace("xxxxxx", $scope.current.fnc);
@@ -75,24 +79,15 @@
             //console.log("loading iframes");
             angular.element( document.getElementById("html") ).attr('src',url+'&html=1');
             //angular.element( document.getElementById("text") ).attr('src',url+'&text=1');
-            $button.removeClass("fa-spin");
+            //$button.removeClass("fa-spin");
          });
       }
       else { alert("function not defined!"); }
    };
-
-      /*
-      $scope.help = function ()
-      {
-         var alert = $mdDialog.alert({
-            title: $scope.mails[index].helptitle,
-            ok: 'Got it!'
-         }).content($scope.mails[index].help);
-         $mdDialog.show(alert).finally(function () { alert = undefined; });
-      };
-      */
+   
+   // init stuff
+   
+   $scope.select( $scope.mails[0] );
 [{/capture}]
-</script>
-
 
 [{include file="vt_dev_footer.tpl"}]

@@ -29,8 +29,8 @@ span {display: inline;}
 .logs { margin: 0 5%;}
 
 /* mails */
-iframe { border-collapse: collapse; border: 1px solid #202020;}
-#text { white-space: pre-wrap; border: 1px solid #202020; }
+iframe { border-collapse: collapse; border: 0; }
+#text { white-space: pre-wrap; border: 0; padding: 15px; }
 
 
 /* console */

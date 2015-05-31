@@ -24,21 +24,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Version:    0.9
  * Author:     Marat Bedoev <m@marat.ws>
  */
 
-$v = "";
+$v = 'https://raw.githubusercontent.com/vanilla-thunder/vt-devutils/master/version.jpg';
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-console',
     'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> php console',
-    'description' => 'php console for oxid eshop, grants full access to oxid framework for quck testing purposes',
+    'description' => 'php console for oxid eshop, grants full access to oxid framework for quck testing purposes<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
     'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => '0.9 (2015-04-09)',
+    'version'     => '<img src="../modules/vt-devutils/version.jpg"/>',
     'author'      => 'Marat Bedoev',
     'email'       => 'm@marat.ws',
-    'url'         => 'http://marat.ws',
+    'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
     'extend'      => array(),
     'files'       => array( 'vtdev_console' => 'vt-devutils/dev-console/application/controllers/admin/vtdev_console.php' ),
     'templates'   => array( 'vt_dev_console.tpl' => 'vt-devutils/dev-console/application/views/admin/vt_dev_console.tpl' )

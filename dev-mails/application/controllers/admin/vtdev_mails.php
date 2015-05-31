@@ -24,13 +24,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Version:    0.9
- * Author:     Marat Bedoev <oxid@marat.ws>
+ * Author:     Marat Bedoev <m@marat.ws>
  */
 class vtdev_mails extends oxAdminView
 {
-
-    protected $_aModuleComponents = ['onsen'];
     protected $_sThisTemplate  = 'vt_dev_mails.tpl';
 
 
@@ -39,7 +36,6 @@ class vtdev_mails extends oxAdminView
     {
         $ret = parent::render();
         $preview = oxRegistry::getConfig()->getRequestParameter('preview');
-        $this->addTplParam("module_components", $this->_aModuleComponents);
         return ($preview) ? "vt_dev_mails_preview.tpl" : $ret;
     }
     

@@ -24,21 +24,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Version:    0.9
  * Author:     Marat Bedoev <oxid@marat.ws>
  */
 
-$v = "";
+$v = 'https://raw.githubusercontent.com/vanilla-thunder/vt-devutils/master/version.jpg';
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-mails',
     'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> mails',
-    'description' => 'easy mail debugging for oxid eshop',
+    'description' => 'easy mail design and debugging for oxid eshop<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
     'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => '0.9 (2015-04-11)',
+    'version'     => '<img src="../modules/vt-devutils/version.jpg"/>',
     'author'      => 'Marat Bedoev',
-    'email'       => 'oxid@marat.ws',
-    'url'         => 'http://marat.ws',
+    'email'       => 'm@marat.ws',
+    'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
     'extend'      => array(
             'oxemail' => 'vt-devutils/dev-mails/extend/vt_dev_mail_oxemail',
             'oxorder' => 'vt-devutils/dev-mails/extend/vt_dev_mail_oxorder'
