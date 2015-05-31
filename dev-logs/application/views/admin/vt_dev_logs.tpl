@@ -79,7 +79,7 @@
         <pre class="small" ng-bind-html="exceptionmsg.text |highlight:search.exception | html"></pre>
     </div>
     <div class="dialog__actions">
-        <button class="btn btn--m btn--black btn--flat" lx-ripple>copy to clipboard</button>
+        <button clip-copy="exceptionmsg.full + '&#10; OXID [{$oView->getShopVersion()}] [{$oView->getShopFullEdition()}]'" class="btn btn--m btn--black btn--flat clipboard"  lx-ripple>copy to clipboard</button>
         <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>cancel</button>
     </div>
 </lx-dialog>

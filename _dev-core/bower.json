@@ -6,6 +6,7 @@
   "dependencies": {
     "angular": "*",
     "lumx": "*",
-    "zeroclipboard": "*"
+    "zeroclipboard": "*",
+    "ng-clip": "~0.2.6"
   }
 }
