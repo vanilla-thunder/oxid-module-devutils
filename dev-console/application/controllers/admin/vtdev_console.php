@@ -29,9 +29,6 @@
  */
 class vtdev_console extends oxAdminView
 {
-
-    protected $_aControllerComponents = ['$scope', '$http'];
-    
     protected $_sThisTemplate  = 'vt_dev_console.tpl';
     
     public function run()

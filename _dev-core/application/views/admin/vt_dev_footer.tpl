@@ -17,7 +17,7 @@ ZeroClipboard.config( { swfPath: "[{$oViewConf->getModuleUrl('_dev-core','src/ze
                 //return $param ? $value.split($param).join('<b class="hl">'+$param+'</b>') : $value;
             } 
         })
-        .controller('devCtrl', function($scope, $http, LxDialogService, LxNotificationService) {
+        .controller('devCtrl', function($scope, $http, LxDialogService, LxNotificationService, LxProgressService) {
             [{$ng}]
         });    
 </script>

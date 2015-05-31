@@ -11,11 +11,11 @@
                 <div><button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="loadExceptionLog()"><i class="mdi mdi-refresh"></i> refresh</button></div>
                 <div flex-item="4"><lx-search-filter model="search.exception" filter-width="100%" placeholder="search..."></lx-search-filter></div>
             </div>
-        
+            
             <hr/>
             
             <ul class="list mt++ logs">
-            <li class="list-row list-row--has-separator" ng-repeat="log in exceptionlog |filter:{full:search.exception}:false |limitTo:15" ng-click="exception( log )">
+            <li class="list-row list-row--has-separator" ng-repeat="log in exceptionlog |filter:{full:search.exception}:false |limitTo:20" ng-click="exception( log )">
                 <div class="list-row__content">
                     <div class="h3">{{ $index+1 }} # <span ng-bind-html="log.header |highlight:search.exception |html"></span></div>
                     <span ng-bind-html="log.subheader |highlight:search.exception |html"></span>
@@ -31,29 +31,32 @@
                 <div><button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="loadErrorLog()"><i class="mdi mdi-refresh"></i> refresh</button></div>
                 <div flex-item><lx-search-filter model="search.error" filter-width="100%" placeholder="search..."></lx-search-filter></div>
                 <div flex-item><lx-search-filter model="search.errin" filter-width="100%" placeholder="in..."></lx-search-filter></div>
-                <div flex-item><lx-text-field label="search for client ip"><input type="text" ng-model="search.errip" placeholder="[{$ip}]"></lx-text-field></div>
+                <div flex-item><lx-text-field label="filter by date..."><input type="text" ng-model="search.errdate"></lx-text-field></div>
+                <div flex-item><lx-text-field label="filter by client ( [{$ip}] )"><input type="text" ng-model="search.errclient"></lx-text-field></div>
             </div>
         
             <hr/>
         
             <ul class="list mt++ logs">
-                <li class="list-row list-row--has-separator" ng-repeat="log in errorlog |filter:{header:search}:false |filter:{in:searchin} |filter:{client:searchclient} |filter:{date:searchdate} | limitTo:20">
+                <li class="list-row list-row--has-separator" ng-repeat="log in errorlog |filter:{full:search.error}:false |filter:{in:search.errin}:false |filter:{client:search.errclient}:false |filter:{date:search.errdate} |limitTo:30">
                     <div class="list-row__primary">
-                        <i ng-show="log.type=='error'" class="icon icon--s icon--grey icon--flat mdi mdi-send"></i>
-                        <i ng-show="log.type=='warning'" class="icon icon--s icon--grey icon--flat mdi mdi-send"></i>
+                        <i ng-show="log.type=='error'" class="icon icon--l icon--red icon--circled mdi mdi-ambulance"></i>
+                        <i ng-show="log.type=='warning'" class="icon icon--l icon--orange icon--circled mdi mdi-sim-alert"></i>
                     </div>
 
                     <div class="list-row__content">
                         <div class="h4">{{ $index+1 }} # <span ng-bind-html="log.header |highlight:search.error |html"></span></div>
                         
-                        <span ng-bind-html="log.subheader |highlight:search |html"></span>
-                        
-                        <div class="fs-body-1 tc-black-2" flex-container="row">
-                            <div flex-item ng-bind="log.date"></div>
-                            <div flex-item><b>in:</b> <span ng-bind-html="log.in |highlight:searchin |html"></span></div>
-                            <div flex-item ng-bind-html="log.client |highlight:searchclient |html"></div>
+                        <div class="fs-body-1 tc-black-2">
+                            <div flex-container="row">
+                                <div flex-item><b>in:</b> <span ng-bind-html="log.in |highlight:search.errin |html"></span></div>
+                                <div ng-bind-html="log.date |highlight:search.errdate |html"></div>
+                            </div>
+                            <div flex-container="row">
+                                <div flex-item><b>referer:</b> <span ng-bind="log.referer"></span></div>
+                                <div ng-bind-html="log.client |highlight:search.errclient |html"></div>
+                            </div>
                         </div>
-                        <div class="fs-body-1 tc-black-2"><b>referer:</b> <span ng-bind="log.referer"></span></div>
                     </div>
                 </li>
             </ul>
@@ -81,28 +84,20 @@
     </div>
 </lx-dialog>
 
-
-[{*
-
-
-<ons-template id="popup.error">
-    <ons-dialog var="dialog" cancelable>
-        <ons-toolbar inline><div class="center" ng-bind="errormsg"></div></ons-toolbar>
-        <ons-button modifier="large" ng-click="dialog.hide()">close</ons-button>
-    </ons-dialog>
-</ons-template>
-*}]
-
 [{capture assign="ng"}]
     $scope.dialogs = {};
+    $scope.search = [];
+    
 
     [{* exception log stuff *}]
     $scope.exceptionlog = [];
     $scope.loadExceptionLog = function()
     {
-        //console.log("loading exception log");
         $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdev_logs&fnc=getExceptionLog"|replace:"&amp;":"&" }]")
-            .then(function(res) { $scope.exceptionlog = res.data; LxNotificationService.success('exception log loaded'); });
+            .then(function(res) { 
+                $scope.exceptionlog = res.data; 
+                LxNotificationService.success('exception log loaded'); 
+            });
     }
     $scope.loadExceptionLog();
         
@@ -117,9 +112,11 @@
     $scope.errorlog = [];
     $scope.loadErrorLog = function()
     {
-        //console.log("loading error log");
         $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdev_logs&fnc=getErrorLog"|replace:"&amp;":"&" }]")
-            .then(function(res) { $scope.errorlog = res.data; LxNotificationService.success('error log loaded'); });
+            .then(function(res) {
+                $scope.errorlog = res.data;
+                LxNotificationService.success('error log loaded');
+            });
     }
     $scope.loadErrorLog();
         

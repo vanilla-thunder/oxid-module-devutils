@@ -29,8 +29,6 @@
  */
 class vtdev_logs extends oxAdminView
 {
-
-    protected $_aModuleComponents = false;
     protected $_sThisTemplate  = 'vt_dev_logs.tpl';
 
     protected $_sExLog = null;
@@ -60,8 +58,6 @@ class vtdev_logs extends oxAdminView
         $this->addTplParam('errlog', $this->_sErrLog);
         $this->addTplParam('ip', $_SERVER['REMOTE_ADDR']);
         
-        $this->addTplParam("module_components", ($this->_aModuleComponents ? ",".$this->_aModuleComponents : ''));
-
         //var_dump("<h2>".$this->_sExLogPath."</h2>");
         //$this->getExceptionLog();
         //echo "<hr/>";
@@ -129,7 +125,7 @@ class vtdev_logs extends oxAdminView
         }
 
         $aData = file($this->_sErrLog);
-        $aData = array_slice($aData, -100);
+        $aData = array_slice($aData, -300);
 
         foreach($aData as $key => $value)
         {
@@ -144,17 +140,19 @@ class vtdev_logs extends oxAdminView
             preg_match("/\sin\s\/(.*)\sreferer\:/",$msg, $in);
             
             // referer: after "referer"
-            preg_match("/\sreferer\:(.*)/",$msg, $in);
+            preg_match("/\sreferer\:(.*)/",$msg, $ref);
             
+            $replace = [$ref[0],' in /'.$in[1]];
 
             $aErr = array(
-                "type" => $header[1][1],
-                "date" => $header[1][0],
-                "header" => substr($msg, 0, strpos($msg, " in /")),
+                "date"   => date_format(date_create($header[1][0]),'Y-m-d H:i:s'),
+                "type"   => $header[1][1],
+                "client" => $header[1][2],
+                "header" => str_replace($replace,"",$msg),
                 "in" => str_replace($cfg->getConfigParam("sShopDir"),"","/".$in[1]),
-                //"in" => substr($msg, strpos($msg, " in /")+3, strpos($msg, ", referer: ")),
-                "referer" => substr($msg, strpos($msg, ", referer: ")+10),
-                "client" => $header[1][2]
+                "referer" => $ref[1],
+                "full" => $value
+                
             );
             $aData[$key] = (object) $aErr;
             

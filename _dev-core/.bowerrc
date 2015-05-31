@@ -1,5 +1,5 @@
 {
   "allow_root": true,
-  "directory": "_dev-core/src/",
+  "directory": "src/",
   "no_proxy": true
 }
