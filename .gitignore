@@ -1,21 +1,21 @@
-// ignore all the dev stuff, stupid programmers added to the distributions
-.scss
-.sass
-.less
-scss/*
-sass/*
-less/*
+# ignore all the dev stuff, stupid programmers added to the distributions
+*.scss
+*.sass
+*.less
+*/scss/*
+*/sass/*
+*/less/*
 
 
-// ignore demo and dev dependencies stupid programmers added to the normal dependencies
-test/*
-example/*
-demo/*
+# ignore demo and dev dependencies stupid programmers added to the normal dependencies
+*/test/*
+*/example/*
+*/demo/*
 
-_dev-core/src/jquery/src
-_dev-core/src/bourbon
+_dev-core/src/jquery/src/
+_dev-core/src/bourbon/
 
-dev-console/src/angular
-dev-console/src/ace-builds/src
-dev-console/src/ace-builds/src-min
-dev-console/src/ace-builds/src-noconflict
+dev-console/src/angular/
+dev-console/src/ace-builds/src/
+dev-console/src/ace-builds/src-min/
+dev-console/src/ace-builds/src-noconflict/
