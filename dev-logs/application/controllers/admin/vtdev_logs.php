@@ -94,9 +94,12 @@ class vtdev_logs extends oxAdminView
             {
                 $aEx = explode("Stack Trace:", trim($value));
                 $aHeader = explode("[0]:",$aEx[0]);
+                
+                $iFC = preg_match("/Faulty\scomponent\s\-\-\>\s(.*)/", $aEx[1], $aFC);
+                
                 $aData[$key] = (object)array(
                     "header" => str_replace($cfg->getConfigParam("sShopDir"),"",trim($aHeader[0])),
-                    "subheader" => str_replace($cfg->getConfigParam("sShopDir"),"",trim($aHeader[1])),
+                    "subheader" => str_replace($cfg->getConfigParam("sShopDir"),"",trim($aHeader[1])). ($iFC == 1 ? ": ".$aFC[1] : ""),
                     "text" => htmlentities(str_replace($cfg->getConfigParam("sShopDir"),"",trim($aEx[1]))),
                     "full" => $value
                 );
