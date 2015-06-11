@@ -15,6 +15,6 @@
     "commit": "59339a657f32c689e4a5f5bc041a871e746303bc"
   },
   "_source": "git://github.com/asafdav/ng-clip.git",
-  "_target": "~0.2.6",
+  "_target": "*",
   "_originalSource": "ng-clip"
 }

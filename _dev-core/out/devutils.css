@@ -6,6 +6,8 @@
 .left { float:left;}
 .right { float:right;}
 
+.grid-2 > .grid-item { width: 48%; padding: 1%; }
+
 span {display: inline;}
 
 .h1 { font-size: 36px; padding: 5px; font-weight: bold; line-height: 1.3; }

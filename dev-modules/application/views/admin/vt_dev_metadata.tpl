@@ -3,12 +3,20 @@
 <lx-tabs>
    [{* aModules *}]
    <lx-tab heading="extensions">
-      <div class="container card">
-      <ul class="list mt++">
-         <li class="list-subheader" ng-repeat-start="(class, extends) in aModules.content"><h3>{{ class }}</h3></li>
-         <li class="list-row" ng-repeat="ext in extends.split('&')">{{ ext }}</li>
-         <li class="list-divider" ng-repeat-end></li>
-      </ul>
+      <div class="container grid-2" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".grid-item"}'>
+         <div masonry-tile class="grid-item" ng-repeat="(class, extends) in aModules.content">
+            <div class="card">
+               <div class="p+">
+                  <strong class="fs-headline display-block">{{ class }}</strong>
+
+                  <div class="paragraph fs-body-1 mt+">
+                     <ul class="list mt++">
+                        <li class="list-row" ng-repeat="ext in extends.split('&')">{{ ext }}</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    </lx-tab>
 
@@ -80,7 +88,7 @@
 </lx-tabs>
 
 
- [{* http://img-9gag-fun.9cache.com/photo/a2YQ31p_460sv.mp4 *}]
+[{* http://img-9gag-fun.9cache.com/photo/a2YQ31p_460sv.mp4 *}]
 
 <script>
    [{capture assign="ng"}]
@@ -124,8 +132,7 @@
       content: []
    };
 
-   $scope.load = function (data)
-   {
+   $scope.load = function (data) {
       $http.get(url.replace("xxxxxx", data.fnc)).then(function (res) {
          data.content = res.data;
          //console.log(res.data);
@@ -133,8 +140,10 @@
       });
    };
 
-   $scope.load($scope.aModules);;
-   $scope.load($scope.aModuleFiles);;
+   $scope.load($scope.aModules);
+   ;
+   $scope.load($scope.aModuleFiles);
+   ;
    $scope.load($scope.aModuleTemplates);
    $scope.load($scope.aModulePaths);
    $scope.load($scope.aModuleVersions);

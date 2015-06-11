@@ -14,6 +14,12 @@
 
 _dev-core/src/jquery/src/
 _dev-core/src/bourbon/
+_dev-core/src/doc-ready/
+_dev-core/src/event*
+_dev-core/src/fizzy*
+_dev-core/src/get-s*
+_dev-core/src/matches-selector/
+_dev-core/src/outlayer/
 
 dev-console/src/angular/
 dev-console/src/ace-builds/src/

@@ -4,9 +4,8 @@
   "homepage": "https://github.com/vanilla-thunder/vt-devutils",
   "private": true,
   "dependencies": {
-    "angular": "*",
     "lumx": "*",
-    "zeroclipboard": "*",
-    "ng-clip": "~0.2.6"
+    "ng-clip": "*",
+    "angular-masonry-directive": "*"
   }
 }
