@@ -28,11 +28,13 @@
     <lx-tab heading="webserver errors">
         <div class="card">
             <div class="toolbar" flex-container="row">
-                <div><button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="loadErrorLog()"><i class="mdi mdi-refresh"></i> refresh</button></div>
-                <div flex-item><lx-search-filter model="search.error" filter-width="100%" placeholder="search..."></lx-search-filter></div>
-                <div flex-item><lx-search-filter model="search.errin" filter-width="100%" placeholder="in..."></lx-search-filter></div>
-                <div flex-item><lx-text-field label="filter by date..."><input type="text" ng-model="search.errdate"></lx-text-field></div>
-                <div flex-item><lx-text-field label="filter by client ( [{$ip}] )"><input type="text" ng-model="search.errclient"></lx-text-field></div>
+               <div><button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="loadErrorLog()"><i class="mdi mdi-refresh"></i> refresh</button></div>
+                <div flex-item="3">
+                   <lx-search-filter model="search.error" filter-width="100%" placeholder="search..."></lx-search-filter>
+                </div>
+                <div flex-item="2"><lx-text-field label="in..."><input type="text" ng-model="search.errin"></lx-text-field></div>
+                <div flex-item="2"><lx-text-field label="filter by date..."><input type="text" ng-model="search.errdate"></lx-text-field></div>
+                <div flex-item="2"><lx-text-field label="filter by client ( [{$ip}] )"><input type="text" ng-model="search.errclient"></lx-text-field></div>
             </div>
         
             <hr/>

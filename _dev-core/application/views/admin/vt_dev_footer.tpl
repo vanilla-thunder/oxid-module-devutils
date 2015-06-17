@@ -1,3 +1,6 @@
+<div id="backtotop">
+   <button class="btn btn--xl btn--blue btn--fab" lx-ripple ng-click="scrolltotop()"><i class="mdi mdi-chevron-double-up"></i></button>
+</div>
 <script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/jquery/dist/jquery.min.js")}]"></script>
 <script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/velocity/velocity.min.js")}]"></script>
 <script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/moment/min/moment-with-locales.min.js")}]"></script>
@@ -25,7 +28,9 @@
         })
         .controller('devCtrl', function($scope, $http, LxDialogService, LxNotificationService, LxProgressService) {
             [{$ng}]
-        });    
+
+            $scope.scrolltotop = function() { $("body").animate({scrollTop: 0}, "slow"); };
+        });
 </script>
 
 

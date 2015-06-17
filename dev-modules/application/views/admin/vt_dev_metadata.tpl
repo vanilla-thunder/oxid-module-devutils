@@ -1,5 +1,4 @@
 [{include file="vt_dev_header.tpl"}]
-<br/>
 <lx-tabs>
    [{* aModules *}]
    <lx-tab heading="extensions">

@@ -1,4 +1,5 @@
 <?php
+include(dirname(__FILE__)."/../vendormetadata.php");
 
 /**
  * vt dev utilities - core
@@ -35,7 +36,7 @@ $aModule = array(
     'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb; padding: 0 2px;background:white;">dev</strong> <b>core</b>',
     'description' => '[vt] developent utilities core package. It is required for all other dev modules from vt-devutils package.<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
     'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => '<img src="../modules/vt-devutils/version.jpg"/>',
+    'version'     => $current,
     'author'      => 'Marat Bedoev',
     'email'       => 'm@marat.ws',
     'url'         => 'https://github.com/vanilla-thunder/vt-devutils',

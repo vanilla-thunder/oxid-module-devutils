@@ -2,15 +2,15 @@
 
 <div class="card">
    <div class="toolbar" flex-container="row">
-         <button ng-repeat="mail in mails" flex-item class="btn btn--l btn--blue btn--raised" lx-ripple ng-click="select( mail )">{{ mail.title }}</button>
+         <button ng-repeat="mail in mails" flex-item class="btn btn--m btn--black btn--flat" lx-ripple ng-click="select( mail )">{{ mail.title }}</button>
    </div>
 </div>
 <div class="container">
    <div class="card">
       <hr/>
       <div class="toolbar" flex-container="row">
-         <div flex-item><h4>{{current.content.Subject}}</h4></div>
-         <div><button class="btn btn--m btn--blue btn--flat" lx-ripple ng-click="preview()">refresh</button></div>
+         <div><button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="preview()"><i class="mdi mdi-refresh"></i> refresh</button></div>
+         <div flex-item>&nbsp;&nbsp;<span class="toolbar__label fs-title">{{current.content.Subject}}</span></div>
       </div>
       <hr/>
       <div flex-container="row">
