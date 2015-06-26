@@ -33,7 +33,9 @@ $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-logs',
     'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> logs',
-    'description' => 'logs parser for oxid eshop.<br/>add <b>"ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');</b> to your config.inc.php to get errors into log/error.log" <hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
+    'description' => 'logs parser for oxid eshop.<br/>add this code to your config.inc.php to save webserver errors into log/error.log<br>'.
+                     '<input style="width:90%;" type="text" value="ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');">'.
+                     '<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
     'thumbnail'   => 'oxid-vt.jpg',
     'version'     => $current,
     'author'      => 'Marat Bedoev',
