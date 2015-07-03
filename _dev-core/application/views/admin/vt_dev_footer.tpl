@@ -1,6 +1,8 @@
+[{if $b2t != false}]
 <div id="backtotop">
    <button class="btn btn--xl btn--blue btn--fab" lx-ripple ng-click="scrolltotop()"><i class="mdi mdi-chevron-double-up"></i></button>
 </div>
+[{/if}]
 <script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/jquery/dist/jquery.min.js")}]"></script>
 <script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/velocity/velocity.min.js")}]"></script>
 <script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/moment/min/moment-with-locales.min.js")}]"></script>

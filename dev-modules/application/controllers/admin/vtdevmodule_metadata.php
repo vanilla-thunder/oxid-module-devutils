@@ -26,11 +26,29 @@
  *
  * Author:     Marat Bedoev <m@marat.ws>
  */
-class module_metadata extends oxAdminView
+class vtdevmodule_metadata extends oxAdminDetails
 {
     protected $_sThisTemplate = 'vt_dev_module_metadata.tpl';
 
+    public function render()
+    {
+        $sModuleId = $this->getEditObjectId();
+        $oModule = oxNew('oxModule');
+        if ($sModuleId && $oModule->load($sModuleId))
+        {
+            $this->addTplParam("oModule",$oModule);
+        }
+        return parent::render();
+    }
 
+    public function getModule()
+    {
+        $oModule = oxNew('oxModule');
+        $id = $this->getEditObjectId();
+        var_dump($id);
+        if( $this->getEditObjectId() && $oModule->load($this->getEditObjectId())) return $oModule;
+        return false;
+    }
     /*
         public function render()
         {
@@ -40,11 +58,13 @@ class module_metadata extends oxAdminView
         }
         */
 
-    public function aModules()
+    public function getModuleExtensions()
     {
-        $cfg = oxRegistry::getConfig();
-        echo json_encode($cfg->getConfigParam("aModules"));
+        $m = $this->getModule();
+        var_dump($m);
         exit;
+        //->getExtensions()
+        oxRegistry::get("devutils")->success();
     }
 
     public function aModuleFiles()

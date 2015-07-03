@@ -10,15 +10,21 @@
       </div>
       
       <div class="container grid-2" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".grid-item"}'>
-         <div masonry-tile class="grid-item" ng-repeat="(class, extends) in aModules.content">
+         <div masonry-tile class="grid-item" ng-repeat="class in aModules.content |filter:{name:search.aModules}:false">
             <div class="card">
                <div class="p+">
-                  <strong class="fs-headline display-block" ng-bind-html="class |highlight:search.aModules |html"></strong>
-                  <div class="paragraph mt+">
+                  <strong class="fs-headline display-block" ng-bind-html="class.name |highlight:search.aModules |html"></strong>
                      <ul class="list mt++">
-                        <li class="list-row" ng-repeat="ext in extends.split('&')"><span ng-bind-html="ext |highlight:search.aModules |html"></span></li>
+                        <li class="list-row" ng-repeat="ext in class.extensions">
+                           <div class="list-row__primary">
+                              <i ng-if="ext.status == 1" lx-tooltip="extension file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
+                              <i ng-if="ext.status == -1" lx-tooltip="extension file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
+                           </div>
+                           <div class="list-row__content">
+                              <span ng-bind-html="ext.file |highlight:search.aModules |html"></span>
+                           </div>
+                        </li>
                      </ul>
-                  </div>
                </div>
             </div>
          </div>
@@ -33,22 +39,24 @@
             <div flex-item="4"><lx-search-filter model="search.aModuleFiles" filter-width="100%" placeholder="search..."></lx-search-filter></div>
          </div>
       </div>
-      
       <div class="container grid-2" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".grid-item" }'>
-         <div masonry-tile class="grid-item" ng-repeat="(key, val) in aModuleFiles.content">
+         <div masonry-tile class="grid-item" ng-repeat="mod in aModuleFiles.content |filter:{name:search.aModuleFiles}:false">
             <div class="card">
                <div class="p+">
-                  <strong class="fs-headline display-block" ng-bind-html="key |highlight:search.aModuleFiles |html"></strong>
-                  <div class="paragraph mt+">
+                  <strong class="fs-headline display-block" ng-bind-html="mod.name |highlight:search.aModuleFiles |html"></strong>
                      <ul class="list mt++">
-                        <li class="list-row list-row--has-separator" ng-repeat="(cl, path) in val">
+                        <li class="list-row list-row--has-separator" ng-repeat="item in mod.files">
+                           <div class="list-row__primary">
+                              <i ng-if="item.status == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
+                              <i ng-if="item.status == -1" lx-tooltip="file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
+                           </div>
+                           
                            <div class="list-row__content">
-                              <strong ng-bind-html="cl |highlight:search.aModuleFiles |html"></strong>
-                              <span class="small" ng-bind-html="path |highlight:search.aModuleFiles |html"></span>
+                              <strong ng-bind-html="item.file |highlight:search.aModuleFiles |html"></strong>
+                              <span class="small" ng-bind-html="item.path |highlight:search.aModuleFiles |html"></span>
                            </div>
                         </li>
                      </ul>
-                  </div>
                </div>
             </div>
          </div>
@@ -65,20 +73,54 @@
       </div>
       
       <div class="container grid-2" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".grid-item" }'>
-         <div masonry-tile class="grid-item" ng-repeat="(key, val) in aModuleTemplates.content">
+         <div masonry-tile class="grid-item" ng-repeat="mod in aModuleTemplates.content |filter:{name:search.aModuleTemplates}:false">
             <div class="card">
                <div class="p+">
-                  <strong class="fs-headline display-block" ng-bind-html="key |highlight:search.aModuleTemplates |html"></strong>
-                  <div class="paragraph mt+">
+                  <strong class="fs-headline display-block" ng-bind-html="mod.name |highlight:search.aModuleTemplates |html"></strong>
                      <ul class="list mt++">
-                        <li class="list-row list-row--has-separator" ng-repeat="(cl, path) in val">
+                        <li class="list-row list-row--has-separator" ng-repeat="item in mod.files">
+                           <div class="list-row__primary">
+                              <i ng-if="item.status == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
+                              <i ng-if="item.status == -1" lx-tooltip="file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
+                           </div>
                            <div class="list-row__content">
-                              <strong ng-bind-html="cl |highlight:search.aModuleTemplates |html"></strong>
-                              <span class="small" ng-bind-html="path |highlight:search.aModuleTemplates |html"></span>
+                              <strong ng-bind-html="item.file |highlight:search.aModuleTemplates |html"></strong>
+                              <span class="small" ng-bind-html="item.path |highlight:search.aModuleTemplates |html"></span>
                            </div>
                         </li>
                      </ul>
-                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </lx-tab>
+   
+   [{* aTplBLocks *}]
+   <lx-tab heading="tpl blocks">
+      <div class="container card">
+         <div class="toolbar" flex-container="row">
+            <div><button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="load( aTplBlocks )"><i class="mdi mdi-refresh"></i> refresh</button></div>
+            <div flex-item="4"><lx-search-filter model="search.aTplBlocks" filter-width="100%" placeholder="search..."></lx-search-filter></div>
+         </div>
+      </div>
+      
+      <div class="container grid-2" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".grid-item" }'>
+         <div masonry-tile class="grid-item" ng-repeat="mod in aTplBlocks.content |filter:{filter:search.aTplBlocks}:false">
+            <div class="card">
+               <div class="p+">
+                  <strong class="fs-headline display-block" ng-bind-html="mod.name |highlight:search.aTplBlocks |html"></strong>
+                     <ul class="list mt++">
+                        <li class="list-row list-row--has-separator" ng-repeat="block in mod.blocks">
+                           <div class="list-row__primary">
+                              <i ng-if="block.STATUS == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
+                              <i ng-if="block.STATUS == -1" lx-tooltip="file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
+                           </div>
+                           <div class="list-row__content">
+                              <strong ng-bind-html="block.OXFILE |highlight:search.aTplBlocks |html"></strong>
+                              <span class="small" ng-bind-html="block.FILEPATH |highlight:search.aTplBlocks |html"></span>
+                           </div>
+                        </li>
+                     </ul>
                </div>
             </div>
          </div>
@@ -95,7 +137,20 @@
                   <strong class="fs-headline display-block">module paths</strong>
                   <hr/>
                   <ul class="list mt++">
-                     <li class="list-row" ng-repeat="(key, val) in aModulePaths.content">{{ key }} - {{ val }}</li>
+                     <li class="list-row list-row--has-separator" ng-repeat="mod in aModulePaths.content">
+                           <div class="list-row__primary">
+                              [{*
+                              <i ng-if="mod.active == 1" lx-tooltip="module active" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
+                              <i ng-if="mod.active == 0" lx-tooltip="module inactive" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
+                              *}]
+                              <i ng-if="mod.status == 1" lx-tooltip="path found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
+                              <i ng-if="mod.status == -1" lx-tooltip="path not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
+                           </div>
+                        <div class="list-row__content">
+                           <strong ng-bind-html="mod.name |highlight:search.aModuleTemplates |html"></strong>
+                           <span class="small" ng-bind-html="mod.path |highlight:search.aModuleTemplates |html"></span>
+                        </div>
+                     </li>
                   </ul>
                </div>
             </div>
@@ -159,16 +214,16 @@
       fnc: "aModuleTemplates",
       content: []
    };
-   $scope.tplBLocks = {
+   $scope.aTplBlocks = {
       title: "blocks",
-      fnc: "tplBLocks",
+      fnc: "aTplBlocks",
       content: []
    };
 
    $scope.load = function (data) {
       $http.get(url.replace("xxxxxx", data.fnc)).then(function (res) {
          data.content = res.data;
-         //console.log(res.data);
+         console.log(res.data);
          LxNotificationService.success(data.title + ' loaded');
       });
    };
@@ -176,10 +231,26 @@
    $scope.load($scope.aModules);
    $scope.load($scope.aModuleFiles);
    $scope.load($scope.aModuleTemplates);
+   $scope.load($scope.aTplBlocks);
    $scope.load($scope.aModulePaths);
    //$scope.load($scope.aModuleVersions);
    $scope.load($scope.aModuleEvents)
 
+   $scope.check = function(file,type) {
+      $http({
+         method: 'POST',
+         url: url.replace("xxxxxx", "check"),
+         data: {'file': file, 'type':type},
+         headers: {'Content-Type': 'application/json'}
+      })
+      .success(function (data, status, headers, config) {
+         console.log(data);
+         if (data.error) alert(data.error);
+      })
+      .error(function (data, status, headers, config) {
+         $scope.output = status+' : '+data.error;
+      });
+   };
 
    [{/capture}]
 </script>

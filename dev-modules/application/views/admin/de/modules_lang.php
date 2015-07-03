@@ -3,5 +3,6 @@
 $sLangName = 'Deutsch';
 $aLang = array(
     'charset'     => 'UTF-8',
-    'vtdev_metadata' => '[<em>vt</em>] Metadata'
+    'vtdev_metadata' => '[<em>vt</em>] Metadata',
+    'vtdevmodule_metadata' => '[<em>vt</em>] Metadata'
 );

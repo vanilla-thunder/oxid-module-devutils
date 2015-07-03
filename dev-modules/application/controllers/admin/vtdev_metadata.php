@@ -40,31 +40,124 @@ class vtdev_metadata extends oxAdminView
         }
         */
 
-    public function aModules()
+    
+    public function check($check, $type)
     {
         $cfg = oxRegistry::getConfig();
-        echo json_encode($cfg->getConfigParam("aModules"));
+        switch($type)
+        {
+            case "ext":
+                return (file_exists($cfg->getModulesDir(true).$check.".php")) ? 1 : -1;
+                break;
+            case "file":
+                return (file_exists($cfg->getModulesDir(true).$check)) ? 1 : -1;
+                break;
+            case "path":
+                return (is_dir($cfg->getModulesDir(true).$check)) ? 1 : -1;
+                break;
+            case "block":
+                $sModule  = $check['OXMODULE'];
+                $sFile = $check['OXFILE'];
+                
+                $aModuleInfo = oxRegistry::getConfig()->getConfigParam("aModulePaths");
+                $sModulePath = $aModuleInfo[$sModule];
+                // for 4.5 modules, since 4.6 insert in oxtplblocks the full file name
+                if (substr($sFile, -4) != '.tpl') $sFile = $sFile . ".tpl";
+                // for < 4.6 modules, since 4.7/5.0 insert in oxtplblocks the full file name and path
+                if (basename($sFile) == $sFile) $sFile = "out/blocks/$sFile";
+                $sFileName = $this->getConfig()->getConfigParam('sShopDir') . "/modules/$sModulePath/$sFile";
+                
+                return (file_exists($sFileName) && is_readable($sFileName)) ? [1,$sFileName] : [-1,$sFileName];
+                break;
+        }
+        
+        /*
+        $query = json_decode(file_get_contents('php://input'), true);
+        var_dump($query);
+        exit;
+        */
+    }
+
+    public function aModules()
+    {
+        $aData = [];
+        foreach(oxRegistry::getConfig()->getConfigParam("aModules") as $cl => $ext)
+        {
+            $files = explode('&',$ext);
+            $extensions = [];
+            foreach($files as $file)
+            {
+                $extensions[] = [ 'file' => $file, 'status' => $this->check($file,'ext') ];
+            }
+            $aData[] = [ 'name' => $cl, 'extensions' => $extensions ];
+        }
+        echo json_encode($aData);
         exit;
     }
 
     public function aModuleFiles()
     {
-        $cfg = oxRegistry::getConfig();
-        echo json_encode($cfg->getConfigParam("aModuleFiles"));
+        $aData = [];
+        foreach(oxRegistry::getConfig()->getConfigParam("aModuleFiles") as $key => $val)
+        {
+            $files = [];
+            foreach($val as $cl => $path)
+            {
+                $files[] = [ 'file' => $cl, 'path' => $path, 'status' => $this->check($path,'file') ];
+            }
+            $aData[] = [ 'name' => $key, 'files' => $files ];
+        }
+        echo json_encode($aData);
         exit;
     }
 
     public function aModuleTemplates()
     {
-        $cfg = oxRegistry::getConfig();
-        echo json_encode($cfg->getConfigParam("aModuleTemplates"));
+        $aData = [];
+        foreach(oxRegistry::getConfig()->getConfigParam("aModuleTemplates") as $key => $val)
+        {
+            $files = [];
+            foreach($val as $cl => $path)
+            {
+                $files[] = [ 'file' => $cl, 'path' => $path, 'status' => $this->check($path,'file') ];
+            }
+            $aData[] = [ 'name' => $key, 'files' => $files ];
+        }
+        echo json_encode($aData);
+        exit;
+    }
+    
+    public function aTplBlocks()
+    {
+        $aData = [];
+        foreach(oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->getAll("SELECT * FROM oxtplblocks") as $val)
+        {
+            $sModule = $val['OXMODULE'];
+            $r = $this->check($val, 'block');
+            $val['STATUS'] = $r[0];
+            $val['FILEPATH'] = $r[1];
+            if(!array_key_exists($sModule, $aData)) $aData[$sModule] = ['name'=>$sModule,'blocks' => [], 'filter' => ''];
+            $aData[$sModule]['blocks'][] = $val;
+            $aData[$sModule]['filter'] .= json_encode($val);
+        }
+        echo json_encode(array_values($aData));
         exit;
     }
 
     public function aModulePaths()
     {
-        $cfg = oxRegistry::getConfig();
-        echo json_encode($cfg->getConfigParam("aModulePaths"));
+        $oVC = $this->getViewConfig();
+        $aData = [];
+        foreach(oxRegistry::getConfig()->getConfigParam("aModulePaths") as $key => $val)
+        {
+            $aData[] = [
+                'name' => $key,
+                //'active' => $oVC->isModuleActive($key),
+                'path' => $val,
+                'status' => $this->check($path,'path')
+            ];
+        }
+        echo json_encode($aData);
         exit;
     }
 

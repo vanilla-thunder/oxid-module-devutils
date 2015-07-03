@@ -3,6 +3,9 @@
 	<OXMENU id="NAVIGATION_ESHOPADMIN">
 		<MAINMENU id="mxextensions">
 			<SUBMENU id="vtdev_metadata" cl="vtdev_metadata" />
+            <SUBMENU id="mxmodule" cl="module" list="module_list">
+                <TAB id="vtdevmodule_metadata" cl="vtdevmodule_metadata" />
+            </SUBMENU>
 		</MAINMENU>
 	</OXMENU>
 </OX>

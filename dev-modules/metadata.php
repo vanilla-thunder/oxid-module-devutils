@@ -41,10 +41,12 @@ $aModule = array(
     'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
     'extend'      => array(),
     'files'       => array(
-            'vtdev_metadata' => 'vt-devutils/dev-modules/application/controllers/admin/vtdev_metadata.php'
+            'vtdev_metadata'       => 'vt-devutils/dev-modules/application/controllers/admin/vtdev_metadata.php',
+            'vtdevmodule_metadata' => 'vt-devutils/dev-modules/application/controllers/admin/vtdevmodule_metadata.php'
         ),
     'templates'   => array(
-            'vt_dev_metadata.tpl' => 'vt-devutils/dev-modules/application/views/admin/vt_dev_metadata.tpl'
+            'vt_dev_metadata.tpl'        => 'vt-devutils/dev-modules/application/views/admin/vt_dev_metadata.tpl',
+            'vt_dev_module_metadata.tpl' => 'vt-devutils/dev-modules/application/views/admin/vt_dev_module_metadata.tpl'
         ),
     'settings'    => array()
 );

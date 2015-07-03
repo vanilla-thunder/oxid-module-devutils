@@ -42,7 +42,7 @@ $aModule = array(
     'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
     'extend'      => array(),
     'files'       => array(
-        'devuils' => 'vt-devutils/_dev-core/application/models/devuils.php'
+        'devutils' => 'vt-devutils/_dev-core/application/models/devutils.php'
     ),
     'events'      => array(),
     'templates'   => array(
