@@ -11,12 +11,18 @@ angular.module('lumx.date-picker', [])
             activeLocale,
             $datePicker,
             $datePickerFilter,
-            $datePickerContainer;
+            $datePickerContainer,
+            $computedWindow;
+
+        $scope.ctrlData = {
+            isOpen: false
+        };
 
         this.init = function(element, locale)
         {
             $datePicker = element.find('.lx-date-picker');
             $datePickerContainer = element;
+            $computedWindow = angular.element($window);
 
             self.build(locale, false);
         };
@@ -55,7 +61,7 @@ angular.module('lumx.date-picker', [])
 
             $scope.days = [];
             $scope.daysOfWeek = [moment.weekdaysMin(1), moment.weekdaysMin(2), moment.weekdaysMin(3), moment.weekdaysMin(4), moment.weekdaysMin(5), moment.weekdaysMin(6), moment.weekdaysMin(0)];
-                
+
             $scope.years = [];
 
             for (var y = moment().year() - 100; y <= moment().year() + 100; y++)
@@ -104,34 +110,51 @@ angular.module('lumx.date-picker', [])
 
         $scope.openPicker = function()
         {
-            $scope.yearSelection = false;
+            if ($scope.ctrlData.isOpen)
+            {
+                return;
+            }
 
-            $datePickerFilter = angular.element('<div/>', {
-                class: 'lx-date-filter'
-            });
-
-            $datePickerFilter
-                .appendTo('body')
-                .bind('click', function()
-                {
-                    $scope.closePicker();
-                });
-
-            $datePicker
-                .appendTo('body')
-                .show();
+            $scope.ctrlData.isOpen = true;
 
             $timeout(function()
             {
-                $datePickerFilter.addClass('lx-date-filter--is-shown');
-                $datePicker.addClass('lx-date-picker--is-shown');
-            }, 100);
+                $scope.yearSelection = false;
+
+                $datePickerFilter = angular.element('<div/>', {
+                    class: 'lx-date-filter'
+                });
+
+                $datePickerFilter
+                    .appendTo('body')
+                    .on('click', function()
+                    {
+                        $scope.closePicker();
+                    });
+
+                $datePicker
+                    .appendTo('body')
+                    .show();
+
+                $timeout(function()
+                {
+                    $datePickerFilter.addClass('lx-date-filter--is-shown');
+                    $datePicker.addClass('lx-date-picker--is-shown');
+                }, 100);
+            });
         };
 
         $scope.closePicker = function()
         {
+            if (!$scope.ctrlData.isOpen)
+            {
+                return;
+            }
+
             $datePickerFilter.removeClass('lx-date-filter--is-shown');
             $datePicker.removeClass('lx-date-picker--is-shown');
+
+            $computedWindow.off('resize');
 
             $timeout(function()
             {
@@ -140,24 +163,26 @@ angular.module('lumx.date-picker', [])
                 $datePicker
                     .hide()
                     .appendTo($datePickerContainer);
+
+                $scope.ctrlData.isOpen = false;
             }, 600);
         };
 
         $scope.displayYearSelection = function()
         {
-            var calendarHeight = angular.element('.lx-date-picker__calendar').outerHeight(),
-                $yearSelector = angular.element('.lx-date-picker__year-selector');
-
-            $yearSelector.css({ height: calendarHeight });
-
             $scope.yearSelection = true;
-            
+
             $timeout(function()
             {
-                var $activeYear = angular.element('.lx-date-picker__year--is-active');
-
+                var $yearSelector = $datePicker.find('.lx-date-picker__year-selector');
+                var $activeYear = $yearSelector.find('.lx-date-picker__year--is-active');
                 $yearSelector.scrollTop($yearSelector.scrollTop() + $activeYear.position().top - $yearSelector.height()/2 + $activeYear.height()/2);
             });
+        };
+
+        $scope.clearDate = function()
+        {
+            $scope.model = undefined;
         };
 
         function generateCalendar()
@@ -191,7 +216,7 @@ angular.module('lumx.date-picker', [])
             {
                 $scope.emptyLastDays.push({});
             }
-            
+
             $scope.days = days;
         }
     }])
@@ -204,6 +229,7 @@ angular.module('lumx.date-picker', [])
                 model: '=',
                 label: '@',
                 fixedLabel: '&',
+                allowClear: '@',
                 icon: '@'
             },
             templateUrl: 'date-picker.html',
@@ -219,6 +245,11 @@ angular.module('lumx.date-picker', [])
                 scope.$watch('model', function()
                 {
                     ctrl.build(checkLocale(attrs.locale), true);
+                });
+
+                attrs.$observe('allowClear', function(newValue)
+                {
+                    scope.allowClear = !!(angular.isDefined(newValue) && newValue === 'true');
                 });
 
                 function checkLocale(locale)

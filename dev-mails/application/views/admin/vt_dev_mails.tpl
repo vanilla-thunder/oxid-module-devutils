@@ -1,20 +1,26 @@
 [{include file="vt_dev_header.tpl"}]
+<script>
+   var resize = function() {
+      var iframe = document.getElementById("html");
+      var mailheight = iframe.contentWindow.document.body.scrollHeight;
+      iframe.height = mailheight + 'px';
+   }
+</script>
 
 <div class="card">
    <div class="toolbar" flex-container="row">
          <button ng-repeat="mail in mails" flex-item class="btn btn--m btn--black btn--flat" lx-ripple ng-click="select( mail )">{{ mail.title }}</button>
    </div>
+   <hr/>
+   <div class="toolbar" flex-container="row">
+      <div><button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="preview()"><i class="mdi mdi-refresh"></i> refresh</button></div>
+      <div flex-item>&nbsp;&nbsp;<span class="toolbar__label fs-title">{{current.content.Subject}}</span></div>
+   </div>
+   <hr/>
 </div>
-<div class="container">
-   <div class="card">
-      <hr/>
-      <div class="toolbar" flex-container="row">
-         <div><button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="preview()"><i class="mdi mdi-refresh"></i> refresh</button></div>
-         <div flex-item>&nbsp;&nbsp;<span class="toolbar__label fs-title">{{current.content.Subject}}</span></div>
-      </div>
-      <hr/>
-      <div flex-container="row">
-         <iframe flex-item id="html"></iframe>
+<div class="container card" flex-item flex-container="column">
+      <div flex-item flex-container="row">
+         <iframe onLoad="resize();" flex-item id="html"></iframe>
          <div flex-item id="text" ng-bind-html="current.content.AltBody | html"></div>
       </div>
    </div>
@@ -77,7 +83,7 @@
          {
             $scope.current.content = res.data;
             //console.log("loading iframes");
-            angular.element( document.getElementById("html") ).attr('src',url+'&html=1');
+            angular.element( document.getElementById("html") ).attr('src',url+'&html=1').attr('height','auto');
             //angular.element( document.getElementById("text") ).attr('src',url+'&text=1');
             //$button.removeClass("fa-spin");
          });

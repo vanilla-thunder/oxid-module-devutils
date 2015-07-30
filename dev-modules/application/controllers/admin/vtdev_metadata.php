@@ -89,7 +89,7 @@ class vtdev_metadata extends oxAdminView
             {
                 $extensions[] = [ 'file' => $file, 'status' => $this->check($file,'ext') ];
             }
-            $aData[] = [ 'name' => $cl, 'extensions' => $extensions ];
+            $aData[] = [ 'name' => $cl, 'extensions' => $extensions, 'filter' => $cl.json_encode($extensions) ];
         }
         echo json_encode($aData);
         exit;
@@ -105,7 +105,7 @@ class vtdev_metadata extends oxAdminView
             {
                 $files[] = [ 'file' => $cl, 'path' => $path, 'status' => $this->check($path,'file') ];
             }
-            $aData[] = [ 'name' => $key, 'files' => $files ];
+            $aData[] = [ 'name' => $key, 'files' => $files, 'filter' => $key.json_encode($files) ];
         }
         echo json_encode($aData);
         exit;
@@ -121,7 +121,7 @@ class vtdev_metadata extends oxAdminView
             {
                 $files[] = [ 'file' => $cl, 'path' => $path, 'status' => $this->check($path,'file') ];
             }
-            $aData[] = [ 'name' => $key, 'files' => $files ];
+            $aData[] = [ 'name' => $key, 'files' => $files, 'filter' => $key.json_encode($files) ];
         }
         echo json_encode($aData);
         exit;

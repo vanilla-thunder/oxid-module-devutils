@@ -25,17 +25,16 @@ include(dirname(__FILE__)."/../vendormetadata.php");
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Author:     Marat Bedoev <oxid@marat.ws>
+ * Author:     Marat Bedoev <m@marat.ws>
  */
 
-$v = 'https://raw.githubusercontent.com/vanilla-thunder/vt-devutils/master/version.jpg';
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-logs',
     'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> logs',
     'description' => 'logs parser for oxid eshop.<br/>add this code to your config.inc.php to save webserver errors into log/error.log<br>'.
                      '<input style="width:90%;" type="text" value="ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');">'.
-                     '<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
+                     '<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $newest . '" style=" float:left;"/> (no need to update if you already have this version)',
     'thumbnail'   => 'oxid-vt.jpg',
     'version'     => $current,
     'author'      => 'Marat Bedoev',
@@ -46,8 +45,8 @@ $aModule = array(
     'templates'   => array( 'vt_dev_logs.tpl' => 'vt-devutils/dev-logs/application/views/admin/vt_dev_logs.tpl' ),
     'settings'    => array(
         array(
-            'group'    => 'vtdev_main',
-            'name'     => 'vt_dev_logs_sWebserverLog',
+            'group'    => 'vtDev',
+            'name'     => 's_vtDev_serverLogPath',
             'type'     => 'str',
             'position' => 0,
             'value'    => 'log/error.log'

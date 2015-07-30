@@ -25,32 +25,37 @@ include(dirname(__FILE__)."/../vendormetadata.php");
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Version:    1.0.0
  * Author:     Marat Bedoev <m@marat.ws>
  */
 
-$v = 'https://raw.githubusercontent.com/vanilla-thunder/vt-devutils/master/version.jpg';
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => '_dev-core',
     'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb; padding: 0 2px;background:white;">dev</strong> <b>core</b>',
-    'description' => '[vt] developent utilities core package. It is required for all other dev modules from vt-devutils package.<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
+    'description' => '[vt] developent utilities core package. It is required for all other dev modules from vt-devutils package.<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $newest . '" style=" float:left;"/> (no need to update if you already have this version)',
     'thumbnail'   => 'oxid-vt.jpg',
     'version'     => $current,
     'author'      => 'Marat Bedoev',
     'email'       => 'm@marat.ws',
     'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
-    'extend'      => array(),
+    'extend'      => array(
+        'oxutils' => 'vt-devutils/_dev-core/extend/vt_dev_oxutils',
+        'oxutilsview' => 'vt-devutils/_dev-core/extend/vt_dev_oxutilsview'
+    ),
     'files'       => array(
-        'devutils' => 'vt-devutils/_dev-core/application/models/devutils.php'
+        'devutils'       => 'vt-devutils/_dev-core/application/models/devutils.php',
+        'vt_dev_options' => 'vt-devutils/_dev-core/application/controllers/admin/vt_dev_options.php'
     ),
     'events'      => array(),
     'templates'   => array(
         'vt_dev_header.tpl'  => 'vt-devutils/_dev-core/application/views/admin/vt_dev_header.tpl',
         'vt_dev_footer.tpl'  => 'vt-devutils/_dev-core/application/views/admin/vt_dev_footer.tpl',
-        'vt_dev_angular_stuff.tpl'=> 'vt-devutils/_dev-core/application/views/admin/vt_dev_angular_stuff.tpl'
+        'vt_dev_options.tpl' => 'vt-devutils/_dev-core/application/views/admin/vt_dev_options.tpl'
         
     ),
     'blocks'      => array(),
-    'settings'    => array()
+    'settings'    => array(
+        array('group' => 'vtDevCache', 'name' => 'bl_VtDev_disableLangCache', 'type' => 'bool',  'value' => true),
+        array('group' => 'vtDevCache', 'name' => 'bl_VtDev_disableSmartyCache', 'type' => 'bool',  'value' => true)
+    )
 );

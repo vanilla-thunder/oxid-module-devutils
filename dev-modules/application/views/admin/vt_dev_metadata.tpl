@@ -1,5 +1,6 @@
 [{include file="vt_dev_header.tpl"}]
 <lx-tabs>
+   
    [{* aModules *}]
    <lx-tab heading="extensions">
       <div class="container card">
@@ -10,11 +11,11 @@
       </div>
       
       <div class="container grid-2" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".grid-item"}'>
-         <div masonry-tile class="grid-item" ng-repeat="class in aModules.content |filter:{name:search.aModules}:false">
+         <div masonry-tile class="grid-item" ng-repeat="class in aModules.content |filter:{filter:search.aModules}:false">
             <div class="card">
                <div class="p+">
                   <strong class="fs-headline display-block" ng-bind-html="class.name |highlight:search.aModules |html"></strong>
-                     <ul class="list mt++">
+                     <ul class="list">
                         <li class="list-row" ng-repeat="ext in class.extensions">
                            <div class="list-row__primary">
                               <i ng-if="ext.status == 1" lx-tooltip="extension file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
@@ -40,11 +41,11 @@
          </div>
       </div>
       <div class="container grid-2" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".grid-item" }'>
-         <div masonry-tile class="grid-item" ng-repeat="mod in aModuleFiles.content |filter:{name:search.aModuleFiles}:false">
+         <div masonry-tile class="grid-item" ng-repeat="mod in aModuleFiles.content |filter:{filter:search.aModuleFiles}:false">
             <div class="card">
                <div class="p+">
                   <strong class="fs-headline display-block" ng-bind-html="mod.name |highlight:search.aModuleFiles |html"></strong>
-                     <ul class="list mt++">
+                     <ul class="list">
                         <li class="list-row list-row--has-separator" ng-repeat="item in mod.files">
                            <div class="list-row__primary">
                               <i ng-if="item.status == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
@@ -73,11 +74,11 @@
       </div>
       
       <div class="container grid-2" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".grid-item" }'>
-         <div masonry-tile class="grid-item" ng-repeat="mod in aModuleTemplates.content |filter:{name:search.aModuleTemplates}:false">
+         <div masonry-tile class="grid-item" ng-repeat="mod in aModuleTemplates.content |filter:{filter:search.aModuleTemplates}:false">
             <div class="card">
                <div class="p+">
                   <strong class="fs-headline display-block" ng-bind-html="mod.name |highlight:search.aModuleTemplates |html"></strong>
-                     <ul class="list mt++">
+                     <ul class="list">
                         <li class="list-row list-row--has-separator" ng-repeat="item in mod.files">
                            <div class="list-row__primary">
                               <i ng-if="item.status == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
@@ -109,18 +110,23 @@
             <div class="card">
                <div class="p+">
                   <strong class="fs-headline display-block" ng-bind-html="mod.name |highlight:search.aTplBlocks |html"></strong>
-                     <ul class="list mt++">
-                        <li class="list-row list-row--has-separator" ng-repeat="block in mod.blocks">
-                           <div class="list-row__primary">
-                              <i ng-if="block.STATUS == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
-                              <i ng-if="block.STATUS == -1" lx-tooltip="file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
-                           </div>
-                           <div class="list-row__content">
-                              <strong ng-bind-html="block.OXFILE |highlight:search.aTplBlocks |html"></strong>
-                              <span class="small" ng-bind-html="block.FILEPATH |highlight:search.aTplBlocks |html"></span>
-                           </div>
-                        </li>
-                     </ul>
+                  <ul class="list">
+                     <li class="list-row list-row--has-separator" ng-repeat="block in mod.blocks">
+                        <div class="list-row__primary">
+                           <i ng-if="block.OXACTIVE == 1" lx-tooltip="block active"   class="icon icon--s icon--green icon--flat mdi mdi-power"></i>
+                           <i ng-if="block.OXACTIVE == 0" lx-tooltip="block inactive" class="icon icon--s icon--red icon--flat mdi mdi-power"></i>
+                           
+                           <i ng-if="block.STATUS == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
+                           <i ng-if="block.STATUS == -1" lx-tooltip="file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
+                        </div>
+                        <div class="list-row__content">
+                           <h3 ng-bind-html="block.OXTEMPLATE |highlight:search.aTplBlocks |html"></h3>
+                           <h3 ng-bind-html="block.OXBLOCKNAME |highlight:search.aTplBlocks |html"></h3>
+                           <strong ng-bind-html="block.OXFILE |highlight:search.aTplBlocks |html"></strong>
+                           <span class="display-block fs-body-1 tc-black-2" ng-bind-html="block.FILEPATH |highlight:search.aTplBlocks |html"></span>
+                        </div>
+                     </li>
+                  </ul>
                </div>
             </div>
          </div>
@@ -136,7 +142,7 @@
                <div class="p+">
                   <strong class="fs-headline display-block">module paths</strong>
                   <hr/>
-                  <ul class="list mt++">
+                  <ul class="list">
                      <li class="list-row list-row--has-separator" ng-repeat="mod in aModulePaths.content">
                            <div class="list-row__primary">
                               [{*
@@ -174,9 +180,6 @@
       </div>
    </lx-tab>
 </lx-tabs>
-
-
-[{* http://img-9gag-fun.9cache.com/photo/a2YQ31p_460sv.mp4 *}]
 
 <script>
    [{capture assign="ng"}]
@@ -217,16 +220,52 @@
    $scope.aTplBlocks = {
       title: "blocks",
       fnc: "aTplBlocks",
-      content: []
+      content: [],
+      templates: []
+   };
+
+   $scope.createTemplatesFilter = function(data) {
+      $scope.aTplBlocks.templates = [];
+      data.forEach(function(element, index, array) {
+         element.blocks.forEach(function(element, index, array) {
+            if($scope.aTplBlocks.templates.indexOf(element.OXTEMPLATE) == -1) $scope.aTplBlocks.templates.push(element.OXTEMPLATE);
+         });
+      });
    };
 
    $scope.load = function (data) {
       $http.get(url.replace("xxxxxx", data.fnc)).then(function (res) {
          data.content = res.data;
-         console.log(res.data);
+         //console.log(res.data);
+         if(data.title == 'blocks') $scope.createTemplatesFilter(res.data);
          LxNotificationService.success(data.title + ' loaded');
       });
    };
+   $scope.people = [
+    { name: 'Adam',      email: 'adam@email.com',      age: 10 },
+    { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
+    { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
+    { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
+    { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
+    { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
+    { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
+    { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
+];
+
+$scope.selectSections = {
+    'Sub header 1': [
+        { uid: '1', name: 'Adam' },
+        { uid: '2', name: 'Amalie' },
+        { uid: '3', name: 'Wladimir' },
+        { uid: '4', name: 'Samantha' }
+    ],
+    '<i class="mdi mdi-android"></i> Sub header 2': [
+        { uid: '5', name: 'Estefanía' },
+        { uid: '6', name: 'Natasha' },
+        { uid: '7', name: 'Nicole' }
+    ]
+};
+
 
    $scope.load($scope.aModules);
    $scope.load($scope.aModuleFiles);
@@ -235,22 +274,6 @@
    $scope.load($scope.aModulePaths);
    //$scope.load($scope.aModuleVersions);
    $scope.load($scope.aModuleEvents)
-
-   $scope.check = function(file,type) {
-      $http({
-         method: 'POST',
-         url: url.replace("xxxxxx", "check"),
-         data: {'file': file, 'type':type},
-         headers: {'Content-Type': 'application/json'}
-      })
-      .success(function (data, status, headers, config) {
-         console.log(data);
-         if (data.error) alert(data.error);
-      })
-      .error(function (data, status, headers, config) {
-         $scope.output = status+' : '+data.error;
-      });
-   };
 
    [{/capture}]
 </script>

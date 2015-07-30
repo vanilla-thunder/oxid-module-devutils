@@ -24,12 +24,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Version:    0.9
- * Author:     Marat Bedoev <oxid@marat.ws>
+ * Author:     Marat Bedoev <m@marat.ws>
  */
 
 $sLangName = 'Deutsch';
 $aLang = array(
     'charset'                               => 'UTF-8',
-    'SHOP_MODULE_vt_dev_logs_sWebserverLog' => 'Pfad zum apache webserver log (relativ oder absolut)'
+    'vtdev_logs' => 'Logs',
+    'SHOP_MODULE_s_vtDev_serverLogPath' => 'Pfad zum apache webserver log (relativ vom shop root oder absolut)'
 );
