@@ -12,6 +12,8 @@
 */example/
 */demo/
 
+*/test.js
+
 _dev-core/src/jquery/src/
 _dev-core/src/bourbon/
 _dev-core/src/doc-ready/
