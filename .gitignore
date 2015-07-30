@@ -8,9 +8,9 @@
 
 
 # ignore demo and dev dependencies stupid programmers added to the normal dependencies
-*/test/*
-*/example/*
-*/demo/*
+*/test/
+*/example/
+*/demo/
 
 _dev-core/src/jquery/src/
 _dev-core/src/bourbon/
