@@ -43,7 +43,7 @@ class vtdev_logs extends oxAdminView
         $cfg = oxRegistry::getConfig();
 
         $this->_sExLog  = $cfg->getConfigParam('sShopDir') . 'log/EXCEPTION_LOG.txt';
-        $this->_sErrLog = ($cfg->getConfigParam('vt_dev_logs_sWebserverLog')) ? $cfg->getConfigParam('vt_dev_logs_sWebserverLog') : false;
+        $this->_sErrLog = ($cfg->getConfigParam('s_vtDev_serverLogPath')) ? $cfg->getConfigParam('s_vtDev_serverLogPath') : false;
         //$this->_sSqlLog = ($cfg->getConfigParam('bSqlLog')) ? $cfg->getConfigParam('sSqlLog') : false;
         //$this->_sMailsLog = ($cfg->getConfigParam('bMailLog')) ? $cfg->getConfigParam('sMailLog') : false;
 
