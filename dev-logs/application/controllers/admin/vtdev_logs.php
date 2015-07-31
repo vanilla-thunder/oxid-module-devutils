@@ -124,10 +124,17 @@ class vtdev_logs extends oxAdminView
         if (!file_exists($this->_sErrLog) || !is_readable($this->_sErrLog))
         {
             $this->addTplParam("error", (object)array("type" => "warning", "text" => "file does not exist or is not readable"));
-            return false;
+
+            header('HTTP/1.1 500 Error reading ');
+            header('Content-Type: application/json; charset=UTF-8');
+            die(json_encode(array('error' => "zhere is no error log")));
         }
 
         $aData = file($this->_sErrLog);
+
+        // xdebug?
+        if(function_exists('xdebug_get_code_coverage')) $this->_getXdebugErrorLog($aData);
+
         $aData = array_slice($aData, -300);
 
         foreach($aData as $key => $value)
@@ -163,6 +170,47 @@ class vtdev_logs extends oxAdminView
         }
 
         echo json_encode(array_reverse($aData));
+        exit;
+    }
+
+    protected function _getXdebugErrorLog($aData)
+    {
+        $cfg = oxRegistry::getConfig();
+        $aLog = [];
+
+        $i = -1;
+        $logdate = '';
+        foreach($aData as $row)
+        {
+            if($i>30) break; // 30 lag entries are enough, i suppose
+            preg_match("/\[([^\]]*)\]/",$row,$date);
+
+            // stack trace
+            if((preg_match("/\] PHP Stack trace/",$row) > 0 || preg_match("/\] PHP\s+\d/",$row) > 0) && $date[1] == $logdate)
+            {
+                $aLog[$i]['stacktrace'][] = substr($row,strlen($date[0]));
+
+            }
+            else // first log line
+            {
+                $i++;
+                $logdate = $date[1];
+                preg_match("/\] PHP\s(.*):/",$row,$type);
+                preg_match("/\sPHP.+\:\s+(.*)\sin\s/",$row,$header);
+                preg_match("/\sin\s\/(.*)/",$row, $in);
+
+                $aLog[$i] = [
+                    'date' => date_format(date_create($logdate),'Y-m-d H:i:s'),
+                    'type' => $type[1],
+                    'header' => $header[1],
+                    'in' => str_replace($cfg->getConfigParam("sShopDir"),"","/".$in[1]),
+                    'stacktrace' => [],
+                    'full' => $row
+                ];
+            }
+        }
+        echo json_encode(array_reverse($aLog));
+        //echo print_r($aLog);
         exit;
     }
 
