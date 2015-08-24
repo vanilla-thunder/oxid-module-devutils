@@ -130,12 +130,13 @@ class vtdev_metadata extends oxAdminView
     public function aTplBlocks()
     {
         $aData = [];
+        $cfg = oxRegistry::getConfig();
         foreach(oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->getAll("SELECT * FROM oxtplblocks") as $val)
         {
             $sModule = $val['OXMODULE'];
             $r = $this->check($val, 'block');
             $val['STATUS'] = $r[0];
-            $val['FILEPATH'] = $r[1];
+            $val['FILEPATH'] =  str_replace($cfg->getConfigParam("sShopDir"),"",$r[1]);
             if(!array_key_exists($sModule, $aData)) $aData[$sModule] = ['name'=>$sModule,'blocks' => [], 'filter' => ''];
             $aData[$sModule]['blocks'][] = $val;
             $aData[$sModule]['filter'] .= json_encode($val);
