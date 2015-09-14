@@ -39,7 +39,8 @@ class vtdev_console extends oxAdminView
         $cfg = oxRegistry::getConfig();
         $me = $user = $cfg->getUser();
         $session = $user->getSession();
-        $order = array_shift( $user->getOrders( 1 )->getArray() );
+        $aOrders = $user->getOrders( 1 )->getArray();
+        $order = $aOrders[0];
         $basket = $user->getSession()->getBasket();
         $basket->load();
         $basket->setPayment("oxidpayadvance");
