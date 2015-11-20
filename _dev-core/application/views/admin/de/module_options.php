@@ -33,7 +33,7 @@ $style = '<style type="text/css">.groupExp a.rc b {font-size: medium; color: #ff
 $aLang = array(
     'charset'                      => 'UTF-8',
     'SHOP_MODULE_GROUP_vtDev' => $style.'Einstellungen',
-    'SHOP_MODULE_GROUP_vtDevCache' => $style.'Cache Eisntellungen',
+    'SHOP_MODULE_GROUP_vtDevCache' => $style.'Cache Einstellungen',
     'SHOP_MODULE_bl_VtDev_disableLangCache' => "Language Cache deaktivieren",
     'SHOP_MODULE_bl_VtDev_disableSmartyCache' => "Smarty Cache deaktivieren",
     'HELP_SHOP_MODULE_bl_VtDev_disableSmartyCache' => "Alle Templates <b>und</b> Template Blocks werden beim Seitenaufruf neu kompiliert. Du brauchst nie wieder tmp/ zu leeren"
