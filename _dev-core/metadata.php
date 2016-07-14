@@ -40,7 +40,8 @@ $aModule = array(
     'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
     'extend'      => array(
         'oxutils' => 'vt-devutils/_dev-core/extend/vt_dev_oxutils',
-        'oxutilsview' => 'vt-devutils/_dev-core/extend/vt_dev_oxutilsview'
+        'oxutilsview' => 'vt-devutils/_dev-core/extend/vt_dev_oxutilsview',
+        'oxviewconfig' => 'vt-devutils/_dev-core/extend/vt_dev_oxviewconfig'   
     ),
     'files'       => array(
         'devutils'       => 'vt-devutils/_dev-core/application/models/devutils.php',
@@ -53,7 +54,13 @@ $aModule = array(
         'vt_dev_options.tpl' => 'vt-devutils/_dev-core/application/views/admin/vt_dev_options.tpl'
         
     ),
-    'blocks'      => array(),
+    'blocks'      => array(
+        array(
+            'template' => 'bottomnaviitem.tpl',
+            'block'    => 'admin_bottomnaviitem',
+            'file'     => '/application/views/admin/blocks/bottomnaviitem_admin_bottomnaviitem.tpl'
+        )
+    ),
     'settings'    => array(
         array('group' => 'vtDevCache', 'name' => 'bl_VtDev_disableLangCache', 'type' => 'bool',  'value' => true),
         array('group' => 'vtDevCache', 'name' => 'bl_VtDev_disableSmartyCache', 'type' => 'bool',  'value' => true)

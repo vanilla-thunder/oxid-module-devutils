@@ -31,5 +31,8 @@ class vt_dev_options extends oxAdminView
 {
     protected $_sThisTemplate  = 'vt_dev_options.tpl';
     
-
+   public function clearTmp() { oxRegistry::get("devutils")->clearTmp(true); }
+   public function clearTpl() { oxRegistry::get("devutils")->clearTpl(true); }
+  
+   public function updateViews() { oxRegistry::get("devutils")->updateViews(true); }
 }
