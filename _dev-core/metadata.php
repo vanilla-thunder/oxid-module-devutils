@@ -62,7 +62,7 @@ $aModule = array(
         )
     ),
     'settings'    => array(
-        array('group' => 'vtDevCache', 'name' => 'bl_VtDev_disableLangCache', 'type' => 'bool',  'value' => true),
-        array('group' => 'vtDevCache', 'name' => 'bl_VtDev_disableSmartyCache', 'type' => 'bool',  'value' => true)
+        array('group' => 'vtDevCache', 'name' => 'bl_VtDev_disableLangCache', 'type' => 'bool',  'value' => false),
+        array('group' => 'vtDevCache', 'name' => 'bl_VtDev_disableSmartyCache', 'type' => 'bool',  'value' => false)
     )
 );
