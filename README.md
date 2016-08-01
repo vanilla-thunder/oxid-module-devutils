@@ -1,8 +1,8 @@
 [vt] Dev Utils for OXID eShop 4.9
 ===========
 
-### check this page for detailed description, features and installation manual:
-## http://vanilla-thunder.github.io/vt-devutils/
+### Tools für OXID Entwickler
+## https://marat.ws/tools-fuer-oxid-entwickler/
 
 
 # The MIT License (MIT)
