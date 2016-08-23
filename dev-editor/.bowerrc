@@ -1,0 +1,5 @@
+{
+  "allow_root": true,
+  "directory": "./",
+  "no_proxy": true
+}

@@ -1,0 +1,13 @@
+{
+  "name": "codiad",
+  "homepage": "https://github.com/Codiad/Codiad",
+  "_release": "v.2.7.4",
+  "_resolution": {
+    "type": "tag",
+    "tag": "v.2.7.4",
+    "commit": "58ed33672c4fb5040ab79204b039b31c084a0e19"
+  },
+  "_source": "git://github.com/Codiad/Codiad.git",
+  "_target": "v.2.7.4",
+  "_originalSource": "Codiad/Codiad"
+}
