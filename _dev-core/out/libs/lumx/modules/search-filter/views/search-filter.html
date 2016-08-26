@@ -1,0 +1,15 @@
+<div class="search-filter" ng-class="lxSearchFilter.getClass()">
+    <div class="search-filter__container">
+        <div class="search-filter__button">
+            <lx-button lx-size="l" lx-color="{{ lxSearchFilter.color }}" lx-type="icon" ng-click="lxSearchFilter.openInput()">
+                <i class="mdi mdi-magnify"></i>
+            </lx-button>
+        </div>
+
+        <div class="search-filter__input" ng-transclude></div>
+
+        <span class="search-filter__clear" ng-click="lxSearchFilter.clearInput()">
+            <i class="mdi mdi-close-circle"></i>
+        </span>
+    </div>
+</div>

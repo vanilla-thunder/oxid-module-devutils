@@ -3,18 +3,18 @@
    <button class="btn btn--xl btn--blue btn--fab" lx-ripple ng-click="scrolltotop()"><i class="mdi mdi-chevron-double-up"></i></button>
 </div>
 [{/if}]
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/jquery/dist/jquery.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/velocity/velocity.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/moment/min/moment-with-locales.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/angular/angular.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/lumx/dist/lumx.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/jquery/dist/jquery.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/velocity/velocity.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/moment/min/moment-with-locales.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/angular/angular.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/lumx/dist/lumx.min.js")}]"></script>
 
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/zeroclipboard/dist/ZeroClipboard.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/ng-clip/dest/ng-clip.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/zeroclipboard/dist/ZeroClipboard.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/ng-clip/dest/ng-clip.min.js")}]"></script>
 
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/masonry/dist/masonry.pkgd.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/imagesloaded/imagesloaded.pkgd.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","src/angular-masonry-directive/src/angular-masonry-directive.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/masonry/dist/masonry.pkgd.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/imagesloaded/imagesloaded.pkgd.min.js")}]"></script>
+<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/angular-masonry-directive/src/angular-masonry-directive.js")}]"></script>
 
 
 [{ oxscript }]
@@ -28,7 +28,7 @@
                 //return $param ? $value.split($param).join('<b class="hl">'+$param+'</b>') : $value;
             } 
         })
-        .controller('devCtrl', function($scope, $http, LxDialogService, LxNotificationService, LxProgressService) {
+        .controller('devCtrl', function($scope, $http, LxDialogService, LxNotificationService) {
             [{$ng}]
 
             $scope.scrolltotop = function() { $("body").animate({scrollTop: 0}, "slow"); };

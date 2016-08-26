@@ -29,17 +29,6 @@
 class vtdev_metadata extends oxAdminView
 {
     protected $_sThisTemplate = 'vt_dev_metadata.tpl';
-
-
-    /*
-        public function render()
-        {
-            $ret = parent::render();
-            $preview = oxRegistry::getConfig()->getRequestParameter('preview');
-            return ($preview) ? "vt_dev_mails_preview.tpl" : $ret;
-        }
-        */
-
     
     public function check($check, $type)
     {
@@ -176,6 +165,13 @@ class vtdev_metadata extends oxAdminView
         exit;
     }
 
+    public function toggleTplBlock()
+    {
+        if(!$oxid = oxRegistry::getConfig()->getRequestParameter("block")) die("nope");
 
+        $ret = oxDb::getDb()->execute("UPDATE oxtplblocks SET oxactive = IF(oxactive > 0, 0, 1) WHERE oxid = '".$oxid."'");
+        echo json_encode([ 'msg'=>'done', 'ret' => $ret ]);
+        exit;
+    }
 
 }

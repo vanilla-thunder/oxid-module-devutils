@@ -1,5 +1,8 @@
 {
   "allow_root": true,
-  "directory": "src/",
-  "no_proxy": true
+  "directory": "out/libs/",
+  "no_proxy": true,
+  "ignoredDependencies": [
+    "bourbon"
+  ]
 }

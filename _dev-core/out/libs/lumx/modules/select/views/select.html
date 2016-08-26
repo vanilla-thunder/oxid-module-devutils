@@ -1,0 +1,18 @@
+<div class="lx-select"
+     ng-class="{ 'lx-select--error': lxSelect.error,
+                 'lx-select--fixed-label': lxSelect.fixedLabel,
+                 'lx-select--is-active': (!lxSelect.multiple && lxSelect.getSelectedModel()) || (lxSelect.multiple && lxSelect.getSelectedModel().length),
+                 'lx-select--is-disabled': lxSelect.ngDisabled,
+                 'lx-select--is-multiple': lxSelect.multiple,
+                 'lx-select--is-unique': !lxSelect.multiple,
+                 'lx-select--theme-light': !lxSelect.theme || lxSelect.theme === 'light',
+                 'lx-select--theme-dark': lxSelect.theme === 'dark',
+                 'lx-select--valid': lxSelect.valid }">
+    <span class="lx-select-label">
+        {{ ::lxSelect.label }}
+    </span>
+
+    <lx-dropdown lx-width="100%">
+        <ng-transclude></ng-transclude>
+    </lx-dropdown>
+</div>

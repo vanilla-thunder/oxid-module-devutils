@@ -1,47 +1,51 @@
 [{include file="vt_dev_header.tpl"}]
 
-[{oxscript include=$oViewConf->getModuleUrl("dev-console","src/ace-builds/src-min-noconflict/ace.js")}]
-[{oxscript include=$oViewConf->getModuleUrl("dev-console","src/angular-ui-ace/ui-ace.min.js")}]
+[{oxscript include=$oViewConf->getModuleUrl("dev-console","out/libs/ace-builds/src-min-noconflict/ace.js")}]
+[{oxscript include=$oViewConf->getModuleUrl("dev-console","out/libs/angular-ui-ace/ui-ace.min.js")}]
 
 <div class="container">
-    <div class="card" flex-container="column">
-        <div id="editor" ui-ace="{theme:'github',mode:'php',onLoad: aceLoaded,blockScrolling: 'Infinity'}"></div>
-        <div flex-container="row"><button flex-item button class="btn btn--m btn--red btn--raised" lx-ripple ng-click="eval();">run code</button></div>
-        <div id="output" ng-bind-html="output | html"></div>
-    </div>
+   <div class="card" flex-container="column">
+      <div id="editor" ui-ace="{theme:'github', mode: {path:'ace/mode/php',inline:true}, onLoad: aceLoaded,blockScrolling: 'Infinity'}"></div>
+      <div flex-container="row">
+         <button flex-item button class="btn btn--m btn--red btn--raised" lx-ripple ng-click="eval();">run code</button>
+      </div>
+      <div id="output" ng-bind-html="output | html"></div>
+   </div>
 </div>
 
 [{capture name=appdep}][{$smarty.capture.appdep}],'ui.ace'[{/capture}]
-[{capture assign="ng"}]
-    $scope.ace;
-    $scope.output;
+<script>
+   [{capture assign="ng"}]
+   $scope.ace;
+   $scope.output;
 
-    $scope.aceLoaded = function (_editor) {
-        _editor.$blockScrolling = 'Infinity';
-        $scope.ace = _editor.getSession();
-    };
+   $scope.aceLoaded = function (_editor) {
+      _editor.$blockScrolling = 'Infinity';
+      //session.setMode({path: 'ace/mode/php', inline: true});
+      $scope.ace = _editor.getSession();
+   };
 
-    $scope.eval = function () {
-        var source = $scope.ace.getValue();
+   $scope.eval = function () {
+      var source = $scope.ace.getValue();
 
-        $http({
-                method: 'POST',
-                url: '[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdev_console&fnc=run"|replace:"&amp;":"&" }]',
-                data: {code: source},  // pass in data as strings
-                headers: {'Content-Type': 'application/json'}  // set the headers so angular passing info as form data (not request payload)
-            })
-            .success(function (data, status, headers, config) {
-                $scope.output = data.output;
-                if (data.error) {
+      $http({
+         method: 'POST',
+         url: '[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdev_console&fnc=run"|replace:"&amp;":"&" }]',
+         data: {code: source},  // pass in data as strings
+         headers: {'Content-Type': 'application/json'}  // set the headers so angular passing info as form data (not request payload)
+      })
+              .success(function (data, status, headers, config) {
+                 $scope.output = data.output;
+                 if (data.error) {
                     alert(data.error);
-                }
-            })
-            .error(function (data, status, headers, config) {
-                $scope.output = status+' : '+data.error;
-            });
-    };
-[{/capture}]
-
+                 }
+              })
+              .error(function (data, status, headers, config) {
+                 $scope.output = status + ' : ' + data.error;
+              });
+   };
+   [{/capture}]
+</script>
 
 [{*
 

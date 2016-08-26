@@ -115,7 +115,6 @@ class vtdev_logs extends oxAdminView
             die(json_encode(array('error' => "something went wrong")));
     }
 
-
     public function getErrorLog()
     {
         if (!$this->_sErrLog) return false;

@@ -1,0 +1,42 @@
+<lx-dropdown-menu class="lx-select-choices"
+                  ng-class="{ 'lx-select-choices--custom-style': lxSelectChoices.parentCtrl.customStyle,
+                              'lx-select-choices--default-style': !lxSelectChoices.parentCtrl.customStyle,
+                              'lx-select-choices--is-multiple': lxSelectChoices.parentCtrl.multiple,
+                              'lx-select-choices--is-unique': !lxSelectChoices.parentCtrl.multiple, }">
+    <ul>
+        <li class="lx-select-choices__filter" ng-if="::lxSelectChoices.parentCtrl.displayFilter">
+            <lx-search-filter lx-dropdown-filter>
+                <input type="text" ng-model="lxSelectChoices.filterModel" ng-change="lxSelectChoices.updateFilter()">
+            </lx-search-filter>
+        </li>
+        
+        <div ng-if="::lxSelectChoices.isArray()">
+            <li class="lx-select-choices__choice"
+                ng-class="{ 'lx-select-choices__choice--is-selected': lxSelectChoices.isSelected(choice) }"
+                ng-repeat="choice in lxSelectChoices.parentCtrl.choices | filterChoices:lxSelectChoices.parentCtrl.filter:lxSelectChoices.filterModel"
+                ng-bind-html="::lxSelectChoices.parentCtrl.displayChoice(choice)"
+                ng-click="lxSelectChoices.toggleChoice(choice, $event)"></li>
+        </div>
+
+        <div ng-if="::!lxSelectChoices.isArray()">
+            <li class="lx-select-choices__subheader"
+                ng-repeat-start="(subheader, children) in lxSelectChoices.parentCtrl.choices"
+                ng-bind-html="::lxSelectChoices.parentCtrl.displaySubheader(subheader)"></li>
+
+            <li class="lx-select-choices__choice"
+                ng-class="{ 'lx-select-choices__choice--is-selected': lxSelectChoices.isSelected(choice) }"
+                ng-repeat-end
+                ng-repeat="choice in children | filterChoices:lxSelectChoices.parentCtrl.filter:lxSelectChoices.filterModel"
+                ng-bind-html="::lxSelectChoices.parentCtrl.displayChoice(choice)"
+                ng-click="lxSelectChoices.toggleChoice(choice, $event)"></li>
+        </div>
+
+        <li class="lx-select-choices__subheader" ng-if="lxSelectChoices.parentCtrl.helper">
+            {{ lxSelectChoices.parentCtrl.helperMessage }}
+        </li>
+
+        <li class="lx-select-choices__loader" ng-if="lxSelectChoices.parentCtrl.loading">
+            <lx-progress lx-type="circular" lx-color="primary" lx-diameter="20"></lx-progress>
+        </li>
+    </ul>
+</lx-dropdown-menu>

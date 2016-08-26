@@ -1,5 +1,5 @@
 {
   "allow_root": true,
-  "directory": "src/",
+  "directory": "out/libs/",
   "no_proxy": true
 }
