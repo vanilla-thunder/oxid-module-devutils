@@ -14,11 +14,13 @@ class vtdev_editor extends oxAdminView
       $sShopDir = str_replace('/', '\/', realpath($cfg->getConfigParam("sShopDir")));
 
       // setup
-      chmod($path,'0775'); // codiad
-      chmod($path.'/data','0775'); // codiad/data
-      chmod($path.'/plugins  ','0775'); // codiad/plugins
-      chmod($path.'/themes  ','0775'); // codiad/themes
-      chmod($path.'/workspace ','0775'); // codiad/workspace
+      $error = false;
+      //chmod($path,'0775'); // codiad
+      if(!is_writable($path)) die("lel!");
+      if(!is_writable($path.'/data')) die("data!");
+      if(!is_writable($path.'/plugins')) die("plugins!");
+      if(!is_writable($path.'/themes')) die("themes!");
+      if(!is_writable($path.'/workspace')) die("workspace!");
 
       if (!file_exists($path . "/config.php")) {
          $config = file_get_contents($path . "/../config.example");
