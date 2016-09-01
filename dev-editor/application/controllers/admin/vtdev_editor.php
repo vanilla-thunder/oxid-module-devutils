@@ -14,13 +14,14 @@ class vtdev_editor extends oxAdminView
       $sShopDir = str_replace('/', '\/', realpath($cfg->getConfigParam("sShopDir")));
 
       // setup
+
       $error = false;
-      //chmod($path,'0775'); // codiad
-      if(!is_writable($path)) die("lel!");
-      if(!is_writable($path.'/data')) die("data!");
-      if(!is_writable($path.'/plugins')) die("plugins!");
-      if(!is_writable($path.'/themes')) die("themes!");
-      if(!is_writable($path.'/workspace')) die("workspace!");
+      //if(!is_writable($path)) die("lel!");
+      if(!is_writable($path.'/data')) $error .= "<h2> modules/vt-devutils/dev-editor/codiad/data must be writable!</h2>";
+      if(!is_writable($path.'/plugins')) $error .= "<h2> modules/vt-devutils/dev-editor/codiad/plugins must be writable!</h2>";
+      if(!is_writable($path.'/themes')) $error .= "<h2> modules/vt-devutils/dev-editor/codiad/themes must be writable!</h2>";
+      if(!is_writable($path.'/workspace')) $error .= "<h2> modules/vt-devutils/dev-editor/codiad/workspace must be writable!</h2>";
+	  if($error) die($error);
 
       if (!file_exists($path . "/config.php")) {
          $config = file_get_contents($path . "/../config.example");
