@@ -41,7 +41,7 @@ _dev-core/out/libs/masonry/dist/masonry.pkgd.js
 _dev-core/out/libs/mdi/preview.html
 
 _dev-core/out/libs/moment/CHANGELOG.md
-_dev-core/out/libs/moment/moment.d
+_dev-core/out/libs/moment/moment.d.ts
 _dev-core/out/libs/moment/moment.js
 _dev-core/out/libs/moment/locale
 #_dev-core/out/libs/moment/locale/a*
