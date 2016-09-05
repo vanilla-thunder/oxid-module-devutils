@@ -15,8 +15,8 @@
 *tests.js
 
 *npm-debug.log
-dev-*/.bower.json
-dev-*/bower.json
+#dev-*/.bower.json
+#dev-*/bower.json
 dev-*/package.json
 
 
