@@ -116,15 +116,17 @@ class vtdev_logs extends oxAdminView
         if (function_exists('xdebug_get_code_coverage')) $this->_getXdebugErrorLog($aData);
 
         $aData = array_slice($aData, -300);
-
+//echo "<pre>";
         foreach ($aData as $key => $value) {
             /*
             [Sat May 30 10:32:38 2015] [error] [client 79.222.227.99] 
             PHP Fatal error:  Smarty error: [in vt_dev_footer.tpl line 7]: syntax error: unrecognized tag: $module_components:default:"'lumx'" (Smarty_Compiler.class.php, line 446) in /srv/ox/bla/core/smarty/Smarty.class.php on line 1093, referer: http://ox.marat.ws/bla/admin/index.php?editlanguage=0&force_admin_sid=5fdleoj00epaoe5d75d5hi6q01&stoken=C8D0F139&&cl=navigation&item=home.tpl
             */
-
+/*
             print_r($key);
             print_r($value);
+            echo "<hr/>";
+            */
 
             preg_match_all("/\[([^\]]*)\]/", $value, $header);
             $msg = trim(str_replace(array_slice($header[0], 0, 3), '', $value));
@@ -151,7 +153,7 @@ class vtdev_logs extends oxAdminView
 
             // "in" => str_replace($cfg->getConfigParam("sShopDir"),"",substr($msg, strpos($msg, " in /")+3, strpos($msg, ", referer: "))),
         }
-
+        //echo "<pre>";
         echo json_encode(['status' => 'ok', 'log' => array_reverse($aData)]);
         exit;
     }

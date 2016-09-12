@@ -122,8 +122,12 @@
     $scope.loadExceptionLog = function () {
         $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdev_logs&fnc=getExceptionLog"|replace:"&amp;":"&" }]")
                 .then(function (res) {
-                    $scope.exceptions = res.data;
-                    LxNotificationService.success('exception log loaded');
+                    if(res.data.status = 'ok') {
+                        $scope.exceptions = res.data;
+                        LxNotificationService.success('exception log');
+                    } else {
+                        LxNotificationService.error('loading exceptions failed!');
+                    }
                 });
     };
     $scope.loadExceptionLog();
@@ -140,8 +144,12 @@
     $scope.loadErrorLog = function () {
         $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=vtdev_logs&fnc=getErrorLog"|replace:"&amp;":"&" }]")
                 .then(function (res) {
-                    $scope.error = res.data;
-                    LxNotificationService.success('error log loaded');
+                    if(res.data.status = 'ok') {
+                        $scope.errors = res.data;
+                        LxNotificationService.success('error log');
+                    } else {
+                        LxNotificationService.error('loading error log failed!');
+                    }
                 });
     };
     $scope.loadErrorLog();
