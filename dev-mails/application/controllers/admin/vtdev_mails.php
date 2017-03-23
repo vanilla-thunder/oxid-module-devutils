@@ -42,13 +42,18 @@ class vtdev_mails extends oxAdminView
     private function fakeOrder()
     {
         $cfg = oxRegistry::getConfig();
-        
+
+        $this->setAdminMode(false);
         $oUser = $cfg->getUser();
-        
-        $oBasket = $this->getSession()->getBasket();
-        $oBasket->load();
+        $oBasket = $oUser->getSession()->getBasket();
+        echo "<pre>";
+        print_r($oBasket);
+        echo "</pre>";
+        die();
+        /*$oBasket->load();
         $oBasket->setPayment("oxidpayadvance");
         $oBasket->calculateBasket();
+        */
 
         /*
         if($iOrderNr = $cfg->getRequestParameter("ordernr"))

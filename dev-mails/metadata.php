@@ -32,9 +32,9 @@ $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-mails',
     'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> mails',
-    'description' => 'easy mail design and debugging for oxid eshop<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $newest . '" style=" float:left;"/> (no need to update if you already have this version)',
-    'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => $current,
+    'description' => 'easy design and debugging for oxid eshop email templates',
+    'thumbnail'   => '../oxid-vt.jpg',
+    'version'     => '1.1.0 (2017-03-22)',
     'author'      => 'Marat Bedoev',
     'email'       => 'm@marat.ws',
     'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
@@ -43,7 +43,8 @@ $aModule = array(
             'oxorder' => 'vt-devutils/dev-mails/extend/vt_dev_mail_oxorder'
         ),
     'files'       => array(
-            'vtdev_mails' => 'vt-devutils/dev-mails/application/controllers/admin/vtdev_mails.php'
+        'vtdev_mails' => 'vt-devutils/dev-mails/application/controllers/admin/vtdev_mails.php',
+        'vtdev_mails_preview' => 'vt-devutils/dev-mails/application/controllers/vtdev_mails_preview.php'
         ),
     'templates'   => array(
             'vt_dev_mails.tpl' => 'vt-devutils/dev-mails/application/views/admin/vt_dev_mails.tpl',
