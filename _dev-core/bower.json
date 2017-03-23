@@ -5,8 +5,7 @@
   "private": true,
   "dependencies": {
     "lumx": "*",
-    "ng-clip": "*",
-    "angular-masonry-directive": "*"
+    "ng-clip": "*"
   },
   "ignoredDependencies": [
     "bourbon"

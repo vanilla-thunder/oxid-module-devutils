@@ -14,4 +14,3 @@
     <link rel="stylesheet" type="text/css" href="[{$oViewConf->getModuleUrl("_dev-core","out/devutils.css")}]?v=[{$smarty.now}]"/>
 </head>
 <body ng-app="devApp" ng-controller="devCtrl">
-    [{capture name=appdep}]'lumx','ngClipboard','masonry'[{/capture}]

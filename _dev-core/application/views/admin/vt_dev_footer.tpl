@@ -12,15 +12,10 @@
 <script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/zeroclipboard/dist/ZeroClipboard.min.js")}]"></script>
 <script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/ng-clip/dest/ng-clip.min.js")}]"></script>
 
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/masonry/dist/masonry.pkgd.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/imagesloaded/imagesloaded.pkgd.min.js")}]"></script>
-<script type="text/javascript" src="[{$oViewConf->getModuleUrl("_dev-core","out/libs/angular-masonry-directive/src/angular-masonry-directive.js")}]"></script>
-
-
 [{ oxscript }]
 
 <script>
-var app = angular.module('devApp', [ [{$smarty.capture.appdep}] ])
+var app = angular.module('devApp', [ 'lumx','ngClipboard'[{$smarty.capture.appdep}] ])
         .filter("html", ['$sce', function ($sce) {
             return function (htmlCode) {
                 return $sce.trustAsHtml(htmlCode);
