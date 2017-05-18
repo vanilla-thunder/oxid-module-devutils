@@ -1,0 +1,13 @@
+{
+  "name": "codiad",
+  "_cacheHeaders": {
+    "ETag": "\"8ff257e508b06097af979d9250b94aa0757bc517\"",
+    "Content-Length": "2441013",
+    "Content-Type": "application/zip",
+    "Content-Disposition": "attachment; filename=Codiad-v.2.8.1.zip"
+  },
+  "_release": "e-tag:8ff257e50",
+  "_source": "https://github.com/Codiad/Codiad/archive/v.2.8.1.zip",
+  "_target": "*",
+  "_originalSource": "https://github.com/Codiad/Codiad/archive/v.2.8.1.zip"
+}

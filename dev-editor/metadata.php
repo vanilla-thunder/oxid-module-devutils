@@ -1,5 +1,5 @@
 <?php
-include(dirname(__FILE__)."/../vendormetadata.php");
+include(dirname(__FILE__) . "/../vendormetadata.php");
 
 /**
  * vt dev utilities - editor
@@ -29,16 +29,16 @@ include(dirname(__FILE__)."/../vendormetadata.php");
  */
 
 $sMetadataVersion = '1.1';
-$aModule = array(
-    'id'          => 'dev-editor',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> editor (work in progress)',
-    'description' => 'web based editor for quick file changes.<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $newest . '" style=" float:left;"/> (no need to update if you already have this version)',
-    'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => '0.0.2',
-    'author'      => 'Marat Bedoev',
-    'email'       => 'm@marat.ws',
-    'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
-    'extend'      => array(),
-    'files'       => array( 'vtdev_editor'      => 'vt-devutils/dev-editor/application/controllers/admin/vtdev_editor.php' ),
-    'templates'   => array( 'vt_dev_editor.tpl' => 'vt-devutils/dev-editor/application/views/admin/vt_dev_editor.tpl' ),
-);
+$aModule = [
+   'id'          => 'dev-editor',
+   'title'       => '[devutils} online editor',
+   'description' => 'web based editor for quick file changes.',
+   'thumbnail'   => 'oxid-vt.jpg',
+   'version'     => '0.0.2',
+   'author'      => 'Marat Bedoev',
+   'email'       => 'm@marat.ws',
+   'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
+   'extend'      => [],
+   'files'       => ['vtdev_editor' => 'vt-devutils/dev-editor/application/controllers/admin/vtdev_editor.php'],
+   'templates'   => ['vtdev_editor.tpl' => 'vt-devutils/dev-editor/application/views/admin/vtdev_editor.tpl'],
+];

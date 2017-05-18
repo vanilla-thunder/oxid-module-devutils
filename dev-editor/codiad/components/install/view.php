@@ -7,25 +7,25 @@
 *  [root]/license.txt for more. This information must remain intact.
 */
 
-$path = rtrim(str_replace("index.php", "", $_SERVER['SCRIPT_FILENAME']),"/");
+$path = rtrim(str_replace("index.php", "", $_SERVER['SCRIPT_FILENAME']), "/");
 
-$workspace = is_writable( $path . "/workspace");
+$workspace = is_writable($path . "/workspace");
 $data = is_writable($path . "/data");
 $plugins = is_writable($path . "/plugins");
 $themes = is_writable($path . "/themes");
-$workspace = is_writable( $path . "/workspace");
+$workspace = is_writable($path . "/workspace");
 
 $conf = $path . '/config.php';
 
 $config = is_writable(file_exists($conf) ? $conf : $path);
 
-if(ini_get('register_globals') == 1) {
+if (ini_get('register_globals') == 1) {
     $register = true;
 } else {
     $register = false;
 }
 
-if(ini_get('newrelic.enabled') == 1) {
+if (ini_get('newrelic.enabled') == 1) {
     $newrelic = true;
 } else {
     $newrelic = false;
@@ -43,67 +43,93 @@ $autocomplete = array(
 );
 
 if (!empty($query)) {
-	$params = explode('&', $query);
-	foreach ($params as $param) {
-		$param = explode('=', $param);
-		if (array_key_exists($param[0], $autocomplete)) {
-			$autocomplete[$param[0]] = urldecode($param[1]);
-		}
-	}
+    $params = explode('&', $query);
+    foreach ($params as $param) {
+        $param = explode('=', $param);
+        if (array_key_exists($param[0], $autocomplete)) {
+            $autocomplete[$param[0]] = urldecode($param[1]);
+        }
+    }
 }
 
-if(!$workspace || !$data || !$config || $register || $newrelic){
+if (!$workspace || !$data || !$config || $register || $newrelic) {
     ?>
-    <h1>Installation Error</h1>
-    <p>Please make sure the following exist and are writeable:</p>
+    <h1><?php i18n("Installation Error"); ?></h1>
+    <p><?php i18n("Please make sure the following exist and are writeable:"); ?></p>
     <div class="install_issues">
-        <p>[SYSTEM]/config.php - <?php if($config) { echo '<font style="color:green">PASSED</font>'; } else { echo '<font style="color:red">ERROR</font>'; } ?></p>
-        <p>[SYSTEM]/workspace - <?php if($workspace) { echo '<font style="color:green">PASSED</font>'; } else { echo '<font style="color:red">ERROR</font>'; } ?></p>
-        <p>[SYSTEM]/plugins - <?php if($plugins) { echo '<font style="color:green">PASSED</font>'; } else { echo '<font style="color:red">ERROR</font>'; } ?></p>
-        <p>[SYSTEM]/themes - <?php if($themes) { echo '<font style="color:green">PASSED</font>'; } else { echo '<font style="color:red">ERROR</font>'; } ?></p>
-        <p>[SYSTEM]/data - <?php if($data) { echo '<font style="color:green">PASSED</font>'; } else { echo '<font style="color:red">ERROR</font>'; } ?></p> 
+        <p>[SYSTEM]/config.php - <?php if ($config) {
+            echo '<font style="color:green">PASSED</font>';
+} else {
+    echo '<font style="color:red">ERROR</font>';
+} ?></p>
+        <p>[SYSTEM]/workspace - <?php if ($workspace) {
+            echo '<font style="color:green">PASSED</font>';
+} else {
+    echo '<font style="color:red">ERROR</font>';
+} ?></p>
+        <p>[SYSTEM]/plugins - <?php if ($plugins) {
+            echo '<font style="color:green">PASSED</font>';
+} else {
+    echo '<font style="color:red">ERROR</font>';
+} ?></p>
+        <p>[SYSTEM]/themes - <?php if ($themes) {
+            echo '<font style="color:green">PASSED</font>';
+} else {
+    echo '<font style="color:red">ERROR</font>';
+} ?></p>
+        <p>[SYSTEM]/data - <?php if ($data) {
+            echo '<font style="color:green">PASSED</font>';
+} else {
+    echo '<font style="color:red">ERROR</font>';
+} ?></p> 
     </div>
-    <?php if($register || $newrelic) { ?>
-    <p>Please make sure these environmental variables are set:</p>
+    <?php if ($register || $newrelic) { ?>
+    <p><?php i18n("Please make sure these environmental variables are set:"); ?></p>
     <div class="install_issues">
-        <?php if($register) { echo '<p>register_globals: Off</p>'; }
-              if($newrelic) { echo '<p>newrelic.enabled: Off</p>'; } ?>
+        <?php if ($register) {
+            echo '<p>register_globals: Off</p>';
+}
+if ($newrelic) {
+    echo '<p>newrelic.enabled: Off</p>';
+} ?>
     </div>
     <?php } ?>
     <button onclick="window.location.reload();">Re-Test</button>
 
     <?php
-}else{
+} else {
     ?>
     <form id="install">
-    <h1>Initial Setup</h1>
+    <h1><?php i18n("Initial Setup"); ?></h1>
 
-		<label>Dependencies</label>
-		<div id="dependencies">
-			<?php foreach(array("ZIP", "OpenSSL", "MBString") as $dep) {
-				if(extension_loaded(strtolower($dep))) { ?>
-					<div class="success"><span class="icon-check"></span> <?=$dep?></div>
-				<?php } else { ?>
-					<div class="error"><span class="icon-cancel"></span> <?=$dep?></div>
-				<?php }
-			} ?>
-		</div>
+        <label><?php i18n("Dependencies"); ?></label>
+        <div id="dependencies">
+            <?php foreach (array("ZIP", "OpenSSL", "MBString") as $dep) {
+                if (extension_loaded(strtolower($dep))) { ?>
+                    <div class="success"><span class="icon-check"></span> <?=$dep?></div>
+                <?php
+                } else { ?>
+                    <div class="error"><span class="icon-cancel"></span> <?=$dep?></div>
+<?php
+                }
+} ?>
+        </div>
 
     <input type="hidden" name="path" value="<?php echo($path); ?>">
 
-    <label>New Username</label>
+            <label><?php i18n("New Username"); ?></label>
     <input type="text" name="username" autofocus="autofocus"  value="<?php echo($autocomplete['username']); ?>">
 
     <div style="float:left; width: 48%; margin-right: 4%;">
 
-        <label>Password</label>
+        <label><?php i18n("Password"); ?></label>
         <input type="password" name="password" value="<?php echo($autocomplete['password']); ?>">
 
     </div>
 
     <div style="float:left; width: 48%;">
 
-        <label>Confirm Password</label>
+        <label><?php i18n("Confirm Password"); ?></label>
         <input type="password" name="password_confirm" value="<?php echo($autocomplete['password_confirm']); ?>">
 
     </div>
@@ -112,12 +138,12 @@ if(!$workspace || !$data || !$config || $register || $newrelic){
 
     <hr>
 
-    <label>New Project Name</label>
+    <label><?php i18n("New Project Name"); ?></label>
     <input type="text" name="project_name" value="<?php echo($autocomplete['project_name']); ?>">
-    <label>Folder Name or Absolute Path</label>
+    <label><?php i18n("Folder Name or Absolute Path"); ?></label>
     <input type="text" name="project_path" value="<?php echo($autocomplete['project_path']); ?>">
     <hr>
-      <?php
+        <?php
         $location = array(
           "Pacific/Midway" => "(GMT-11:00) Midway Island, Samoa",
           "America/Adak" => "(GMT-10:00) Hawaii-Aleutian",
@@ -210,24 +236,23 @@ if(!$workspace || !$data || !$config || $register || $newrelic){
           "Pacific/Tongatapu" => "(GMT+13:00) Nuku'alofa",
           "Pacific/Kiritimati" => "(GMT+14:00) Kiritimati",
         );
-      ?>
+        ?>
 
-    <label>Timezone</label>
+    <label><?php i18n("Timezone"); ?></label>
     <select name="timezone">
-      <?php
-      foreach ($location as $key => $city) {
-        if ($autocomplete['timezone'] == $key) {
-          $timezones .= '<option selected="selected" value="' . $key . '">' . $city . '</option>';
+        <?php
+        foreach ($location as $key => $city) {
+            if ($autocomplete['timezone'] == $key) {
+                $timezones .= '<option selected="selected" value="' . $key . '">' . $city . '</option>';
+            } else {
+                $timezones .= '<option value="' . $key . '">' . $city . '</option>';
+            }
         }
-        else {
-          $timezones .= '<option value="' . $key . '">' . $city . '</option>';
-        }
-      }
-      echo($timezones);
-      ?>
+        echo($timezones);
+        ?>
     </select>
 
-    <button>Install</button>
+    <button><?php i18n("Install"); ?></button>
     </form>
     <?php
 }
@@ -239,26 +264,26 @@ if(!$workspace || !$data || !$config || $register || $newrelic){
     $(function(){
 
         $('html, body').css('overflow', 'auto');
-		
-		// Automatically select first timezone with the appropriate GMT offset
-		function getTimeZoneString() {
-			var num = new Date().getTimezoneOffset();
-			if (num === 0) {
-				return "GMT";
-			} else {
-				var hours = Math.floor(num / 60);
-				var minutes = Math.floor((num - (hours * 60)));
+        
+        // Automatically select first timezone with the appropriate GMT offset
+        function getTimeZoneString() {
+            var num = new Date().getTimezoneOffset();
+            if (num === 0) {
+                return "GMT";
+            } else {
+                var hours = Math.floor(num / 60);
+                var minutes = Math.floor((num - (hours * 60)));
 
-				if (hours < 10) hours = "0" + Math.abs(hours);
-				if (minutes < 10) minutes = "0" + Math.abs(minutes);
-				
-				return "GMT" + (num < 0 ? "+" : "-") + hours + ":" + minutes;
-			}
-		}
-		var timezone = getTimeZoneString();
-		$("[name=timezone] option").each(function() {
-			if($(this).text().indexOf(timezone) > -1) $("[name=timezone]").val($(this).val());
-		})
+                if (hours < 10) hours = "0" + Math.abs(hours);
+                if (minutes < 10) minutes = "0" + Math.abs(minutes);
+                
+                return "GMT" + (num < 0 ? "+" : "-") + hours + ":" + minutes;
+            }
+        }
+        var timezone = getTimeZoneString();
+        $("[name=timezone] option").each(function() {
+            if($(this).text().indexOf(timezone) > -1) $("[name=timezone]").val($(this).val());
+        })
 
         $('#install').on('submit',function(e){
             e.preventDefault();

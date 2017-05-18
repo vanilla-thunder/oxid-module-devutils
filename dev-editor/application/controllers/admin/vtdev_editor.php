@@ -2,7 +2,7 @@
 
 class vtdev_editor extends oxAdminView
 {
-   protected $_sThisTemplate = 'vt_dev_editor.tpl';
+   protected $_sThisTemplate = 'vtdev_editor.tpl';
 
    public function init()
    {
