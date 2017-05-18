@@ -31,7 +31,7 @@ include(dirname(__FILE__)."/../vendormetadata.php");
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-mails',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> mails',
+    'title'       => '[devutils] email preview (work in progress)',
     'description' => 'easy design and debugging for oxid eshop email templates',
     'thumbnail'   => '../oxid-vt.jpg',
     'version'     => '1.1.0 (2017-03-22)',

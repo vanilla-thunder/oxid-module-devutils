@@ -29,7 +29,7 @@
  */
 class vtdev_console extends oxAdminView
 {
-    protected $_sThisTemplate  = 'vt_dev_console.tpl';
+    protected $_sThisTemplate  = 'vtdev_console.tpl';
     
     public function run()
     {

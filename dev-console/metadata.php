@@ -1,5 +1,5 @@
 <?php
-include(dirname(__FILE__)."/../vendormetadata.php");
+include(dirname(__FILE__) . "/../vendormetadata.php");
 
 /**
  * vt dev utilities - php console
@@ -29,16 +29,16 @@ include(dirname(__FILE__)."/../vendormetadata.php");
  */
 
 $sMetadataVersion = '1.1';
-$aModule = array(
-    'id'          => 'dev-console',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> console',
-    'description' => 'php console for oxid eshop, grants full access to oxid framework for quck testing purposes<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $newest . '" style=" float:left;"/> (no need to update if you already have this version)',
-    'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => $current,
-    'author'      => 'Marat Bedoev',
-    'email'       => 'm@marat.ws',
-    'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
-    'extend'      => array(),
-    'files'       => array( 'vtdev_console' => 'vt-devutils/dev-console/application/controllers/admin/vtdev_console.php' ),
-    'templates'   => array( 'vt_dev_console.tpl' => 'vt-devutils/dev-console/application/views/admin/vt_dev_console.tpl' )
-);
+$aModule = [
+   'id'          => 'dev-console',
+   'title'       => '[devutils] console',
+   'description' => 'php console for oxid eshop, grants full access to oxid framework for quck testing purposes',
+   'thumbnail'   => '../oxid-vt.jpg',
+   'version'     => '1.0.0 (2017-05-17)',
+   'author'      => 'Marat Bedoev',
+   'email'       => 'm@marat.ws',
+   'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
+   'extend'      => [],
+   'files'       => ['vtdev_console' => 'vt-devutils/dev-console/application/controllers/admin/vtdev_console.php'],
+   'templates'   => ['vtdev_console.tpl' => 'vt-devutils/dev-console/application/views/admin/vtdev_console.tpl']
+];

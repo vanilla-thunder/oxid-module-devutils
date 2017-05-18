@@ -1,5 +1,8 @@
 {
   "allow_root": true,
   "directory": "out/libs/",
-  "no_proxy": true
+  "no_proxy": true,
+  "ignoredDependencies": [
+    "angular"
+  ]
 }

@@ -29,7 +29,7 @@
  */
 class vtdev_logs extends oxAdminView
 {
-    protected $_sThisTemplate = 'vt_dev_logs.tpl';
+    protected $_sThisTemplate = 'vtdev_logs.tpl';
 
     protected $_sExLog = null;
     protected $_sErrLog = null;

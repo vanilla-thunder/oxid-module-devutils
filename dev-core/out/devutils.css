@@ -1,0 +1,50 @@
+.container {
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.tabs__vertical .tabs__links { flex-direction: column !important; }
+.tabs__vertical .tabs__indicator { display: none !important;}
+.tabs__vertical .tabs__link--is-active:after { content:'>>';}
+
+.left { float:left;}
+.right { float:right;}
+.grid-2 > .grid-item { width: 48%; padding: 1%; }
+
+span {display: inline;}
+
+.h1 { font-size: 36px; padding: 5px; font-weight: bold; line-height: 1.3; }
+.h2 { font-size: 30px; padding: 5px; font-weight: bold; line-height: 1.3; }
+.h3 { font-size: 24px; padding: 5px; font-weight: bold; line-height: 1.3; } 
+.h4 { font-size: 18px; padding: 5px; font-weight: bold; line-height: 1.3; }
+
+.small { font-size: 0.8em; }
+
+.hl { color: red !important; }
+
+.lx-select { margin-top: 8px; }
+.text-field { padding-top: 8px; }
+.text-field__label { top: -16px; }
+.tooltip__label { font-size:16px;}
+.dialog--xl { width: 80%; margin-left: -40%; }
+
+
+/* logs */
+.dialog pre { padding: 10px;}
+.logs { margin: 0 5%;}
+
+/* mails */
+iframe { border-collapse: collapse; border: 0; min-height: 400px; }
+#text { white-space: pre-wrap; border: 0; padding: 15px; border-left: 1px solid #cfcfcf;}
+
+
+/* console */
+#editor, #output {
+    white-space: pre-wrap;
+    width: 100%;
+    min-height: 20rem;
+    border: 1px solid #cfcfcf;
+}
+
+#backtotop { position: fixed; top: 55px; right: 50px; }

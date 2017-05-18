@@ -1,6 +1,4 @@
 <?php
-include(dirname(__FILE__)."/../vendormetadata.php");
-
 /**
  * vt dev utilities - modules
  * The MIT License (MIT)
@@ -28,25 +26,24 @@ include(dirname(__FILE__)."/../vendormetadata.php");
  * Author:     Marat Bedoev <oxid@marat.ws>
  */
 
-$v = 'https://raw.githubusercontent.com/vanilla-thunder/vt-devutils/master/version.jpg';
 $sMetadataVersion = '1.1';
-$aModule = array(
-    'id'          => 'dev-modules',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> modules',
-    'description' => 'show cached module metadata from database and resetting metadata entries<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $v . '" style=" float:left;"/> (no need to update if you already have this version)',
+$aModule = [
+    'id'          => 'dev-checkout',
+    'title'       => '[devutils] checkout (work in progress)',
+    'description' => 'show cached module metadata from database and resetting metadata entries',
     'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => $current,
+    'version'     => '0.0.1 (2017-05-15)',
     'author'      => 'Marat Bedoev',
     'email'       => 'm@marat.ws',
     'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
-    'extend'      => array(),
-    'files'       => array(
-            'vtdev_metadata'       => 'vt-devutils/dev-modules/application/controllers/admin/vtdev_metadata.php',
-            'vtdevmodule_metadata' => 'vt-devutils/dev-modules/application/controllers/admin/vtdevmodule_metadata.php'
-        ),
-    'templates'   => array(
-            'vt_dev_metadata.tpl'        => 'vt-devutils/dev-modules/application/views/admin/vt_dev_metadata.tpl',
-            'vt_dev_module_metadata.tpl' => 'vt-devutils/dev-modules/application/views/admin/vt_dev_module_metadata.tpl'
-        ),
-    'settings'    => array()
-);
+    'extend'      => [],
+    'files'       => [
+        //'vtdev_metadata'       => 'vt-devutils/dev-modules/application/controllers/admin/vtdev_metadata.php',
+        //'vtdevmodule_metadata' => 'vt-devutils/dev-modules/application/controllers/admin/vtdevmodule_metadata.php'
+    ],
+    'templates'   => [
+        //'vt_dev_metadata.tpl'        => 'vt-devutils/dev-modules/application/views/admin/vt_dev_metadata.tpl',
+        //'vt_dev_module_metadata.tpl' => 'vt-devutils/dev-modules/application/views/admin/vt_dev_module_metadata.tpl'
+    ],
+    'settings'    => []
+];

@@ -1,5 +1,5 @@
 <?php
-include(dirname(__FILE__)."/../vendormetadata.php");
+include(dirname(__FILE__) . "/../vendormetadata.php");
 
 /**
  * vt dev utilities - logs
@@ -29,27 +29,27 @@ include(dirname(__FILE__)."/../vendormetadata.php");
  */
 
 $sMetadataVersion = '1.1';
-$aModule = array(
-    'id'          => 'dev-logs',
-    'title'       => '<strong style="color:#c700bb;border: 1px solid #c700bb;padding: 0 2px;background:white;">dev</strong> logs',
-    'description' => 'logs parser for oxid eshop.<br/>add this code to your config.inc.php to save webserver errors into log/error.log<br>'.
-                     '<input style="width:90%;" type="text" value="ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');">'.
-                     '<hr/><b style="display: inline-block; float:left;">newest version:</b><img src="' . $newest . '" style=" float:left;"/> (no need to update if you already have this version)',
-    'thumbnail'   => 'oxid-vt.jpg',
-    'version'     => $current,
-    'author'      => 'Marat Bedoev',
-    'email'       => 'm@marat.ws',
-    'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
-    'extend'      => array(),
-    'files'       => array( 'vtdev_logs' => 'vt-devutils/dev-logs/application/controllers/admin/vtdev_logs.php' ),
-    'templates'   => array( 'vt_dev_logs.tpl' => 'vt-devutils/dev-logs/application/views/admin/vt_dev_logs.tpl' ),
-    'settings'    => array(
-        array(
-            'group'    => 'vtDev',
-            'name'     => 's_vtDev_serverLogPath',
-            'type'     => 'str',
-            'position' => 0,
-            'value'    => 'log/error.log'
-        )
-    )
-);
+$aModule = [
+   'id'          => 'dev-logs',
+   'title'       => '[devutils] logs -WIP-',
+   'description' => 'logs parser for oxid eshop.<br/>add this code to your config.inc.php to save webserver errors into log/error.log<br><textarea cols="80" rows="3">ini_set(\'error_reporting\',24567); 
+ini_set(\'log_errors\',1);
+ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');</textarea>>',
+   'thumbnail'   => '../oxid-vt.jpg',
+   'version'     => '1.0.2 (2017-05-17)',
+   'author'      => 'Marat Bedoev',
+   'email'       => 'm@marat.ws',
+   'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
+   'extend'      => [],
+   'files'       => ['vtdev_logs' => 'vt-devutils/dev-logs/application/controllers/admin/vtdev_logs.php'],
+   'templates'   => ['vtdev_logs.tpl' => 'vt-devutils/dev-logs/application/views/admin/vtdev_logs.tpl'],
+   'settings'    => [
+      [
+         'group'    => 'vtDev',
+         'name'     => 's_vtDev_serverLogPath',
+         'type'     => 'str',
+         'position' => 0,
+         'value'    => 'log/error.log'
+      ]
+   ]
+];
