@@ -1,0 +1,17 @@
+{
+  "name": "vt-devutils",
+  "description": "developer utilities for OXID eShop",
+  "type": "oxideshop-module",
+  "keywords": ["oxid", "eShop", "developer utilities"],
+  "homepage": "https://marat.ws/tools-fuer-oxid-entwickler/",
+  "support": {
+    "email": "m@marat.ws",
+    "issues": "https://github.com/vanilla-thunder/vt-devutils/issues",
+    "source": "https://github.com/vanilla-thunder/vt-devutils"
+  },
+  "extra": {
+    "oxideshop": {
+      "target-directory": "vt-devutils"
+    }
+  }
+}
