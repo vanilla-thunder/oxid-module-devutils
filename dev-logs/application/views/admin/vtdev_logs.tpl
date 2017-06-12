@@ -64,24 +64,26 @@
             </div>
 
             <ul class="list mt++ logs" ng-show="errors.log.length > 0">
-                <li class="list-row list-row--has-separator" ng-repeat="log in errors.log |filter:{full:search.error}:false |filter:{in:search.errin}:false |filter:{client:search.errclient}:false |filter:{date:search.errdate} |limitTo:30">
+                <li class="list-row list-row--has-separator" ng-repeat="log in errors.log |filter:{full:search.error}:false |filter:{client:search.errclient}:false |filter:{date:search.errdate} |limitTo:30">
                     <div class="list-row__primary">
                         <i ng-show="log.type=='error'" class="icon icon--l icon--red icon--circled mdi mdi-ambulance"></i>
                         <i ng-show="log.type=='warning'" class="icon icon--l icon--orange icon--circled mdi mdi-sim-alert"></i>
                     </div>
 
                     <div class="list-row__content">
-                        <div class="h4">{{ $index+1 }} # <span ng-bind-html="log.header |highlight:search.error |html"></span></div>
+                        <div class="h4">{{ $index+1 }} # <span ng-bind-html="log.msg  |highlight:search.error |html"></span></div>
 
                         <div class="fs-body-1 tc-black-2">
                             <div flex-container="row">
-                                <div flex-item><b>in:</b> <span ng-bind-html="log.in |highlight:search.errin |html"></span></div>
-                                <div ng-bind-html="log.date |highlight:search.errdate |html"></div>
+                                <div ng-bind-html="log.date |highlight:search.errdate |html"></div>&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;<div ng-bind-html="log.client |highlight:search.errclient |html"></div>
                             </div>
+                            [{*
                             <div flex-container="row">
+                            <div flex-item><b>in:</b> <span ng-bind-html="log.in |highlight:search.errin |html"></span></div>
                                 <div flex-item><b>referer:</b> <span ng-bind="log.referer"></span></div>
-                                <div ng-bind-html="log.client |highlight:search.errclient |html"></div>
+
                             </div>
+                             *}]
                         </div>
                     </div>
                 </li>
