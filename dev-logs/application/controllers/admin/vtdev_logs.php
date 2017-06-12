@@ -129,26 +129,21 @@ class vtdev_logs extends oxAdminView
             */
 
             preg_match_all("/\[([^\]]*)\]/", $value, $header);
-            $msg = trim(str_replace(array_slice($header[0], 0, 3), '', $value));
+            $msg = trim(str_replace(array_slice($header[0], 0, 4), '', $value));
 
-            // in: between " in" and " referer"
-            preg_match("/\sin\s\/(.*)\sreferer\:/", $msg, $in);
-
-            // referer: after "referer"
-            preg_match("/\sreferer\:(.*)/", $msg, $ref);
-
+            /*
+            preg_match("/\sin\s\/(.*)\sreferer\:/", $msg, $in); // in: between " in" and " referer"
+            preg_match("/\sreferer\:(.*)/", $msg, $ref); // referer: after "referer"
             $replace = [$ref[0], ' in /' . $in[1]];
+            */
 
-            $aErr        = array(
+            $aErr        = [
                 "date" => date_format(date_create($header[1][0]), 'Y-m-d H:i:s'),
                 "type" => $header[1][1],
-                "client" => $header[1][2],
-                "header" => str_replace($replace, "", $msg),
-                "in" => str_replace($cfg->getConfigParam("sShopDir"), "", "/" . $in[1]),
-                "referer" => $ref[1],
+                "client" => $header[1][3],
                 "full" => $value
 
-            );
+            ];
             $aData[$key] = (object)$aErr;
 
             // "in" => str_replace($cfg->getConfigParam("sShopDir"),"",substr($msg, strpos($msg, " in /")+3, strpos($msg, ", referer: "))),

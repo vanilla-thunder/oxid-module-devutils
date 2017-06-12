@@ -34,13 +34,13 @@ $aModule = [
    'title'       => '[devutils] logs -WIP-',
    'description' => 'logs parser for oxid eshop.<br/>add this code to your config.inc.php to save webserver errors into log/error.log<br><textarea cols="80" rows="3">ini_set(\'error_reporting\',24567); 
 ini_set(\'log_errors\',1);
-ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');</textarea>>',
+ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');</textarea><hr/>access token for chrome extension: '.md5($_SERVER["DOCUMENT_ROOT"]),
    'thumbnail'   => '../oxid-vt.jpg',
-   'version'     => '1.0.2 (2017-05-17)',
+   'version'     => '1.1.0 (2017-05-30)',
    'author'      => 'Marat Bedoev',
    'email'       => 'm@marat.ws',
    'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
-   'extend'      => [],
+   'extend'      => ['start' => 'vt-devutils/dev-logs/application/extend/startvtdevlogs'],
    'files'       => ['vtdev_logs' => 'vt-devutils/dev-logs/application/controllers/admin/vtdev_logs.php'],
    'templates'   => ['vtdev_logs.tpl' => 'vt-devutils/dev-logs/application/views/admin/vtdev_logs.tpl'],
    'settings'    => [
