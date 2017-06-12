@@ -1,5 +1,5 @@
 {
-  "name": "vt-devutils",
+  "name": "vt/devutils",
   "description": "developer utilities for OXID eShop",
   "type": "oxideshop-module",
   "keywords": ["oxid", "eShop", "developer utilities"],
