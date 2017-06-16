@@ -14,12 +14,17 @@ class startvtdevlogs extends startvtdevlogs_parent
 
         // exceptin log
         $sExLog = $cfg->getConfigParam('sShopDir') . 'log/EXCEPTION_LOG.txt';
-        if (!file_exists($sExLog) || !is_readable($sExLog))  $response["status"] = "ERR: EXCEPTION_LOG.txt does not exist or is not readable\n";
+        if ( !file_exists($sExLog) ) $response["exceptions"]["status"] = "ERROR: EXCEPTION_LOG.txt does not exist";
+        elseif ( !is_readable($sExLog) ) $response["exceptions"]["status"] = "ERROR: EXCEPTION_LOG.txt is not readable";
         else {
             $sData = file_get_contents($sExLog);
             $aData = explode("---------------------------------------------", $sData);
-            $aData = array_slice($aData, -10);
+
+            $response["exceptions"]["status"] = "ok";
+            $response["exceptions"]["total"] = count($aData);
+
             array_pop($aData); // cut last empty array element
+            $aData = array_slice($aData, -10);
             foreach ($aData as $key => $value) {
                 $aEx     = explode("Stack Trace:", trim($value));
                 $aHeader = explode("[0]:", $aEx[0]);
@@ -38,19 +43,24 @@ class startvtdevlogs extends startvtdevlogs_parent
 
         // error log
         $sErrLog = $cfg->getConfigParam('sShopDir') . 'log/error.log';
-        if (!file_exists($sErrLog) || !is_readable($sErrLog))  $response["status"] .= "ERR: error.log does not exist or is not readable\n";
+        if ( !file_exists($sErrLog) ) $response["errors"]["status"] = "ERROR: error.log does not exist";
+        elseif ( !is_readable($sErrLog) ) $response["errors"]["status"] = "ERROR: error.log is not readable";
         else {
-            $aData = file($sErrLog);
-            $aData = array_slice($aData, -20);
-            foreach ($aData as $key => $value) {
-                preg_match_all("/\[([^\]]*)\]/", $value, $header);
-                $msg = trim(str_replace(array_slice($header[0], 0, 4), '', $value));
+            $sData = "\n".file_get_contents($sErrLog);
+            $aData = preg_split('/\n\[/',$sData);
+            unset($aData[0]);
 
-                /*
-                preg_match("/\sin\s\/(.*)\sreferer\:/", $msg, $in); // in: between " in" and " referer"
-                preg_match("/\sreferer\:(.*)/", $msg, $ref); // referer: after "referer"
-                $replace = [$ref[0], ' in /' . $in[1]];
-                */
+            $response["errors"]["status"] = "ok";
+            $response["errors"]["total"] = count($aData);
+            $aData = array_slice($aData, -20);
+
+            foreach ($aData as $key => $value)
+            {
+                preg_match('/\]\s{1}[^\[]/',$value,$matches,PREG_OFFSET_CAPTURE);
+                $meta = '['.substr($value,0,$matches[0][1]).']';
+                $msg =  substr($value,$matches[0][1]+2);
+
+                preg_match_all("/\[([^\]]*)\]/", $meta, $header);
 
                 $aData[$key] = [
                     "date" => date_format(date_create_from_format("D M d H:i:s.u Y",$header[1][0]), 'Y-m-d H:i:s'),

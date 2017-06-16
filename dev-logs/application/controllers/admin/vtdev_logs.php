@@ -106,36 +106,37 @@ class vtdev_logs extends oxAdminView
     public function getErrorLog()
     {
         if (!$this->_sErrLog) return false;
-
-        $cfg = oxRegistry::getConfig();
         if (!file_exists($this->_sErrLog) || !is_readable($this->_sErrLog)) die(json_encode(['status' => "file does not exist or is not readable"]));
 
-        $aData = file($this->_sErrLog);
+        $sData = "\n".file_get_contents($this->_sErrLog);
+        $aData = preg_split('/\n\[/',$sData);
+        unset($aData[0]);
 
         // xdebug?
         if (function_exists('xdebug_get_code_coverage')) $this->_getXdebugErrorLog($aData);
 
         $aData = array_slice($aData, -300);
-//echo "<pre>";
-        foreach ($aData as $key => $value) {
+        foreach ($aData as $key => $value)
+        {
             /*
-            [Sat May 30 10:32:38 2015] [error] [client 79.222.227.99] 
+            [Sat May 30 10:32:38 2015] [error] [client 79.222.227.99]
             PHP Fatal error:  Smarty error: [in vt_dev_footer.tpl line 7]: syntax error: unrecognized tag: $module_components:default:"'lumx'" (Smarty_Compiler.class.php, line 446) in /srv/ox/bla/core/smarty/Smarty.class.php on line 1093, referer: http://ox.marat.ws/bla/admin/index.php?editlanguage=0&force_admin_sid=5fdleoj00epaoe5d75d5hi6q01&stoken=C8D0F139&&cl=navigation&item=home.tpl
             */
-/*
-            print_r($key);
-            print_r($value);
-            echo "<hr/>";
-            */
+            preg_match('/\]\s{1}[^\[]/',$value,$matches,PREG_OFFSET_CAPTURE);
+            $meta = '['.substr($value,0,$matches[0][1]).']';
+            $msg =  substr($value,$matches[0][1]+2);
 
-            preg_match_all("/\[([^\]]*)\]/", $value, $header);
-            $msg = trim(str_replace(array_slice($header[0], 0, 4), '', $value));
+            preg_match_all("/\[([^\]]*)\]/", $meta, $header);
+            //var_dump($header);
+
+            //$msg = trim(str_replace(array_slice($header[0], 0, 4), '', $value));
 
             /*
             preg_match("/\sin\s\/(.*)\sreferer\:/", $msg, $in); // in: between " in" and " referer"
             preg_match("/\sreferer\:(.*)/", $msg, $ref); // referer: after "referer"
             $replace = [$ref[0], ' in /' . $in[1]];
             */
+//var_dump(date_create_from_format("D M d H:i:s.u Y",$header[1][0]));
 
             $aErr        = [
                 "date" => date_format(date_create_from_format("D M d H:i:s.u Y",$header[1][0]), 'Y-m-d H:i:s'),
