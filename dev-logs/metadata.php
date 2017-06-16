@@ -36,7 +36,7 @@ $aModule = [
 ini_set(\'log_errors\',1);
 ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');</textarea><hr/>access token for chrome extension: '.md5($_SERVER["DOCUMENT_ROOT"]),
    'thumbnail'   => '../oxid-vt.jpg',
-   'version'     => '1.1.0 (2017-05-30)',
+   'version'     => '1.2.0 (2017-06-16)',
    'author'      => 'Marat Bedoev',
    'email'       => 'm@marat.ws',
    'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
