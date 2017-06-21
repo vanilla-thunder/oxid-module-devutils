@@ -63,7 +63,7 @@ class startvtdevlogs extends startvtdevlogs_parent
                 preg_match_all("/\[([^\]]*)\]/", $meta, $header);
 
                 $aData[$key] = [
-                    "date" => date_format(date_create_from_format("D M d H:i:s.u Y",$header[1][0]), 'Y-m-d H:i:s'),
+                    "date" => date_format(( date_create($header[1][0]) ? date_create($header[1][0]) : date_create_from_format("D M d H:i:s.u Y",$header[1][0])), 'Y-m-d H:i:s'),
                     "type" => $header[1][1],
                     "client" => $header[1][3],
                     "msg" => $msg
