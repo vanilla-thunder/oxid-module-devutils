@@ -1,11 +1,9 @@
 <?php
-include(dirname(__FILE__) . "/../vendormetadata.php");
-
 /**
  * vt dev utilities - logs
  * The MIT License (MIT)
  *
- * Copyright (C) 2015  Marat Bedoev
+ * Copyright (C) 2017  Marat Bedoev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +29,7 @@ include(dirname(__FILE__) . "/../vendormetadata.php");
 $sMetadataVersion = '1.1';
 $aModule = [
    'id'          => 'dev-logs',
-   'title'       => '[devutils] logs -WIP-',
+   'title'       => '[devutils] logs',
    'description' => 'logs parser for oxid eshop.<br/>add this code to your config.inc.php to save webserver errors into log/error.log<br><textarea cols="80" rows="3">ini_set(\'error_reporting\',24567); 
 ini_set(\'log_errors\',1);
 ini_set(\'error_log\',dirname(__FILE__).\'/log/error.log\');</textarea><hr/>access token for chrome extension: '.md5($_SERVER["DOCUMENT_ROOT"]),
