@@ -31,24 +31,23 @@ include(dirname(__FILE__)."/../vendormetadata.php");
 $sMetadataVersion = '1.1';
 $aModule = array(
     'id'          => 'dev-mails',
-    'title'       => '[devutils] email preview (work in progress)',
+    'title'       => '[devutils] email preview',
     'description' => 'easy design and debugging for oxid eshop email templates',
     'thumbnail'   => '../oxid-vt.jpg',
-    'version'     => '1.1.0 (2017-03-22)',
+    'version'     => '1.2.0 (2017-07-05)',
     'author'      => 'Marat Bedoev',
     'email'       => 'm@marat.ws',
     'url'         => 'https://github.com/vanilla-thunder/vt-devutils',
     'extend'      => array(
-            'oxemail' => 'vt-devutils/dev-mails/extend/vt_dev_mail_oxemail',
-            'oxorder' => 'vt-devutils/dev-mails/extend/vt_dev_mail_oxorder'
+            'oxemail' => 'vt-devutils/dev-mails/extend/oxemailvtdevmails',
+            'oxorder' => 'vt-devutils/dev-mails/extend/oxordervtdevmails'
         ),
     'files'       => array(
-        'vtdev_mails' => 'vt-devutils/dev-mails/application/controllers/admin/vtdev_mails.php',
-        'vtdev_mails_preview' => 'vt-devutils/dev-mails/application/controllers/vtdev_mails_preview.php'
+        'vtdev_mails' => 'vt-devutils/dev-mails/application/controllers/vtdev_mails.php'
         ),
     'templates'   => array(
-            'vt_dev_mails.tpl' => 'vt-devutils/dev-mails/application/views/admin/vt_dev_mails.tpl',
-            'vt_dev_mails_preview.tpl' => 'vt-devutils/dev-mails/application/views/admin/vt_dev_mails_preview.tpl'
+            'vtdev_mails.tpl' => 'vt-devutils/dev-mails/application/views/vtdev_mails.tpl'
+            //'vt_dev_mails_preview.tpl' => 'vt-devutils/dev-mails/application/views/admin/vt_dev_mails_preview.tpl'
         ),
     'settings'    => array()
 );

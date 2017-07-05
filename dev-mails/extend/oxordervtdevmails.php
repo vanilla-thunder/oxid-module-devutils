@@ -27,19 +27,26 @@
  * Version:    0.9
  * Author:     Marat Bedoev <oxid@marat.ws>
  */
-class vt_dev_mail_oxorder extends vt_dev_mail_oxorder_parent
+class oxordervtdevmails extends oxordervtdevmails_parent
 {
-    public function fakeOrder($oUser, $oBasket)
+    /** this function simulates finalizeOrder
+     *
+     * @param $oBasket oxBasket
+     * @param $oUser oxUser
+     */
+    public function fakeOrder($oBasket, $oUser)
     {
         $this->_setUser($oUser);
         $this->_loadFromBasket($oBasket);
-        $oUserPayment = $this->_setPayment($oBasket->getPaymentId());
+        $oUserPayment = $this->_setPayment( ($oBasket->getPaymentId() ? $oBasket->getPaymentId() : 'oxidpayadvance') );
 
         $this->oxorder__oxordernr = new oxField("777");
         
         $sDate = date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime());
         $this->oxorder__oxorderdate = new oxField($sDate);
         $this->oxorder__oxsenddate = new oxField($sDate);
+
+        $oBasket->setOrderId('testOrder777');
 
         $this->_oUser = $oUser;
         $this->_oBasket = $oBasket;

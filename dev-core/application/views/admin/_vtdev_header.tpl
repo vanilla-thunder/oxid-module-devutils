@@ -13,4 +13,4 @@
     <link rel="stylesheet" type="text/css" href="[{$oViewConf->getModuleUrl("dev-core","out/libs/mdi/css/materialdesignicons.min.css")}]"/>
     <link rel="stylesheet" type="text/css" href="[{$oViewConf->getModuleUrl("dev-core","out/devutils.css")}]"/>
 </head>
-<body ng-app="devApp" ng-controller="devCtrl">
+<body ng-app="devApp" ng-controller="devCtrl" id="[{$oView->getClassName()}]">

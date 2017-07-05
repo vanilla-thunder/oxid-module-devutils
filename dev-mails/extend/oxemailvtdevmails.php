@@ -28,7 +28,7 @@
  * Author:     Marat Bedoev <oxid@marat.ws>
  */
  
-class vt_dev_mail_oxemail extends vt_dev_mail_oxemail_parent
+class oxemailvtdevmails extends oxemailvtdevmails_parent
 {
     private $_blDebug = false;
     

@@ -26,71 +26,67 @@
  *
  * Author:     Marat Bedoev <m@marat.ws>
  */
-class vtdev_mails_preview extends oxUBase
+class vtdev_mails extends oxUBase
 {
+    protected $_sThisTemplate  = 'vtdev_mails.tpl';
     public function init()
     {
         parent::init();
-        if($this->getUser()->oxuser__oxrights->value != "malladmin") die("allahu akbar!");
+        if($this->getUser()->oxuser__oxrights->value != "malladmin") die("401: plx log in");
 
     }
 
     public function render()
     {
-        die();
+        $cfg = oxRegistry::getConfig();
+        if( $mail = $cfg->getRequestParameter("mail") ) $this->_preview($mail);
+        return parent::render();
     }
 
-    private function fakeOrder()
-    {
-        $oUser = $this->getUser();
-        $oBasket = $this->getSession()->getBasket();
-        $oOrder = oxNew("oxOrder");
-        $oOrder->fakeOrder($oUser, $oBasket);
-
-        return $oOrder;
-    }
-
-    public function preview()
+    private function _preview($mail)
     {
         $cfg = oxRegistry::getConfig();
-        if(!($fnc = $cfg->getRequestParameter("mail"))) die("missing mail parameter");
+        $type = $cfg->getRequestParameter("type");
 
         $oUser = oxRegistry::getSession()->getUser();
-
         $oEmail = oxNew('oxemail');
         $oEmail->setDebug();
 
-        if(in_array($fnc, ["sendRegisterEmail","sendRegisterConfirmEmail","sendNewsletterDbOptInMail" ]))
+        if(in_array($mail, ["sendRegisterEmail","sendRegisterConfirmEmail","sendNewsletterDbOptInMail" ]))
         {
             // diese Funktionen benötigen oxUser als param
-            $oEmail->$fnc($oUser);
+            $oEmail->$mail($oUser);
         }
-        elseif (in_array($fnc, ["sendOrderEmailToUser","sendOrderEmailToOwner"]))
+        elseif (in_array($mail, ["sendOrderEmailToUser","sendOrderEmailToOwner"]))
         {
-            // diese Funktionen benötigen oxOrder als param
-            $oOrder = $this->fakeOrder();
-            $oEmail->$fnc($oOrder);
+            $oUser = $this->getUser();
+            $oBasket = $this->getSession()->getBasket();
+            $oOrder = oxNew("oxOrder");
+            $oOrder->fakeOrder($oBasket,$oUser);
+            //var_dump($oOrder);
+            //die();
+            $oEmail->$mail($oOrder);
         }
-        elseif($fnc == "sendSendedNowMail")
+        elseif($mail == "sendSendedNowMail")
         {
             $oOrder = array_shift($oUser->getOrders(1)->getArray());
             $this->setAdminMode(true);
-            $oEmail->$fnc($oOrder);
+            $oEmail->$mail($oOrder);
         }
-        elseif($fnc == "sendForgotPwdEmail")
+        elseif($mail == "sendForgotPwdEmail")
         {
             // diese Funktionen benötigen eine E-Mail Adresse als param
-            $oEmail->$fnc($oUser->oxuser__oxusername->value);
+            $oEmail->$mail($oUser->oxuser__oxusername->value);
         }
-        elseif($fnc == "sendContactMail")
+        elseif($mail == "sendContactMail")
         {
             // diese Funktionen benötigen E-Mail Adresse, Subject und Text als params
             $sMail = $oUser->oxuser__oxusername->value;
             $sSubject = "mail subject";
             $sBody = "dear $sMail, we miss you very hard here, at OXID eShop.\n Please, don't forget us!";
-            $oEmail->$fnc($sMail, $sSubject, $sBody);
+            $oEmail->$mail($sMail, $sSubject, $sBody);
         }
-        elseif($fnc == "sendSuggestMail")
+        elseif($mail == "sendSuggestMail")
         {
             exit;
         }
@@ -99,18 +95,17 @@ class vtdev_mails_preview extends oxUBase
             exit;
         }
 
-
-        if (oxRegistry::getConfig()->getRequestParameter("html"))
+        if($type == 'html')
         {
             echo $oEmail->getBody();
         }
-        elseif (oxRegistry::getConfig()->getRequestParameter("text"))
+        elseif($type == 'plain')
         {
-            echo $oEmail->getAltBody();
+            echo "<pre>".$oEmail->getAltBody()."</pre>";
         }
         else
         {
-            echo json_encode($oEmail);
+            echo $oEmail->getSubject();
         }
         exit;
     }
