@@ -136,10 +136,9 @@ class vtdev_logs extends oxAdminView
             preg_match("/\sreferer\:(.*)/", $msg, $ref); // referer: after "referer"
             $replace = [$ref[0], ' in /' . $in[1]];
             */
-//var_dump(date_create_from_format("D M d H:i:s.u Y",$header[1][0]));
 
             $aErr        = [
-                "date" => date_format(date_create_from_format("D M d H:i:s.u Y",$header[1][0]), 'Y-m-d H:i:s'),
+                "date" => date_format(( date_create($header[1][0]) ? date_create($header[1][0]) : date_create_from_format("D M d H:i:s.u Y",$header[1][0])), 'Y-m-d H:i:s'),
                 "type" => $header[1][1],
                 "client" => $header[1][3],
                 "msg" => $msg,
