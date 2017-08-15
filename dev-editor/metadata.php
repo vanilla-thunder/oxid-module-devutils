@@ -31,7 +31,7 @@ include(dirname(__FILE__) . "/../vendormetadata.php");
 $sMetadataVersion = '1.1';
 $aModule = [
    'id'          => 'dev-editor',
-   'title'       => '[devutils} online editor',
+   'title'       => '[devutils] online editor',
    'description' => 'web based editor for quick file changes.',
    'thumbnail'   => 'oxid-vt.jpg',
    'version'     => '0.0.2',
