@@ -32,7 +32,7 @@ class vtdev_mails extends oxUBase
     public function init()
     {
         parent::init();
-        if($this->getUser()->oxuser__oxrights->value != "malladmin") die("401: plx log in");
+        if($this->getUser()->oxuser__oxrights->value != "malladmin") die("Please login with an admin user in the frontend and add something to your basket.");
 
     }
 
