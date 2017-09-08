@@ -24,9 +24,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Author:     Marat Bedoev <oxid@marat.ws>
+ * Author:     Marat Bedoev <m@marat.ws>
  */
-class vt_dev_thankyou extends vt_dev_thankyou_parent
+class thankyouVtDevCheckout extends thankyouVtDevCheckout_parent
 {
 
    public function init()
