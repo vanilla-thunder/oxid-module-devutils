@@ -17,8 +17,8 @@
     <div flex-item><h3 class="text-center">{{subject}}</h3></div>
     <hr/>
     <div flex-item flex-container="row">
-        <div flex-item><iframe class="p+" onLoad="resize('html');" id="html"></iframe></div>
-        <div flex-item><iframe class="p+" onLoad="resize('plain');" id="plain"></iframe></div>
+        <div flex-item><iframe width="100%" class="p+" onLoad="resize('html');" id="html"></iframe></div>
+        <div flex-item><iframe width="100%" class="p+" onLoad="resize('plain');" id="plain"></iframe></div>
     </div>
 </div>
 
