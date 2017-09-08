@@ -1,4 +1,4 @@
-[{include file="vt_dev_header.tpl"}]
+[{include file="_vtdev_header.tpl"}]
 <form name="transfer" id="transfer" action="[{ $oViewConf->getSelfLink() }]" method="post">
     [{ $oViewConf->getHiddenSid() }]
     <input type="hidden" name="oxid" value="[{$oView->getEditObjectId()}]">
@@ -153,4 +153,4 @@
    [{/capture}]
 </script>
 
-[{include file="vt_dev_footer.tpl" b2t=false}]
+[{include file="_vtdev_footer.tpl" b2t=false}]

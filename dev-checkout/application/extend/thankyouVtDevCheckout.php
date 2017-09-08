@@ -35,7 +35,7 @@ class thankyouVtDevCheckout extends thankyouVtDevCheckout_parent
       parent::init();
       /** @var oxUser $oUser */
       $oUser = $this->getUser();
-      if($oUser->oxuser__oxrights->value === "malladmin" || $oUser->inGroup("testuser")) oxRegistry::getSession()->setBasket($this->_oBasket);
+      if($oUser->oxuser__oxrights->value === "malladmin" || $oUser->inGroup("oxidadmin")) oxRegistry::getSession()->setBasket($this->_oBasket);
    }
 
 }
