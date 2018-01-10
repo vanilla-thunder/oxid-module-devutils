@@ -36,4 +36,6 @@ class vtdev_gui extends oxAdminView
    public function clearTpl() { oxRegistry::get("vtdevutils")->clearTpl(true); }
 
    public function updateViews() { oxRegistry::get("vtdevutils")->updateViews(true); }
+   
+   public function keepalive() {  }
 }
