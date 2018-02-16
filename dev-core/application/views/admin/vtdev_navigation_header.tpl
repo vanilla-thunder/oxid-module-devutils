@@ -28,15 +28,15 @@
 <form name="vtdevutils" id="vtdevutils" action="[{$oViewConf->getSelfLink() }]" method="post" target="vtdevframe">
     [{$oViewConf->getHiddenSid() }]
     <input type="hidden" name="cl" value="vtdev_gui">
-    <button class="btn-vtdev" type="submit" name="fnc" value="cleartmp">clear<br/>php cache</button>
-    <button class="btn-vtdev" type="submit" name="fnc" value="cleartpl">clear<br/>tpl cache</button>
-
     <input type="checkbox" id="keepalive" name="fnc" value="keepalive">
     <button class="btn-vtdev">
         <label for="keepalive">
             keep me<br/>logged in
         </label>
     </button>
+    <button class="btn-vtdev" type="submit" name="fnc" value="cleartmp">clear<br/>php cache</button>
+    <button class="btn-vtdev" type="submit" name="fnc" value="cleartpl">clear<br/>tpl cache</button>
+
     <iframe name="vtdevframe" width="0" height="0" border="0" style="display:none;"></iframe>
     [{* <button class="textButton" type="submit" name="fnc" value="updateviews" onclick="return confirm('[{oxmultilang ident="SHOP_MALL_UPDATEVIEWSCONFIRM"}]?')">update views</button> *}]
 </form>
