@@ -1,0 +1,33 @@
+{
+  "name": "vt-devutils/dev-metadata",
+  "description": "Analysis module for finding problematical shop data.",
+  "type": "oxideshop-module",
+  "keywords": [
+    "oxid",
+    "modules",
+    "admin",
+    "dev",
+    "debug"
+  ],
+  "homepage": "https://github.com/vanilla-thunder/vt-devutils",
+  "license": [
+    "GNU"
+  ],
+  "require": {
+    "vt/dev-core": "*"
+  },
+  "version": "1.1.0",
+  "extra": {
+    "oxideshop": {
+      "blacklist-filter": [
+        "docs/**/*.*"
+      ],
+      "target-directory": "vt-devutils/dev-metadata"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Vt\\Oxid\\DevMetadata\\": "../../../source/modules/vt-devutils/dev-metadata/"
+    }
+  }
+}

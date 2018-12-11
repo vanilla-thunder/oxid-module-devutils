@@ -1,0 +1,30 @@
+{
+  "name": "vt/dev-core",
+  "description": "Analysis module for finding problematical shop data.",
+  "type": "oxideshop-module",
+  "keywords": [
+    "oxid",
+    "modules",
+    "admin",
+    "dev",
+    "debug"
+  ],
+  "homepage": "https://github.com/vanilla-thunder/vt-devutils",
+  "license": [
+    "GNU"
+  ],
+  "version": "1.7.0",
+  "extra": {
+    "oxideshop": {
+      "blacklist-filter": [
+        "docs/**/*.*"
+      ],
+      "target-directory": "vt-devutils/dev-core"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Vt\\Oxid\\DevCore\\": "../../../source/modules/vt-devutils/dev-core/"
+    }
+  }
+}
