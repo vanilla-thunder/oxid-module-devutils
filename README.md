@@ -21,6 +21,10 @@ You have to install it via Composer, as local path repository or via git repo.
 
 ### Add Repositories
 
+**Attantion:** Do not delete things out of your composer.json. Simply add the `repositories`-Block or extend it!
+
+```
+{
   "name": "...",
   "type": "project",
   "description": "...",
@@ -47,11 +51,15 @@ You have to install it via Composer, as local path repository or via git repo.
       "url": "privateSrc/VanillaThunder/DevMetadata"
     }
   ]
+}
+```
 
 ### Add Modules/Packages
 
 **Attantion:** No need to add `DevCore`, it will be automatic installed if one of the others will be installed
 
+```
+{
   "name": "...",
   "type": "project",
   "description": "...",
@@ -65,6 +73,8 @@ You have to install it via Composer, as local path repository or via git repo.
     "vt-devutils/dev-mails": "*",
     "vt-devutils/dev-metadata": "*"
   }
+}
+```
 
 ### How install now?
 
