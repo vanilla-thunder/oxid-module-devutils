@@ -52,9 +52,7 @@ class Email extends Email_parent
 
     public function sendForgotPwdEmail($sEmailAddress, $sSubject = null)
     {
-        oxRegistry::getUtils()->writeToLog($sEmailAddress . " haz forgot pwd!", 'pwd.log');
         $ret = parent::sendForgotPwdEmail($sEmailAddress, $sSubject);
-        oxRegistry::getUtils()->writeToLog($sEmailAddress . " haz forgot pwd!!!!", 'pwd.log');
         return ($this->isDebug()) ? $this : $ret;
     }
 }

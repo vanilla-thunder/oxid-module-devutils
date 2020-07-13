@@ -42,6 +42,6 @@
         var vtdevutils = document.getElementById('vtdevutils'),
             keepalive = document.getElementById('keepalive');
         if (keepalive.checked) vtdevutils.submit();
-    }, 300000);
+    }, 180000);
 </script>
 [{include file="header.tpl"}]

@@ -54,7 +54,7 @@ class DevMails extends \OxidEsales\Eshop\Application\Controller\FrontendControll
             // diese Funktionen benötigen oxUser als param
             $oEmail->$mail($oUser);
         }
-        elseif (in_array($mail, ["sendOrderEmailToUser","sendOrderEmailToOwner"]))
+        elseif (in_array($mail, ["sendOrderEmailToUser","sendOrderEmailToOwner","sendSendedNowMail"]))
         {
             //$oUser = $this->getUser();
             $oBasket = $this->getSession()->getBasket();
@@ -62,12 +62,6 @@ class DevMails extends \OxidEsales\Eshop\Application\Controller\FrontendControll
             $oOrder->fakeOrder($oBasket,$oUser);
             //var_dump($oOrder);
             //die();
-            $oEmail->$mail($oOrder);
-        }
-        elseif($mail == "sendSendedNowMail")
-        {
-            $oOrder = array_shift($oUser->getOrders(1)->getArray());
-            $this->setAdminMode(true);
             $oEmail->$mail($oOrder);
         }
         elseif($mail == "sendForgotPwdEmail")

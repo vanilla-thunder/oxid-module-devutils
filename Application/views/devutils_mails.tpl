@@ -9,8 +9,8 @@
 </script>
 
 <div class="row">
+    <a ng-repeat="mail in mails" ng-bind="mail.title" ng-click="preview( mail )" class="col s6 m4 l2 waves-effect waves-light btn-flat deep-orange-text"></a>
     <div class="flexbox pt+">
-        <a ng-repeat="mail in mails" ng-bind="mail.title" ng-click="preview( mail )" class="waves-effect waves-light btn-flat deep-orange-text"></a>
     </div>
 </div>
 <div class="row">
@@ -18,10 +18,10 @@
 </div>
 <div class="row">
     <div class="col s12 l6 card">
-        <iframe id="htmlframe" style="border:0;width:100%;min-height:600px;"></iframe>
+        <iframe id="htmlframe" style="border:0;width:100%;min-height:700px;"></iframe>
     </div>
     <div class="col s12 l6 card">
-        <iframe id="plainframe" style="border:0;width:100%;min-height:600px;"></iframe>
+        <iframe id="plainframe" style="border:0;width:100%;min-height:700px;"></iframe>
     </div>
 
 </div>
