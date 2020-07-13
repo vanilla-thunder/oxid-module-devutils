@@ -1,6 +1,5 @@
 {
   "name": "vanilla-thunder/oxid-module-devutils",
-  "version": "2.0",
   "description": "developer utilities for OXID eShop",
   "type": "oxideshop-module",
   "homepage": "https://github.com/vanilla-thunder/oxid-module-devutils",

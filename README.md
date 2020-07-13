@@ -1,5 +1,23 @@
-[vt] Dev Utils ab OXID eShop 4.9
-===========
+# [vt] Dev Utils for OXID eShop v6.2
 
-### Tools für OXID Entwickler
-## https://marat.ws/tools-fuer-oxid-entwickler/
+### Current Version: v2.0.0-RC (release candidate)
+this version is the first updated version for OXID v6, it still might have some bugs.
+
+### Functions
++ clearing tmp in oxid backend
++ overview of all cached module metadata like controllers, class extensions template blocks
++ overview of metadata of a particular module
++ gui for viewing apache error log and oxideshop.log
++ preview for emails
++ gui for viewing values in oxconfig table
+
+### Installation
+`composer require -n vanilla-thunder/oxid-module-devutils`
+
+### Old version for OXID v4 
+you can find the old module version for OXID versions before v6 here:  
+https://github.com/vanilla-thunder/oxid-module-devutils/tree/oxid-v4
+
+### Detailed Information
+Full description of all functions can be found in the repository wiki:  
+https://github.com/vanilla-thunder/oxid-module-devutils/wiki
