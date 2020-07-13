@@ -1,9 +1,0 @@
-{
-  "name": "vt-devutils-editor",
-  "version": "1",
-  "homepage": "https://github.com/vanilla-thunder/vt-devutils",
-  "private": true,
-  "dependencies": {
-    "codiad": "https://github.com/Codiad/Codiad/archive/v.2.8.1.zip"
-  }
-}

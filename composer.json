@@ -1,17 +1,30 @@
 {
-  "name": "vt/devutils",
+  "name": "vanilla-thunder/oxid-module-devutils",
+  "version": "2.0",
   "description": "developer utilities for OXID eShop",
   "type": "oxideshop-module",
-  "keywords": ["oxid", "eShop", "developer utilities"],
-  "homepage": "https://marat.ws/tools-fuer-oxid-entwickler/",
-  "support": {
-    "email": "m@marat.ws",
-    "issues": "https://github.com/vanilla-thunder/vt-devutils/issues",
-    "source": "https://github.com/vanilla-thunder/vt-devutils"
-  },
+  "homepage": "https://github.com/vanilla-thunder/oxid-module-devutils",
+  "license": [
+    "GPL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "Marat Bedoev",
+      "email": "hello@mb-dev.pro"
+    }
+  ],
   "extra": {
     "oxideshop": {
-      "target-directory": "vt-devutils"
+      "target-directory": "vt/devutils"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "oxid-esales/oxideshop-ce": "^v6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "VanillaThunder\\DevUtils\\": "../../../source/modules/vt/devutils"
     }
   }
 }
