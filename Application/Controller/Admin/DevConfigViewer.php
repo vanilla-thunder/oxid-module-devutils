@@ -60,9 +60,49 @@ class DevConfigViewer extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
     public function getConfigValue ()
     {
+        $config = \OxidEsales\EshopCommunity\Core\Registry::getConfig();
         $request = oxNew(\OxidEsales\Eshop\Core\Request::class);
-        $varname = $request->getRequestEscapedParameter("oxvarname");
-        $value = \OxidEsales\EshopCommunity\Core\Registry::getConfig()->getConfigParam($varname);
+        $oxvarname = $request->getRequestEscapedParameter("oxvarname");
+        $oxmodule = $request->getRequestEscapedParameter("oxmodule");
+
+        //$value = \OxidEsales\EshopCommunity\Core\Registry::getConfig()->getConfigParam($oxvarname); // cant halndle multiple oxvarnames with same name but different oxmodule
+
+        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
+        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
+        $queryBuilder = $bullshitFactory->create();
+
+        $queryBuilder
+            ->select("OXVARTYPE", $config->getDecodeValueQuery() . " as OXVARVALUE")
+            ->from('oxconfig')
+            ->where("oxvarname = :oxvarname")
+            ->andWhere("oxmodule = :oxmodule")
+            ->andWhere('oxshopid = :oxshopid')
+            ->setMaxResults(1)
+            ->setParameters([
+                'oxvarname' => $oxvarname,
+                'oxmodule' => $oxmodule ?? "",
+                'oxshopid' => \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId()
+            ]);
+
+        $blocksData = $queryBuilder->execute();
+        $blocksData = $blocksData->fetchAll();
+
+        $oxvartype = $blocksData[0]["OXVARTYPE"];
+        $oxvarvalue = $blocksData[0]["OXVARVALUE"];
+        $value = "";
+
+        switch ($oxvartype) {
+            case 'arr':
+            case 'aarr':
+                $value = unserialize($oxvarvalue);
+                break;
+            case 'bool':
+                $value = ($oxvarvalue == 'true' || $oxvarvalue == '1');
+                break;
+            default:
+                $value = $oxvarvalue;
+                break;
+        }
 
         echo json_encode(['status' => 'ok', 'value' => $value]);
         exit;

@@ -15,9 +15,9 @@
                 <th align="left"><input type="text" ng-model="search.SIZE" placeholder="Size >="></th>
                 <th align="left"><input type="text" ng-model="search.OXTIMESTAMP" placeholder="Timestamp"></th>
             </tr>
-            <tr ng-repeat="_conf in _configs |filter:{OXVARNAME:search.OXVARNAME}:false |filter:{OXVARTYPE:search.OXVARTYPE}:typeFilter |filter:{SIZE:search.SIZE}:sizeFilter |filter:{OXTIMESTAMP:search.OXTIMESTAMP}:false ">
+            <tr ng-repeat="_conf in _configs |filter:{OXVARNAME:search.OXVARNAME}:false |filter:{OXVARTYPE:search.OXVARTYPE}:typeFilter |filter:{SIZE:search.SIZE}:sizeFilter |filter:{OXTIMESTAMP:search.OXTIMESTAMP}:false "
+                ng-click="getConfigValue(_conf.OXVARNAME,_conf.OXMODULE)">
                 <td ng-bind-html="_conf.OXVARNAME |highlight:search.OXVARNAME |html"
-                    ng-click="getConfigValue(_conf.OXVARNAME)"
                     class="waves-effect waves-light" style="display: block;">
                     <i class="material-icons left">search</i>
                 </td>
@@ -65,9 +65,9 @@
         'name':'',
         'value' : {}
     };
-    $scope.getConfigValue = function (oxvarname)
+    $scope.getConfigValue = function (oxvarname,oxmodule)
     {
-        $http.get('[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devconfigviewer&fnc=getConfigValue"|replace:"&amp;":"&" }]&oxvarname=' + oxvarname)
+        $http.get('[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devconfigviewer&fnc=getConfigValue"|replace:"&amp;":"&" }]&oxvarname=' + oxvarname + '&oxmodule=' + oxmodule || "")
              .then(function (res)
              {
                  console.log(res);
