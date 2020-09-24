@@ -8,6 +8,12 @@
     </div>
     <div ng-repeat="(_mod, _configs) in summary track by $index" id="oxconfig{{$index}}" class="col s12">
         <table class="striped">
+            <colgroup>
+                <col width="50%" />
+                <col width="12%" />
+                <col width="12%" />
+                <col width="26%" />
+            </colgroup>
             <tr></tr>
             <tr>
                 <th align="left"><input type="text" ng-model="search.OXVARNAME" placeholder="Name"></th>

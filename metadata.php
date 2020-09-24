@@ -15,7 +15,7 @@
 $sMetadataVersion = '2.1';
 $aModule = [
     'id' => 'vt-devutils',
-    'title' => '[VT] DevUtils',
+    'title' => '[vt] DevUtils',
     'description' => 'developent utilities for OXID eShop V6.2',
     'thumbnail' => 'devutils.jpg',
     'version' => '2.0.0-RC',
@@ -27,9 +27,11 @@ $aModule = [
         \OxidEsales\Eshop\Application\Controller\Admin\NavigationController::class => VanillaThunder\DevUtils\Application\Extend\NavigationController::class,
         \OxidEsales\Eshop\Application\Model\Order::class => VanillaThunder\DevUtils\Application\Extend\Order::class,
         \OxidEsales\Eshop\Core\Email::class => VanillaThunder\DevUtils\Application\Extend\Email::class,
+        \OxidEsales\Eshop\Core\Language::class => VanillaThunder\DevUtils\Application\Extend\Language::class,
         \OxidEsales\Eshop\Core\ViewConfig::class => VanillaThunder\DevUtils\Application\Extend\ViewConfig::class
     ],
     'controllers' => [
+        'devchildtpl' => VanillaThunder\DevUtils\Application\Controller\Admin\DevChildTpl::class,
         'devconfigviewer' => VanillaThunder\DevUtils\Application\Controller\Admin\DevConfigViewer::class,
         'devgui' => VanillaThunder\DevUtils\Application\Controller\Admin\DevGui::class,
         'devlogs' => VanillaThunder\DevUtils\Application\Controller\Admin\DevLogs::class,
@@ -46,6 +48,7 @@ $aModule = [
         'devutils__footer.tpl' => 'vt/devutils/Application/views/admin/devutils__footer.tpl',
 
         // admin templates
+        'devutils_chiltpl.tpl' => 'vt/devutils/Application/views/admin/devutils_chiltpl.tpl',
         'devutils_configviewer.tpl' => 'vt/devutils/Application/views/admin/devutils_configviewer.tpl',
         'devutils_gui.tpl' => 'vt/devutils/Application/views/admin/devutils_gui.tpl',
         'devutils_logs.tpl' => 'vt/devutils/Application/views/admin/devutils_logs.tpl',

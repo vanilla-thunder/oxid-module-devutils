@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OX>
     <OXMENU id="NAVIGATION_ESHOPADMIN">
+        <MAINMENU id="mxmainmenu">
+            <SUBMENU id="devtranslations" cl="devtranslations" />
+        </MAINMENU>
         <MAINMENU id="mxextensions">
             <SUBMENU id="mxmodule" cl="module" list="module_list">
                 <TAB id="devmodulemetadata" cl="devmodulemetadata" />

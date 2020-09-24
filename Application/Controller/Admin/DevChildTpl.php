@@ -13,13 +13,22 @@
  * You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>
  */
 
-$sLangName = 'Deutsch';
-$aLang = array(
-    'charset' => 'UTF-8',
-    'devlogs' => 'Logs',
-    'devmails' => 'E-Mails Preview',
-    'devmetadata' => 'Module Metadata',
-    'devmodulemetadata' => 'Metadata',
-    'devconfigviewer' => 'Config Viewer',
-    'devtranslations' => 'Übersetzungen'
-);
+namespace VanillaThunder\DevUtils\Application\Controller\Admin;
+
+class DevChildTpl extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
+{
+    protected $_sThisTemplate = 'devutils_chiltpl.tpl';
+
+    public function getTemplateStructure()
+    {
+        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+
+        $theme = $oConfig->getConfigParam('sTheme');
+        var_dump($theme);
+
+        var_dump($oConfig->getViewsDir(true));
+        var_dump($oConfig->getViewsDir());
+        //$aChildTpl = scandir();
+        return ""; //$aChildTpl;
+    }
+}

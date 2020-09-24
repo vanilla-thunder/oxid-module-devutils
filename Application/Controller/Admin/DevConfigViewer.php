@@ -49,7 +49,7 @@ class DevConfigViewer extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
         $aData = [];
         foreach ($blocksData as $row) {
-            $oxmodule = (!empty($row["OXMODULE"]) ? $row["OXMODULE"] : "general");
+            $oxmodule = (!empty($row["OXMODULE"]) ? str_replace(["module:","theme:"],"",$row["OXMODULE"]) : "general");
             if (!array_key_exists($oxmodule, $aData)) $aData[$oxmodule] = [];
             $aData[$oxmodule][] = $row;
         }

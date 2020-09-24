@@ -26,72 +26,48 @@ class DevTranslations extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 {
     protected $_sThisTemplate = 'devutils_translations.tpl';
 
-    public function render()
+    public function getAllTranslations()
     {
+        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $oViewConf = $this->getViewConfig();
+        $iLang = $oViewConf->getActLanguageId();
+        $aLangFiles = \OxidEsales\Eshop\Core\Registry::getLang()->getAllLangFiles($iLang);
+        $sShopDir = $oConfig->getConfigParam('sShopDir');
 
-        return parent::render();
+        $aAllTranslations = [];
+
+        foreach($aLangFiles as $sLangFile)
+        {
+            $aLang = [];
+            include $sLangFile;
+            foreach ($aLang as $key => $value) {
+                if(!array_key_exists($key,$aAllTranslations)) $aAllTranslations[$key] = [];
+                $aAllTranslations[$key][str_replace($sShopDir,"",$sLangFile)] = $value;
+            }
+        }
+
+        unset($aAllTranslations["charset"]);
+        ksort($aAllTranslations);
+
+        print json_encode($aAllTranslations);
+        exit;
     }
 
-    public function getModule($sModuleId)
+    public function getTranslations()
     {
-        $oModule = oxNew(\OxidEsales\Eshop\Core\Module\Module::class);
-        $oModule->load($sModuleId);
-        return $oModule;
+        $oViewConf = $this->getViewConfig();
+        $iLang = $oViewConf->getActLanguageId();
+        $aLang = \OxidEsales\Eshop\Core\Registry::getLang()->getTranslationsArray($iLang, false);
+
+        unset($aLang["charset"]);
+        ksort($aLang);
+
+        $aTranslations = [];
+        foreach($aLang as $key => $value) $aTranslations[] = ["key" => $key, "value" => $value];
+
+        print json_encode($aTranslations);
+        exit;
     }
 
-    public function reinstallModule()
-    {
-        $sModuleId = $this->getEditObjectId();
-        $oModule = $this->getModule($sModuleId);
 
-        $container = ContainerFactory::getInstance()->getContainer();
-        $moduleInstallerService = $container->get(ModuleInstallerInterface::class);
-
-        $moduleInstallerService->install($oModule->getModuleFullPath(), $oModule->getModulePath());
-    }
-
-
-    public function getModuleSettings()
-    {
-        //$oConfig = Registry::getConfig();
-        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
-        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $bullshitFactory->create();
-
-        $queryBuilder
-            ->select('OXVARNAME, OXVARTYPE ') //, DECODE( oxvarvalue, :configKey) AS oxvarvalue')
-            ->from('oxconfig')
-            ->where('oxshopid = :shopId')
-            ->andWhere('oxmodule = :oxmodule')
-            ->orderBy("OXVARNAME")
-            ->setParameters([
-                //'configKey' => $oConfig->getConfigParam("sConfigKey"),
-                'shopId' => Registry::getConfig()->getShopId(),
-                'oxmodule' => 'module:'.$this->getEditObjectId()
-            ]);
-
-        $blocksData = $queryBuilder->execute();
-        return $blocksData->fetchAll(PDO::FETCH_KEY_PAIR);
-    }
-
-    public function getModuleBlocks()
-    {
-        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
-        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $bullshitFactory->create();
-
-        $queryBuilder
-            ->select('OXTHEME, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE ')
-            ->from('oxtplblocks')
-            ->where('oxshopid = :shopId')
-            ->andWhere('oxmodule = :oxmodule')
-            ->orderBy("OXTEMPLATE, OXBLOCKNAME")
-            ->setParameters([
-                'shopId' => Registry::getConfig()->getShopId(),
-                'oxmodule' => $this->getEditObjectId()
-            ]);
-
-        $blocksData = $queryBuilder->execute();
-        return $blocksData->fetchAll(PDO::FETCH_ASSOC);
-    }
 }

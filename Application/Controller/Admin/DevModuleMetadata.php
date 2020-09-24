@@ -20,6 +20,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Command\ModuleTargetPathIsMissingException;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Dao\ModuleConfigurationDaoInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Install\DataObject\OxidEshopPackage;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Install\Service\ModuleConfigurationInstallerInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
@@ -71,9 +72,22 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             $oModule = $this->getModule($sModuleId);
 
             $container = ContainerFactory::getInstance()->getContainer();
-            $moduleConfigurationInstallerService = $container->get(ModuleConfigurationInstallerInterface::class);
 
+            // update yaml config files
+            $moduleConfigurationInstallerService = $container->get(ModuleConfigurationInstallerInterface::class);
             $moduleConfigurationInstallerService->install($oModule->getModuleFullPath(), $oModule->getModuleFullPath());
+
+            // update cached metadata in database
+            //$moduleConfigurationDao = $container->get(ModuleConfigurationDaoInterface::class);
+            //$moduleConfiguration = $moduleConfigurationDao->get($sModuleId, 1);
+            //$moduleConfiguration->setConfigured(true);
+            //$moduleConfigurationDao->save($moduleConfiguration, 1);
+
+            //$classExtensionChainService = $container->get(OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Service::class);
+            //$classExtensionChainService->updateChain(1);
+
+            //$this->applyModulesConfigurationForAllShops($output);
+
         } catch (ModuleTargetPathIsMissingException $exception) {
             die("MESSAGE_TARGET_PATH_IS_REQUIRED");
         } catch (\Throwable $throwable) {
