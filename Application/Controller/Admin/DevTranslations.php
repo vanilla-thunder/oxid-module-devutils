@@ -27,11 +27,6 @@ class DevTranslations extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 {
     protected $_sThisTemplate = 'devutils_translations.tpl';
 
-    private function _getCustLangFilePath()
-    {
-
-    }
-
     public function getAllTranslations()
     {
         $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
@@ -56,7 +51,7 @@ class DevTranslations extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
         unset($aAllTranslations["charset"]);
         ksort($aAllTranslations);
 
-        print json_encode($aAllTranslations);
+        print json_encode(["status" => "ok", "data" => $aAllTranslations]);
         exit;
     }
 
@@ -72,7 +67,7 @@ class DevTranslations extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
         $aTranslations = [];
         foreach ($aLang as $key => $value) $aTranslations[] = ["key" => $key, "value" => $value];
 
-        print json_encode($aTranslations);
+        print json_encode(["status" => "ok", "data" => $aTranslations]);
         exit;
     }
 

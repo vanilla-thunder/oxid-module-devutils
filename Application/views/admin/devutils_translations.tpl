@@ -81,7 +81,7 @@
         $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devtranslations&fnc=getTranslations"|replace:"&amp;":"&" }]")
              .then(function (res)
              {
-                 if (res.data.status === 'ok') $scope.translations = res.data;
+                 if (res.data.status === 'ok') $scope.translations = res.data.data;
                  else if (res.data.status === 'error') $scope.response = res.data.msg;
                  else $scope.response = "Übersetzungen konnten nicht geladen werden, bitte prüfe deine Fehler Logs."
                  $scope.loading--;
@@ -97,7 +97,7 @@
         $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devtranslations&fnc=getAllTranslations"|replace:"&amp;":"&" }]")
              .then(function (res)
              {
-                 if (res.data.status === 'ok') $scope.allTranslations = res.data;
+                 if (res.data.status === 'ok') $scope.allTranslations = res.data.data;
                  else if (res.data.status === 'error') $scope.response = res.data.msg;
                  else $scope.response = "Übersetzungen konnten nicht geladen werden, bitte prüfe deine Fehler Logs."
                  $scope.loading--;
