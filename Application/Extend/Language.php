@@ -45,8 +45,8 @@ class Language extends Language_parent
         $aModulePaths = $this->_getActiveModuleInfo();
 
         $aLangFiles = [
-            "generic" => $this->_appendLangFile([$sAppDir . 'translations/' . $sLang."/lang.php"],$sAppDir . 'translations/' . $sLang),
-            "theme" => $this->_appendLangFile([$sAppDir . 'views/' . $sTheme . '/' . $sLang."/lang.php"], $sAppDir . 'views/' . $sTheme . '/' . $sLang),
+            "generic" => $this->_appendLangFile([$sAppDir . 'translations/' . $sLang . "/lang.php"], $sAppDir . 'translations/' . $sLang),
+            "theme" => $this->_appendLangFile([$sAppDir . 'views/' . $sTheme . '/' . $sLang . "/lang.php"], $sAppDir . 'views/' . $sTheme . '/' . $sLang),
             "theme_cust" => $this->getCustomThemeLanguageFiles($iLang),
             "module" => $this->_appendModuleLangFiles([], $aModulePaths, $sLang),
             "cust_lang" => $this->_appendCustomLangFiles([], $sLang)
@@ -59,5 +59,20 @@ class Language extends Language_parent
     {
         $sLang = \OxidEsales\Eshop\Core\Registry::getLang()->getLanguageAbbr($iLang);
         return $this->_appendCustomLangFiles([], $sLang);
+    }
+
+    public function getFrontendCustLangFilePath($iLang)
+    {
+        $oConfig = Registry::getConfig();
+        $language = Registry::getLang()->getLanguageAbbr($iLang);
+        $sCutLangFile = $oConfig->getAppDir() .
+            'views' . DIRECTORY_SEPARATOR .
+            ($oConfig->getConfigParam("sCustomTheme")
+                ? $oConfig->getConfigParam("sCustomTheme")
+                : $oConfig->getConfigParam("sTheme")) . DIRECTORY_SEPARATOR .
+            $language . DIRECTORY_SEPARATOR .
+            'cust_lang.php';
+
+        return $sCutLangFile;
     }
 }

@@ -30,7 +30,7 @@
        {
            ngClipProvider.setPath('[{$oViewConf->getModuleUrl("vt-devutils","out/ZeroClipboard.swf")}]');
        }])
-       .controller('devCtrl', function ($scope, $http)
+       .controller('devCtrl', function ($scope, $http, $timeout)
        {
            $scope.Object = Object;
 

@@ -34,6 +34,17 @@ class DevUtils extends \OxidEsales\EshopCommunity\Core\Config
         return "$i files ($fs MB) deleted";
     }
 
+    public function clearLangCacheOnly() {
+        $pattern = $this->getConfigParam("sCompileDir") . "/oxc_langcache_*.txt";
+        foreach (glob($pattern) as $item) {
+            if (is_file($item)) {
+                $fs += filesize($item);
+                unlink($item);
+                $i++;
+            }
+        }
+    }
+
     public function clearTpl()
     {
         $pattern = $this->getConfigParam("sCompileDir") . "smarty/*.php";
