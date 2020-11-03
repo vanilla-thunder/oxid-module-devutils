@@ -3,6 +3,12 @@
 
 [{if $error}]<h1>[{$error|var_dump}]</h1>[{/if}]
 
+<div class="fixed-action-btn">
+    <a class="btn-floating waves-effect waves-light" title="neue Übersetzung hinzufügen" ng-click="newTranslation()">
+        <i class="material-icons">add</i>
+    </a>
+</div>
+
 <div class="row">
     <div class="card p+ mt+ red white-text" ng-if="response" ng-bind="response"></div>
     <table class="striped">
@@ -106,6 +112,11 @@
     $scope.getAllTranslations();
 
     $scope.edit = {};
+    $scope.newTranslation = function ()
+    {
+        $scope.edit = {};
+        $('#editmodal').modal('open');
+    };
     $scope.editTranslation = function (translation)
     {
         $scope.edit = translation;

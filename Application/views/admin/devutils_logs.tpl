@@ -45,7 +45,8 @@
                 <td><i class="material-icons left">thumb_down</i> nothing left...</td>
             </tr>
             <tr class="my" ng-repeat="_e in oxidlog.log |filter:search.oxidlog:false |limitTo:30 track by $index">
-                <td class="p" ng-bind-html="_e |highlight:search.oxidlog |html"></td>
+                <td class="p" ng-bind-html="_e[0] |highlight:search.oxidlog |html"></td>
+                <td><button ng-click="stacktrace(_e)" class="btn"><i class="material-icons">playlist_play</i></button></td>
             </tr>
         </table>
     </div>
@@ -87,7 +88,19 @@
     </lx-tab>
 </lx-tabs>
 -->
-
+  <div id="stacktrace" class="modal">
+    <div class="modal-content">
+      <b ng-bind-html="exceptionmsg[0] |highlight:search.oxidlog |html"></b>
+      <p ng-bind-html="exceptionmsg[1] |highlight:search.oxidlog |html"></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" clip-copy="exceptionmsg[0] + exceptionmsg[1] + '&#10; OXID [{$oView->getShopVersion()}] [{$oView->getShopFullEdition()}]'" class="waves-effect waves-green btn-flat clipboard">
+        copy to clipboard
+      </a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
+    </div>
+  </div>
+  
 <lx-dialog class="dialog dialog--xl" id="exceptionmsg" auto-close="true">
     <div class="dialog__header">
         <div class="toolbar bgc-light-blue-500 pl++">
@@ -110,8 +123,6 @@
 </lx-dialog>
 <script>
     [{capture assign="ng"}]
-    $('.tabs').tabs();
-
     $scope.dialogs = {};
     $scope.search = {
         'oxidlog':'',
@@ -148,6 +159,7 @@
              {
                  if (res.data.status = 'ok')
                  {
+                 	console.log(res.data);
                      $scope.oxidlog = res.data;
                      //LxNotificationService.success('OXID Log loaded');
                  }
@@ -160,9 +172,10 @@
     $scope.getOxidLog();
 
     $scope.exceptionmsg = [];
-    $scope.exception = function (log)
+    $scope.stacktrace = function (log)
     {
         $scope.exceptionmsg = log;
+         $('#stacktrace').modal('open');
         //$scope.exceptionmsg = $scope.exceptionlog[parseInt(i)];
         //LxDialogService.open('exceptionmsg');
     };

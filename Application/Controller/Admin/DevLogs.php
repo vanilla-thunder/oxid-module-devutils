@@ -30,13 +30,31 @@ class DevLogs extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetail
 
         $sShopDir = str_replace('source/','',$cfg->getConfigParam('sShopDir'));
 
-        $aData = file($sOxidLogPath);
+		//$sData = file_get_contents($sOxidLogPath);
+		// \[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\](.+)(\n.+)?(?=\n\z|\[)
+		//preg_match_all("/\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\](.+)(\n.+)?(?=\n\z|\[)/gi",$sData,$aMatches);
+		//$aData = $aMatches;
+		//var_dump($sData);
+		//print "<pre>";
+		
+		$aData = file($sOxidLogPath);
         $aData = array_unique($aData);
         $aData = array_slice($aData, -300);
-        $aData = str_replace(['\n',$sShopDir],["<br/>",""],$aData);
+        $aData = str_replace(['["[object]','\n',$sShopDir],["<br/>","<br/>",""],$aData);
+        foreach($aData as $index => $value) 
+        {
+        	//print "<hr/>".$value."<br/>";
+        	preg_match("/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]/mi", $value, $m);
+        	if(empty($m)) {
+        		$aData[$index-1] = explode("[stacktrace]", str_replace("\n", "", $aData[$index-1]).$value);
+        		unset($aData[$index]);
+        	}
+        	else $aData[$index] = explode("[stacktrace]", $value);
+        	
+        }
 
         //$time = filemtime($sExLog);
-        print json_encode(['status' => 'ok', 'log' => array_reverse($aData)]);
+        print json_encode(['status' => 'ok', 'log' => array_reverse(array_values($aData))]);
         exit;
     }
 

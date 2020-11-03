@@ -7,6 +7,7 @@
 [{ oxscript }]
 
 <script>
+    M.AutoInit();
     var app = angular.module('devApp', ['ngClipboard'[{$smarty.capture.appdep}] ]);
     app.filter("html", ['$sce', function ($sce)
     {
