@@ -52,6 +52,17 @@ body {
     align-items: center;
 }
 
+th.divider {
+    padding: 0;
+    line-height: 0.5;
+    text-align: center;
+}
+th.divider h4 {
+    margin: 5px 0;
+    display: inline-block;
+    position: relative;
+}
+
 .modal {
     width: fit-content !important;
 }

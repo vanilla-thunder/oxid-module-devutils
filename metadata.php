@@ -28,6 +28,7 @@ $aModule = [
         \OxidEsales\Eshop\Application\Model\Order::class => VanillaThunder\DevUtils\Application\Extend\Order::class,
         \OxidEsales\Eshop\Core\Email::class => VanillaThunder\DevUtils\Application\Extend\Email::class,
         \OxidEsales\Eshop\Core\Language::class => VanillaThunder\DevUtils\Application\Extend\Language::class,
+        \OxidEsales\Eshop\Core\UtilsView::class => VanillaThunder\DevUtils\Application\Extend\UtilsView::class,
         \OxidEsales\Eshop\Core\ViewConfig::class => VanillaThunder\DevUtils\Application\Extend\ViewConfig::class
     ],
     'controllers' => [

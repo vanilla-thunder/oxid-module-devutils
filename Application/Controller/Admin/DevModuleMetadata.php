@@ -20,6 +20,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Command\ModuleTargetPathIsMissingException;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Dao\ModuleConfigurationDaoInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Install\DataObject\OxidEshopPackage;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Install\Service\ModuleConfigurationInstallerInterface;
@@ -30,39 +31,145 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
 {
     protected $_sThisTemplate = 'devutils_modulemetadata.tpl';
 
-    public function render()
+    public function getModule($sModuleId = null)
     {
-        $sModuleId = $this->getEditObjectId();
+        $oModule = oxNew(\OxidEsales\Eshop\Core\Module\Module::class);
+        $oModule->load($sModuleId ?? $this->getEditObjectId());
+        return $oModule;
+    }
 
-        $oModule = $this->getModule($sModuleId);
-        $this->addTplParam("oModule", $oModule);
+    public function getMetadataConfiguration()
+    {
+        $sModuleDir = oxNew(\OxidEsales\Eshop\Core\Module\Module::class)->getModuleFullPath($this->getEditObjectId());
 
         $aModule = [];
-        include($oModule->getMetadataPath());
+        /** @define "$sModuleDir" "../../.." */
+        include($sModuleDir.DIRECTORY_SEPARATOR."metadata.php");
+
+        // path
+        $aModule["path"] = $sModuleDir;
+
+        // settings
         if (array_key_exists("settings", $aModule)) {
-            /*
-            $settings = $aModule["settings"];
-            $type = array_column($settings, "type");
-            $name = array_column($settings, "name");
-            array_multisort($type, SORT_ASC, $name, SORT_ASC,$settings);
-            */
             $settings = [];
             foreach ($aModule["settings"] as $var) {
-                $settings[$var["name"]] = $var["type"];
+                $settings[$var["name"]] = $var; //["type"];
             }
             ksort($settings);
             $aModule["settings"] = $settings;
         }
-        $this->addTplParam("aModule", $aModule);
 
-        return parent::render();
+        // blocks
+        if (array_key_exists("blocks", $aModule)) {
+            $blocks = [];
+            foreach ($aModule["blocks"] as $var) {
+                $blocks[$var["block"]] = $var; //["type"];
+            }
+            //ksort($settings);
+            $aModule["blocks"] = $blocks;
+        }
+
+        return $aModule;
     }
 
-    public function getModule($sModuleId)
+    public function getYamlConfiguration()
     {
-        $oModule = oxNew(\OxidEsales\Eshop\Core\Module\Module::class);
-        $oModule->load($sModuleId);
-        return $oModule;
+        $container = ContainerFactory::getInstance()->getContainer();
+        $shopConfigurationDao = $container->get(ShopConfigurationDaoBridgeInterface::class);
+        return $shopConfigurationDao->get(1)->getModuleConfiguration($this->getEditObjectId());
+    }
+
+    public function getDbConfiguration()
+    {
+        $sModuleId = $this->getEditObjectId();
+        $oConfig = Registry::getConfig();
+        $queryBuilderFactoryInterface = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class);
+
+        $aModule =  [
+            "version" => null,
+            "path" => null,
+            "events" => [],
+            "extend" => [],
+            "controllers" => [],
+            "templates" => [],
+            "blocks" => [],
+            "settings" => [],
+        ];
+
+        // version
+        $aModuleVersions = Registry::getConfig()->getConfigParam("aModuleVersions");
+        $aModule["version"] = array_key_exists($sModuleId, $aModuleVersions) ? $aModuleVersions[$sModuleId] : "-";
+
+        // path
+        $aModulePaths = Registry::getConfig()->getConfigParam("aModulePaths");
+        $aModule["path"] = array_key_exists($sModuleId, $aModulePaths) ? $aModulePaths[$sModuleId] : "-";
+
+        // events
+        $aModuleEvents = Registry::getConfig()->getConfigParam("aModuleEvents");
+        $aModule["events"] = array_key_exists($sModuleId, $aModuleEvents) ? $aModuleEvents[$sModuleId] : [];
+
+        // extensions
+        $aModuleExtensions = Registry::getConfig()->getConfigParam("aModuleExtensions");
+        if (array_key_exists($sModuleId, $aModuleExtensions)) {
+            $aActiveModuleExtensions = Registry::getConfig()->getConfigParam("aModules");
+            foreach ($aModuleExtensions[$sModuleId] as $sModuleExtension) {
+                foreach ($aActiveModuleExtensions as $sClass => $sExtension) {
+                    $check = strpos($sExtension, $sModuleExtension);
+                    if ( $check !== false && $check >= 0) {
+                        $aModule["extend"][$sClass] = $sModuleExtension;
+                    }
+                }
+            }
+        }
+
+        // controllers
+        $aDbControllers = Registry::getConfig()->getConfigParam("aModuleControllers");
+        $aModule["controllers"] = array_key_exists($sModuleId, $aDbControllers) ? $aDbControllers[$sModuleId] : [];
+
+        // templates
+        $aDbTemplates = Registry::getConfig()->getConfigParam("aModuleTemplates");
+        $aModule["templates"] = array_key_exists($sModuleId, $aDbTemplates) ? $aDbTemplates[$sModuleId] : [];
+
+        // blocks
+        $queryBuilder = $queryBuilderFactoryInterface->create();
+        $queryBuilder
+            ->select('OXTHEME, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE ')
+            ->from('oxtplblocks')
+            ->where('oxshopid = :shopId')
+            ->andWhere('oxmodule = :oxmodule')
+            ->orderBy("OXTEMPLATE, OXBLOCKNAME")
+            ->setParameters([
+                'shopId' => Registry::getConfig()->getShopId(),
+                'oxmodule' => $this->getEditObjectId()
+            ]);
+
+        foreach ($queryBuilder->execute()->fetchAll(\PDO::FETCH_ASSOC) as $var) {
+            $aModule["blocks"][$var["OXBLOCKNAME"]] = $var; //["type"];
+        }
+
+        // settings
+        $queryBuilder = $queryBuilderFactoryInterface->create();
+        $queryBuilder
+            ->select('OXVARNAME, OXVARTYPE, DECODE( OXVARVALUE, :configKey) AS OXVARVALUE')
+            ->from('oxconfig')
+            ->where('oxshopid = :shopId')
+            ->andWhere('oxmodule = :oxmodule')
+            ->orderBy("OXVARNAME")
+            ->setParameters([
+                'configKey' => $oConfig->getConfigParam("sConfigKey"),
+                'shopId' => Registry::getConfig()->getShopId(),
+                'oxmodule' => 'module:' . $this->getEditObjectId()
+            ]);
+
+        foreach ($queryBuilder->execute()->fetchAll(\PDO::FETCH_ASSOC) as $var) {
+            if ($var["OXVARTYPE"] === "arr") {
+                $var["OXVARVALUE"] = unserialize($var["OXVARVALUE"]);
+            }
+            $aModule["settings"][$var["OXVARNAME"]] = $var;
+        }
+        ksort($aModule["settings"]);
+
+        return $aModule;
     }
 
     public function reinstallModule()
@@ -87,7 +194,6 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             //$classExtensionChainService->updateChain(1);
 
             //$this->applyModulesConfigurationForAllShops($output);
-
         } catch (ModuleTargetPathIsMissingException $exception) {
             die("MESSAGE_TARGET_PATH_IS_REQUIRED");
         } catch (\Throwable $throwable) {
@@ -95,6 +201,7 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             die("MESSAGE_INSTALLATION_FAILED");
         }
     }
+
     public function reactivateModule()
     {
         try {
@@ -113,55 +220,5 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             Registry::getUtilsView()->addErrorToDisplay($exception);
             Registry::getLogger()->error($exception->getMessage(), [$exception]);
         }
-    }
-
-    public function getModuleVersion($sModuleId)
-    {
-        $aModuleVersions = Registry::getConfig()->getConfigParam("aModuleVersions");
-        return (array_key_exists($sModuleId, $aModuleVersions) ? $aModuleVersions[$sModuleId] : "x");
-    }
-
-    public function getModuleSettings()
-    {
-        //$oConfig = Registry::getConfig();
-        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
-        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $bullshitFactory->create();
-
-        $queryBuilder
-            ->select('OXVARNAME, OXVARTYPE ') //, DECODE( oxvarvalue, :configKey) AS oxvarvalue')
-            ->from('oxconfig')
-            ->where('oxshopid = :shopId')
-            ->andWhere('oxmodule = :oxmodule')
-            ->orderBy("OXVARNAME")
-            ->setParameters([
-                //'configKey' => $oConfig->getConfigParam("sConfigKey"),
-                'shopId' => Registry::getConfig()->getShopId(),
-                'oxmodule' => 'module:' . $this->getEditObjectId()
-            ]);
-
-        $blocksData = $queryBuilder->execute();
-        return $blocksData->fetchAll(PDO::FETCH_KEY_PAIR);
-    }
-
-    public function getModuleBlocks()
-    {
-        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
-        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $bullshitFactory->create();
-
-        $queryBuilder
-            ->select('OXTHEME, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE ')
-            ->from('oxtplblocks')
-            ->where('oxshopid = :shopId')
-            ->andWhere('oxmodule = :oxmodule')
-            ->orderBy("OXTEMPLATE, OXBLOCKNAME")
-            ->setParameters([
-                'shopId' => Registry::getConfig()->getShopId(),
-                'oxmodule' => $this->getEditObjectId()
-            ]);
-
-        $blocksData = $queryBuilder->execute();
-        return $blocksData->fetchAll(PDO::FETCH_ASSOC);
     }
 }

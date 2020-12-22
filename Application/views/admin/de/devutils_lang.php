@@ -21,5 +21,7 @@ $aLang = array(
     'devmetadata' => 'Module Metadata',
     'devmodulemetadata' => 'Metadata',
     'devconfigviewer' => 'Config Viewer',
-    'devtranslations' => 'Übersetzungen'
+    'devtranslations' => 'Übersetzungen',
+
+    'DEVUTILS_NO_ENTRIES' => 'Keine Einträge vorhanden'
 );
