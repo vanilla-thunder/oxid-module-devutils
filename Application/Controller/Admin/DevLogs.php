@@ -26,51 +26,89 @@ class DevLogs extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetail
     {
         $cfg          = \OxidEsales\Eshop\Core\Registry::getConfig();
         $sOxidLogPath = $cfg->getConfigParam('sShopDir') . 'log/oxideshop.log';
-        if (!file_exists($sOxidLogPath) || !is_readable($sOxidLogPath)) die(json_encode(['status' => "oxideshop.log does not exist or is not readable"]));
+        if (!file_exists($sOxidLogPath) || !is_readable($sOxidLogPath)) {
+            die(json_encode(['status' => "oxideshop.log does not exist or is not readable"]));
+        }
 
-        $sShopDir = str_replace('source/','',$cfg->getConfigParam('sShopDir'));
+        $sShopDir = str_replace('source/', '', $cfg->getConfigParam('sShopDir'));
 
-		//$sData = file_get_contents($sOxidLogPath);
-		// \[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\](.+)(\n.+)?(?=\n\z|\[)
-		//preg_match_all("/\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\](.+)(\n.+)?(?=\n\z|\[)/gi",$sData,$aMatches);
-		//$aData = $aMatches;
-		//var_dump($sData);
-		//print "<pre>";
-		
-		$aData = file($sOxidLogPath);
+        $sData = file_get_contents($sOxidLogPath);
+        $pattern = "/\[((?>\d{4}-\d\d-\d\d|\d\d \w{3}) \d\d:\d\d:\d\d(?>\.\d{6} \d{4})?)\] /"; // ooof...
+        $aData = preg_split($pattern, $sData, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+
+        $aLog = [];
+        foreach ($aData as $index => $value) {
+            //print($index % 2);
+            if ($index % 2 !== 0) {
+                continue;
+            }
+
+            $log = trim(str_replace(['\n',$sShopDir],['<br/>',''],$aData[$index+1]));
+
+            if($date = date_create_from_format('d M H:i:s.u Y',$value)) {
+                // pokemon exception
+                $aLog[] = [
+                    'date' => date_format($date, "Y-m-d H:i:s"),
+                    'log' => $log
+                ];
+            }
+            else {
+                // oxid exception
+                $stacktrace = false;
+                if(preg_match('/(\[stacktrace\].+)\\"\]/',$log,$matches)) {
+                    $stacktrace = $matches[1] ?? false;
+                    if($stacktrace) $log = str_replace($stacktrace,"", $log);
+                }
+                $aLog[] = [
+                    'date' => $value,
+                    'log' => str_replace('"] []','',$log),
+                    'stacktrace' => $stacktrace
+                ];
+            }
+            //var_dump($value);
+            //print $value." > ".$date."<br/>";
+        }
+
+        /*
+        $aData = file($sOxidLogPath);
         $aData = array_unique($aData);
         $aData = array_slice($aData, -300);
         $aData = str_replace(['["[object]','\n',$sShopDir],["<br/>","<br/>",""],$aData);
-        foreach($aData as $index => $value) 
+        foreach($aData as $index => $value)
         {
-        	//print "<hr/>".$value."<br/>";
-        	preg_match("/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]/mi", $value, $m);
-        	if(empty($m)) {
-        		$aData[$index-1] = explode("[stacktrace]", str_replace("\n", "", $aData[$index-1]).$value);
-        		unset($aData[$index]);
-        	}
-        	else $aData[$index] = explode("[stacktrace]", $value);
-        	
+            //print "<hr/>".$value."<br/>";
+            preg_match("/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]/mi", $value, $m);
+            if(empty($m)) {
+                $aData[$index-1] = explode("[stacktrace]", str_replace("\n", "", $aData[$index-1]).$value);
+                unset($aData[$index]);
+            }
+            else $aData[$index] = explode("[stacktrace]", $value);
+
         }
+        */
 
         //$time = filemtime($sExLog);
-        print json_encode(['status' => 'ok', 'log' => array_reverse(array_values($aData))]);
+        print json_encode(['status' => 'ok', 'log' => array_reverse($aLog)]);
         exit;
     }
 
     public function getApacheLog()
     {
         $sApacheLogPath = ini_get("error_log");
-        if (!$sApacheLogPath ||empty($sApacheLogPath)) die(json_encode(['status' => "apache log is disabled"]));
-        if (!file_exists($sApacheLogPath) || !is_readable($sApacheLogPath)) die(json_encode(['status' => "apache log file does not exist or is not readable"]));
+        if (!$sApacheLogPath ||empty($sApacheLogPath)) {
+            die(json_encode(['status' => "apache log is disabled"]));
+        }
+        if (!file_exists($sApacheLogPath) || !is_readable($sApacheLogPath)) {
+            die(json_encode(['status' => "apache log file does not exist or is not readable"]));
+        }
 
         $cfg      = \OxidEsales\Eshop\Core\Registry::getConfig();
-        $sShopDir = str_replace('source/','',$cfg->getConfigParam('sShopDir'));
+        $sShopDir = str_replace('source/', '', $cfg->getConfigParam('sShopDir'));
 
         $aData = file($sApacheLogPath);
         $aData = array_unique($aData);
         $aData = array_slice($aData, -300);
-        $aData = str_replace($sShopDir,"",$aData);
+        $aData = str_replace($sShopDir, "", $aData);
 
         echo json_encode(['status' => 'ok', 'log' => array_reverse($aData)]);
         exit;
@@ -84,15 +122,15 @@ class DevLogs extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetail
         $i       = -1;
         $logdate = '';
         foreach ($aData as $row) {
-            if ($i > 30) break; // 30 lag entries are enough, i suppose
+            if ($i > 30) {
+                break;
+            } // 30 lag entries are enough, i suppose
             preg_match("/\[([^\]]*)\]/", $row, $date);
 
             // stack trace
             if ((preg_match("/\] PHP Stack trace/", $row) > 0 || preg_match("/\] PHP\s+\d/", $row) > 0) && $date[1] == $logdate) {
                 $aLog[$i]['stacktrace'][] = substr($row, strlen($date[0]));
-
-            } else // first log line
-            {
+            } else { // first log line
                 $i++;
                 $logdate = $date[1];
                 preg_match("/\] PHP\s(.*):/", $row, $type);
@@ -113,5 +151,4 @@ class DevLogs extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetail
         //echo print_r($aLog);
         exit;
     }
-
 }

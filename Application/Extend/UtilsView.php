@@ -17,7 +17,6 @@ class UtilsView extends UtilsView_parent
      */
     public function getSmarty($blReload = false)
     {
-        die("zzzz");
         if (!self::$_oSmarty || $blReload) {
             $this->_aTemplateDir = [];
             self::$_oSmarty = new DevSmarty();

@@ -4,12 +4,13 @@
 this version is the first updated version for OXID v6, it still might have some bugs.
 
 ### Functions
-+ clearing tmp in oxid backend
-+ overview of all cached module metadata like controllers, class extensions template blocks
-+ overview of metadata of a particular module
++ clearing tmp in oxid admin
++ overview of all cached module metadata like controllers, extensions, templates, blocks
++ viewing metadata of a particular module
 + gui for viewing apache error log and oxideshop.log
 + preview for emails
 + gui for viewing values in oxconfig table
++ put template names in front of cache file names, so you could easily find them in tmp/smarty/ folder 
 
 ### Installation
 `composer require -n vanilla-thunder/oxid-module-devutils`

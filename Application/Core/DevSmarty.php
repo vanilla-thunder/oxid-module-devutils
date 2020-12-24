@@ -23,9 +23,9 @@ class DevSmarty extends \Smarty
 
         $_filename = urlencode(basename($auto_source));
         $_return = str_replace('//','/',$_return);
-        $_newFilename = str_replace('smarty/','smarty/'.$_filename,$_return);
-        var_dump($_return);
-        var_dump($_newFilename);
+        $_newFilename = str_replace(['%%'.$_filename,'smarty/'],['','smarty/'.$_filename.'%%'],$_return);
+        //var_dump($_return);
+        //var_dump($_newFilename);
         return $_newFilename;
     }
 

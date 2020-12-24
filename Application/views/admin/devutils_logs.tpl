@@ -20,7 +20,7 @@
             <tr class="green white-text" ng-if="apachelog.log.length == 0">
                 <td><i class="material-icons left">thumbs_up</i> Apache Log is empty</td>
             </tr>
-            <tr class="red white-text" ng-if="(apachelog.log |filter:search.apachelog:false |limitTo:30).length == 0">
+            <tr class="red white-text" ng-if="apachelog.log.length > 0 && (apachelog.log |filter:search.apachelog:false |limitTo:30).length == 0">
                 <td><i class="material-icons left">thumbs_down</i> nothing left...</td>
             </tr>
             <tr class="my" ng-repeat="_e in apachelog.log |filter:search.apachelog:false |limitTo:30 track by $index">
@@ -45,8 +45,11 @@
                 <td><i class="material-icons left">thumb_down</i> nothing left...</td>
             </tr>
             <tr class="my" ng-repeat="_e in oxidlog.log |filter:search.oxidlog:false |limitTo:30 track by $index">
-                <td class="p" ng-bind-html="_e[0] |highlight:search.oxidlog |html"></td>
-                <td><button ng-click="stacktrace(_e)" class="btn"><i class="material-icons">playlist_play</i></button></td>
+                <td class="p">
+                    <b ng-bind="_e.date"></b>
+                    <span ng-bind-html="_e.log |highlight:search.oxidlog |html"></span>
+                </td>
+                <td><button ng-if="_e.stacktrace" ng-click="stacktrace(_e)" class="btn"><i class="material-icons">playlist_play</i></button></td>
             </tr>
         </table>
     </div>
@@ -90,17 +93,18 @@
 -->
   <div id="stacktrace" class="modal">
     <div class="modal-content">
-      <b ng-bind-html="exceptionmsg[0] |highlight:search.oxidlog |html"></b>
-      <p ng-bind-html="exceptionmsg[1] |highlight:search.oxidlog |html"></p>
+      <b ng-bind-html="exceptionmsg.log |highlight:search.oxidlog |html"></b>
+      <p ng-bind-html="exceptionmsg.stacktrace |highlight:search.oxidlog |html"></p>
     </div>
     <div class="modal-footer">
-      <a href="#!" clip-copy="exceptionmsg[0] + exceptionmsg[1] + '&#10; OXID [{$oView->getShopVersion()}] [{$oView->getShopFullEdition()}]'" class="waves-effect waves-green btn-flat clipboard">
-        copy to clipboard
+      <a href="#!" copy-to-clipboard="exceptionmsg.log + exceptionmsg.stacktrace + '&#10; OXID [{$oView->getShopVersion()}] [{$oView->getShopFullEdition()}]'" class="waves-effect waves-green btn-flat clipboard">
+        copy to clipboard does not work :(
       </a>
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
     </div>
   </div>
-  
+
+[{*
 <lx-dialog class="dialog dialog--xl" id="exceptionmsg" auto-close="true">
     <div class="dialog__header">
         <div class="toolbar bgc-light-blue-500 pl++">
@@ -121,6 +125,7 @@
         <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>cancel</button>
     </div>
 </lx-dialog>
+*}]
 <script>
     [{capture assign="ng"}]
     $scope.dialogs = {};
@@ -137,14 +142,15 @@
         $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devlogs&fnc=getApacheLog"|replace:"&amp;":"&" }]")
              .then(function (res)
              {
-                 if (res.data.status = 'ok')
+                 console.log(res.data);
+                 if (res.data.status === 'ok')
                  {
                      $scope.apachelog = res.data;
                      //M.toast({html: 'Apache Log loaded'});
                  }
                  else
                  {
-                     M.toast({html: 'loading Apache Log failed!'});
+                     M.toast({html: 'loading Apache Log failed: '+res.data.status});
                  }
              });
     };
@@ -157,7 +163,7 @@
         $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devlogs&fnc=getOxidLog"|replace:"&amp;":"&" }]")
              .then(function (res)
              {
-                 if (res.data.status = 'ok')
+                 if (res.data.status === 'ok')
                  {
                  	console.log(res.data);
                      $scope.oxidlog = res.data;

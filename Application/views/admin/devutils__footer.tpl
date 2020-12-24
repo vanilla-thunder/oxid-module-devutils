@@ -16,11 +16,29 @@
             return $sce.trustAsHtml(htmlCode);
         }
     }])
+        .directive('copyToClipboard', function () {
+            return {
+                restrict: 'A',
+                link: function (scope, elem, attrs) {
+                    elem.click(function () {
+                        if (attrs.copyToClipboard) {
+                            var $temp_input = $("<input>");
+                            $("body").append($temp_input);
+                            $temp_input.val(attrs.copyToClipboard).select();
+                            document.execCommand("copy");
+                            $temp_input.remove();
+                        }
+                    });
+                }
+            };
+        })
        .filter("highlight", function ()
        {
            return function ($value, $param)
            {
-               return $param ? $value.replace(new RegExp($param, "ig"), function swag(x)
+               //console.log($param);
+               //console.log($value);
+               return $param && $value ? $value.replace(new RegExp($param, "ig"), function swag(x)
                {
                    return '<b class="red-text">' + x + '</b>';
                }) : $value;

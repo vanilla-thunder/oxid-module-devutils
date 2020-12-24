@@ -32,14 +32,9 @@
                     <input type="hidden" name="cl" value="devmodulemetadata">
                     <input type="hidden" name="oxid" value="[{$oModule->getId()}]">
                     <button class="btn waves-effect waves-light" type="submit" name="fnc" value="reinstallModule">
-                        reload
+                        reinstall
                         <i class="material-icons right">cached</i>
                     </button>
-                    <button class="btn waves-effect waves-light" type="submit" name="fnc" value="reactivateModule">
-                        restart
-                        <i class="material-icons right">call_missed_outgoing</i>
-                    </button>
-                    (man muss wahrscheinlich beides machen)
                 </form>
             </div>
         </div>

@@ -194,31 +194,32 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             //$classExtensionChainService->updateChain(1);
 
             //$this->applyModulesConfigurationForAllShops($output);
-        } catch (ModuleTargetPathIsMissingException $exception) {
-            die("MESSAGE_TARGET_PATH_IS_REQUIRED");
-        } catch (\Throwable $throwable) {
-            var_dump($throwable);
-            die("MESSAGE_INSTALLATION_FAILED");
-        }
-    }
 
-    public function reactivateModule()
-    {
-        try {
-            $moduleActivationBridge = $this->getContainer()->get(ModuleActivationBridgeInterface::class);
+            $moduleActivationBridge = $container->get(ModuleActivationBridgeInterface::class);
             $moduleActivationBridge->deactivate(
                 $this->getEditObjectId(),
                 Registry::getConfig()->getShopId()
             );
 
-            $moduleActivationBridge = $this->getContainer()->get(ModuleActivationBridgeInterface::class);
+            $moduleActivationBridge = $container->get(ModuleActivationBridgeInterface::class);
             $moduleActivationBridge->activate(
                 $this->getEditObjectId(),
                 Registry::getConfig()->getShopId()
             );
+        } catch (ModuleTargetPathIsMissingException $exception) {
+            var_dump($exception);
+            Registry::getUtilsView()->addErrorToDisplay($exception);
+            Registry::getLogger()->error($exception->getMessage(), [$exception]);
+            //die("MESSAGE_TARGET_PATH_IS_REQUIRED");
+        } catch (\Throwable $throwable) {
+            var_dump($throwable);
+            Registry::getUtilsView()->addErrorToDisplay($throwable);
+            Registry::getLogger()->error($throwable->getMessage(), [$throwable]);
+            //die("MESSAGE_INSTALLATION_FAILED");
         } catch (\Exception $exception) {
             Registry::getUtilsView()->addErrorToDisplay($exception);
             Registry::getLogger()->error($exception->getMessage(), [$exception]);
+            //die("MESSAGE_REACTIVATION_FAILED");
         }
     }
 }
