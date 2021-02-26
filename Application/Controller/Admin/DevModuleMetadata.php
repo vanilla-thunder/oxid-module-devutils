@@ -47,7 +47,45 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
         include($sModuleDir.DIRECTORY_SEPARATOR."metadata.php");
 
         // path
-        $aModule["path"] = $sModuleDir;
+        $aModule["path"] = basename($sModuleDir);
+
+        // controllers
+        /*
+        if (array_key_exists("controllers", $aModule)) {
+            $sModulesDir = Registry::getConfig()->getModulesDir();
+            foreach ($aModule["controllers"] as $cl => $file) {
+                $aModule["controllers"][$cl] = [
+                    'cl' => $cl,
+                    'check' => file_exists($sModulesDir.$file)
+                ];
+            }
+        }*/
+
+        // templates
+        if (array_key_exists("templates", $aModule)) {
+            $sModulesDir = Registry::getConfig()->getModulesDir();
+            foreach ($aModule["templates"] as $tpl => $file) {
+                $aModule["templates"][$tpl] = [
+                    'file' => $file,
+                    'check' => file_exists($sModulesDir.$file)
+                ];
+            }
+        }
+
+        // blocks
+        if (array_key_exists("blocks", $aModule)) {
+            $blocks = [];
+            foreach ($aModule["blocks"] as $var) {
+                $blocks[$var["block"]] = [
+                    'block' => $var['block'],
+                    'template' => $var['template'],
+                    'file' => $var['file'],
+                    'check' => file_exists($sModuleDir.$var['file'])
+                ];
+            }
+            //ksort($settings);
+            $aModule["blocks"] = $blocks;
+        }
 
         // settings
         if (array_key_exists("settings", $aModule)) {
@@ -57,16 +95,6 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             }
             ksort($settings);
             $aModule["settings"] = $settings;
-        }
-
-        // blocks
-        if (array_key_exists("blocks", $aModule)) {
-            $blocks = [];
-            foreach ($aModule["blocks"] as $var) {
-                $blocks[$var["block"]] = $var; //["type"];
-            }
-            //ksort($settings);
-            $aModule["blocks"] = $blocks;
         }
 
         return $aModule;
@@ -98,11 +126,11 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
 
         // version
         $aModuleVersions = Registry::getConfig()->getConfigParam("aModuleVersions");
-        $aModule["version"] = array_key_exists($sModuleId, $aModuleVersions) ? $aModuleVersions[$sModuleId] : "-";
+        $aModule["version"] = array_key_exists($sModuleId, $aModuleVersions) ? $aModuleVersions[$sModuleId] : "unknown";
 
         // path
         $aModulePaths = Registry::getConfig()->getConfigParam("aModulePaths");
-        $aModule["path"] = array_key_exists($sModuleId, $aModulePaths) ? $aModulePaths[$sModuleId] : "-";
+        $aModule["path"] = array_key_exists($sModuleId, $aModulePaths) ? $aModulePaths[$sModuleId] : "unknown";
 
         // events
         $aModuleEvents = Registry::getConfig()->getConfigParam("aModuleEvents");

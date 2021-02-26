@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<OX>
-	<OXMENU id="NAVIGATION_ESHOPADMIN">
-		<MAINMENU id="mxextensions">
-			<SUBMENU id="vtdev_mails" cl="vtdev_mails" />
-		</MAINMENU>
-	</OXMENU>
-</OX>

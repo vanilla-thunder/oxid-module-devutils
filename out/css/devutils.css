@@ -4,9 +4,9 @@
     font-weight: 400;
     src: local('Material Icons'),
     local('MaterialIcons-Regular'),
-    url('/modules/vt/devutils/out/fonts/MaterialIcons-Regular.woff2') format('woff2'),
-    url('/modules/vt/devutils/out/fonts/MaterialIcons-Regular.woff') format('woff'),
-    url('/modules/vt/devutils/out/fonts/MaterialIcons-Regular.ttf') format('truetype');
+    url('/modules/vt/DevUtils/out/fonts/MaterialIcons-Regular.woff2') format('woff2'),
+    url('/modules/vt/DevUtils/out/fonts/MaterialIcons-Regular.woff') format('woff'),
+    url('/modules/vt/DevUtils/out/fonts/MaterialIcons-Regular.ttf') format('truetype');
 }
 .material-icons {
     font-family: 'Material Icons';

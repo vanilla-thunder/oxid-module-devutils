@@ -13,19 +13,12 @@
  * You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>
  */
 
-$sLangName = 'Deutsch';
-$aLang = array(
-    'charset' => 'UTF-8',
-    'devlogs' => 'Logs',
-    'devmails' => 'E-Mails Preview',
-    'devmetadata' => 'Module Metadata',
-    'devmodulemetadata' => 'Metadata',
-    'devconfigviewer' => 'Config Viewer',
-    'devtranslations' => 'Übersetzungen',
+namespace VanillaThunder\DevUtils\Application\Extend;
 
-    'DEVUTILS_NO_ENTRIES' => 'Keine Einträge vorhanden',
-    'DEVUTILS_TPL_OK' => '<i class="material-icons tiny green-text tooltipped" data-position="right" data-tooltip="TPL Datei gefunden">check</i>',
-    'DEVUTILS_TPL_NF' => '<i class="material-icons tiny red-text tooltipped" data-position="right" data-tooltip="TPL Datei nicht gefunden">error</i>'
-
-
-);
+class Shop extends Shop_parent {
+	
+	public function generateViews() {
+		// do not generate views for disabled subshops
+		//if(Regis)
+	}
+}

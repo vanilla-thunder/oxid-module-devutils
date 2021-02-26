@@ -58,8 +58,6 @@ class ModuleMain extends ModuleMain_parent
     public function reloadModule()
     {
         $sModuleId = $this->getEditObjectId();
-        var_dump($sModuleId);
-        exit;
         try {
             $moduleSourcePath = Path::isRelative($path)
                 ? Path::makeAbsolute($path, getcwd())

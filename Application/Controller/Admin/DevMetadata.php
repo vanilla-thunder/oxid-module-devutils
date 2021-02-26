@@ -116,16 +116,18 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
 
     public function getModuleExtensions()
     {
+        $cfg = Registry::getConfig();
+        $sModulesDir = $cfg->getModulesDir();
         $aModuleExtensions = Registry::getConfig()->getConfigParam("aModuleExtensions");
         foreach ($aModuleExtensions as $module => $extensions) {
             $items = [];
             foreach ($extensions as $extension) {
                 $status = 0;
-                try {
-                    $status = (class_exists($extension) ? 1 : -1);
-                } catch (\Throwable $e) {
-                    /**
-                     * oof, das ist dirty AF
+
+                if(strpos( $extension,"\\") !== false)
+                {
+                    /** namespace
+                     * das ist dirty AF
                      * class_exists versucht scheinbar die Klasse zu instanziieren
                      * wegen dem dynamischen Mapping von "class extends class_parent" existiert class_parent natürlich nicht
                      * deswegen wirft class_exists eine "class not found" Fehlermeldung.
@@ -135,8 +137,10 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
                     //print $extension."_parent" . "<br/>";
                     //print $e->getMessage() . "<br/>";
                     //var_dump(strpos($e->getMessage(), $extension."_parent"));
-                    $status = (strpos($e->getMessage(), $extension . "_parent") > 0 ? 1 : -1);
+                    try { $status = (class_exists($extension) ? 1 : -1); }
+                    catch (\Throwable $e) { $status = (strpos($e->getMessage(), $extension . "_parent") > 0 ? 1 : -1); }
                 }
+                else $status = file_exists($sModulesDir.DIRECTORY_SEPARATOR.$extension.".php") &&  is_readable($sModulesDir.DIRECTORY_SEPARATOR.$extension.".php");
 
                 $items[] = [
                     "class" => $extension,
@@ -225,11 +229,11 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
 
         // dann Dateien prüfen
         foreach ($aTplBLocks as $module => $blocks) {
-            $moduleConfiguration = $anotherBullshit->get($oxmodule);
+            $moduleConfiguration = $anotherBullshit->get($module);
             $sModulePath = $moduleConfiguration->getPath();
             foreach ($blocks as $index => $block) {
-                $fullpath = $cfg->getModulesDir() . $sModulePath . DIRECTORY_SEPARATOR . $row["OXFILE"];
-                $aTplBLocks[$module][$index]["OXACTIVE"] = intval($row["OXACTIVE"]);
+                $fullpath = $cfg->getModulesDir() . $sModulePath . DIRECTORY_SEPARATOR . $block["OXFILE"];
+                $aTplBLocks[$module][$index]["OXACTIVE"] = intval($block["OXACTIVE"]);
                 $aTplBLocks[$module][$index]["fullpath"] = $fullpath;
                 $aTplBLocks[$module][$index]["status"] = (file_exists($fullpath) && is_readable($fullpath) ? 1 : -1);
             }

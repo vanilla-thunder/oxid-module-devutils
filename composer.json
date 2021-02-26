@@ -14,7 +14,7 @@
   ],
   "extra": {
     "oxideshop": {
-      "target-directory": "vt/devutils"
+      "target-directory": "vt/DevUtils"
     }
   },
   "require": {
@@ -23,7 +23,7 @@
   },
   "autoload": {
     "psr-4": {
-      "VanillaThunder\\DevUtils\\": "../../../source/modules/vt/devutils"
+      "VanillaThunder\\": "../../../source/modules/vt"
     }
   }
 }

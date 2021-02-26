@@ -4,31 +4,38 @@
 <div class="row pt">
     <div class="col s12">
         <ul id="metadatatabs" class="tabs">
-            <li class="tab col"><a class="active" href="#amodules">all extensions</a></li>
-            <li class="tab col"><a href="#amoduleextensions">module extensions</a></li>
+            <li class="tab col"><a class="active" href="#amodules">extensions per class</a></li>
+            <li class="tab col"><a href="#amoduleextensions">extensions per module</a></li>
             <li class="tab col"><a href="#amodulecontrollers">controllers</a></li>
             <li class="tab col"><a href="#amoduletemplates">templates</a></li>
             <li class="tab col"><a href="#atplblocks">tpl blocks</a></li>
         </ul>
     </div>
     <div id="amodules" class="col s12">
-        [{* aModules *}]
+        <div class="input-field">
+            <i class="material-icons prefix">search</i>
+            <input type="text" id="autocomplete-amodules" placeholder="search" class="autocomplete" ng-model="search.amodules">
+        </div>
         <ul>
-            <li ng-repeat="(_cl,_ext) in aModules.value track by $index" class="mv+">
+            <li ng-repeat="(_cl,_ext) in aModules.value track by $index" ng-show="(_ext |filter:search.amodules:false).length > 0" class="mv+">
                 <b ng-bind="_cl"></b>
                 <ul class="pl+">
-                    <li ng-repeat="_e in _ext track by $index" ng-bind="_e"></li>
+                    <li ng-repeat="_e in _ext |filter:search.amodules:false track by $index" ng-bind-html="_e| highlight:search.amodules | html"></li>
                 </ul>
             </li>
         </ul>
     </div>
     <div id="amoduleextensions" class="col s12">
+        <div class="input-field">
+            <i class="material-icons prefix">search</i>
+            <input type="text" id="autocomplete-amoduleextensions" placeholder="search" class="autocomplete" ng-model="search.amoduleextensions">
+        </div>
         <ul>
-            <li ng-repeat="(_module,_extensions) in aModuleExtensions.value track by $index" class="mv+">
+            <li ng-repeat="(_module,_extensions) in aModuleExtensions.value track by $index" ng-show="(_extensions |filter:search.amoduleextensions:false).length > 0" class="mv+">
                 <b ng-bind="_module"></b>
                 <ul class="pl+">
-                    <li ng-repeat="_extension in _extensions track by $index">
-                        <span ng-bind="_extension.class"></span>
+                    <li ng-repeat="_extension in _extensions |filter:search.amoduleextensions:false track by $index">
+                        <span ng-bind-html="_extension.class| highlight:search.amoduleextensions | html"></span>
                         <i ng-if="_extension.status == 1" class="material-icons tiny green-text tooltipped" data-tooltip="everything seems fine" data-position="right">check</i>
                         <i ng-if="_extension.status == -1" class="material-icons tiny red-text tooltipped" data-tooltip="file not found!" data-position="right">close</i>
                     </li>
@@ -37,6 +44,17 @@
         </ul>
     </div>
     <div id="amodulecontrollers" class="col s12">
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <label for="autocomplete-input">search</label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <ul>
             <li ng-repeat="(_module,_controllers) in aModuleControllers.value track by $index" class="mv+">
                 <b ng-bind="_module"></b>
@@ -54,6 +72,17 @@
         </ul>
     </div>
     <div id="amoduletemplates" class="col s12">
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <label for="autocomplete-input">search</label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <ul>
             <li ng-repeat="(_module,_templates) in aModuleTemplates.value track by $index" class="mv+">
                 <b ng-bind="_module"></b>
@@ -70,8 +99,19 @@
         </ul>
     </div>
     <div id="atplblocks" class="col s12">
-        <h5 ng-if="aTplBlocks.value.length == 0">there are no template blocks available</h5>
-        <div ng-if="aTplBlocks.value.length > 0" ng-repeat="(_module,_blocks) in aTplBlocksc track by $index" class="card">
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <label for="autocomplete-input">search</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h5 ng-if="Object.keys(aTplBlocks.value).length == 0">there are no template blocks available</h5>
+        <div ng-if="Object.keys(aTplBlocks.value).length > 0" ng-repeat="(_module,_blocks) in aTplBlocks.value track by $index" class="card">
             <div class="card-content">
                 <span class="card-title" ng-bind="_module"></span>
                 <ul>
@@ -102,7 +142,6 @@
         </div>
     </div>
 </div>
-
 <!--
 <lx-tabs>
 

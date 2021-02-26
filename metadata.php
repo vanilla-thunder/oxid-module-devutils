@@ -26,6 +26,7 @@ $aModule = [
         //\OxidEsales\Eshop\Application\Controller\Admin\ModuleMain::class  => VanillaThunder\DevUtils\Application\Extend\ModuleMain::class,
         \OxidEsales\Eshop\Application\Controller\Admin\NavigationController::class => VanillaThunder\DevUtils\Application\Extend\NavigationController::class,
         \OxidEsales\Eshop\Application\Model\Order::class => VanillaThunder\DevUtils\Application\Extend\Order::class,
+        \OxidEsales\Eshop\Application\Model\Shop::class => VanillaThunder\DevUtils\Application\Extend\Shop::class,
         \OxidEsales\Eshop\Core\Email::class => VanillaThunder\DevUtils\Application\Extend\Email::class,
         \OxidEsales\Eshop\Core\Language::class => VanillaThunder\DevUtils\Application\Extend\Language::class,
         \OxidEsales\Eshop\Core\UtilsView::class => VanillaThunder\DevUtils\Application\Extend\UtilsView::class,
@@ -42,23 +43,23 @@ $aModule = [
         'devmails' => VanillaThunder\DevUtils\Application\Controller\DevMails::class
     ],
     'templates' => [
-        'vtdev_module_main.tpl' => 'vt/devutils/Application/views/admin/vtdev_module_main.tpl',
-        'vtdev_navigation_header.tpl' => 'vt/devutils/Application/views/admin/vtdev_navigation_header.tpl',
+        'vtdev_module_main.tpl' => 'vt/DevUtils/Application/views/admin/vtdev_module_main.tpl',
+        'vtdev_navigation_header.tpl' => 'vt/DevUtils/Application/views/admin/vtdev_navigation_header.tpl',
 
-        'devutils__header.tpl' => 'vt/devutils/Application/views/admin/devutils__header.tpl',
-        'devutils__footer.tpl' => 'vt/devutils/Application/views/admin/devutils__footer.tpl',
+        'devutils__header.tpl' => 'vt/DevUtils/Application/views/admin/devutils__header.tpl',
+        'devutils__footer.tpl' => 'vt/DevUtils/Application/views/admin/devutils__footer.tpl',
 
         // admin templates
-        'devutils_chiltpl.tpl' => 'vt/devutils/Application/views/admin/devutils_chiltpl.tpl',
-        'devutils_configviewer.tpl' => 'vt/devutils/Application/views/admin/devutils_configviewer.tpl',
-        'devutils_gui.tpl' => 'vt/devutils/Application/views/admin/devutils_gui.tpl',
-        'devutils_logs.tpl' => 'vt/devutils/Application/views/admin/devutils_logs.tpl',
-        'devutils_metadata.tpl' => 'vt/devutils/Application/views/admin/devutils_metadata.tpl',
-        'devutils_modulemetadata.tpl' => 'vt/devutils/Application/views/admin/devutils_modulemetadata.tpl',
-        'devutils_translations.tpl' => 'vt/devutils/Application/views/admin/devutils_translations.tpl',
+        'devutils_chiltpl.tpl' => 'vt/DevUtils/Application/views/admin/devutils_chiltpl.tpl',
+        'devutils_configviewer.tpl' => 'vt/DevUtils/Application/views/admin/devutils_configviewer.tpl',
+        'devutils_gui.tpl' => 'vt/DevUtils/Application/views/admin/devutils_gui.tpl',
+        'devutils_logs.tpl' => 'vt/DevUtils/Application/views/admin/devutils_logs.tpl',
+        'devutils_metadata.tpl' => 'vt/DevUtils/Application/views/admin/devutils_metadata.tpl',
+        'devutils_modulemetadata.tpl' => 'vt/DevUtils/Application/views/admin/devutils_modulemetadata.tpl',
+        'devutils_translations.tpl' => 'vt/DevUtils/Application/views/admin/devutils_translations.tpl',
 
         // frontend templates
-        'devutils_mails.tpl' => 'vt/devutils/Application/views/devutils_mails.tpl',
+        'devutils_mails.tpl' => 'vt/DevUtils/Application/views/devutils_mails.tpl',
 
     ],
     'blocks' => [],
