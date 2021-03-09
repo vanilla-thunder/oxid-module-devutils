@@ -4,21 +4,19 @@
 <div class="row pt">
     <div class="col s12">
         <ul id="metadatatabs" class="tabs">
-            <li class="tab col"><a class="active" href="#amodules">extensions per class</a></li>
+            <li class="tab col"><a class="active" href="#amodules">extensions</a></li>
             <li class="tab col"><a href="#amoduleextensions">extensions per module</a></li>
             <li class="tab col"><a href="#amodulecontrollers">controllers</a></li>
             <li class="tab col"><a href="#amoduletemplates">templates</a></li>
             <li class="tab col"><a href="#atplblocks">tpl blocks</a></li>
+            <li class="tab col"><a href="#blocksorting">block sorting</a></li>
         </ul>
     </div>
     <div id="amodules" class="col s12">
-        <div class="input-field">
-            <i class="material-icons prefix">search</i>
-            <input type="text" id="autocomplete-amodules" placeholder="search" class="autocomplete" ng-model="search.amodules">
-        </div>
+        <div class="input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="search" ng-model="search.amodules" autocomplete="off"></div>
         <ul>
             <li ng-repeat="(_cl,_ext) in aModules.value track by $index" ng-show="(_ext |filter:search.amodules:false).length > 0" class="mv+">
-                <b ng-bind="_cl"></b>
+                <h5 ng-bind="_cl"></h5>
                 <ul class="pl+">
                     <li ng-repeat="_e in _ext |filter:search.amodules:false track by $index" ng-bind-html="_e| highlight:search.amodules | html"></li>
                 </ul>
@@ -26,16 +24,13 @@
         </ul>
     </div>
     <div id="amoduleextensions" class="col s12">
-        <div class="input-field">
-            <i class="material-icons prefix">search</i>
-            <input type="text" id="autocomplete-amoduleextensions" placeholder="search" class="autocomplete" ng-model="search.amoduleextensions">
-        </div>
+        <div class="input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="search" ng-model="search.amoduleextensions" autocomplete="off"></div>
         <ul>
-            <li ng-repeat="(_module,_extensions) in aModuleExtensions.value track by $index" ng-show="(_extensions |filter:search.amoduleextensions:false).length > 0" class="mv+">
-                <b ng-bind="_module"></b>
+            <li ng-repeat="(_module,_extensions) in aModuleExtensions.value track by $index" ng-show="(_extensions | filter:search.amoduleextensions:false).length > 0" class="mv+">
+                <h5 ng-bind="_module"></h5>
                 <ul class="pl+">
-                    <li ng-repeat="_extension in _extensions |filter:search.amoduleextensions:false track by $index">
-                        <span ng-bind-html="_extension.class| highlight:search.amoduleextensions | html"></span>
+                    <li ng-repeat="_extension in _extensions | filter:search.amoduleextensions:false track by $index">
+                        <span ng-bind-html="_extension.class | highlight:search.amoduleextensions | html"></span>
                         <i ng-if="_extension.status == 1" class="material-icons tiny green-text tooltipped" data-tooltip="everything seems fine" data-position="right">check</i>
                         <i ng-if="_extension.status == -1" class="material-icons tiny red-text tooltipped" data-tooltip="file not found!" data-position="right">close</i>
                     </li>
@@ -44,27 +39,17 @@
         </ul>
     </div>
     <div id="amodulecontrollers" class="col s12">
-        <div class="row">
-            <div class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">search</i>
-                        <input type="text" id="autocomplete-input" class="autocomplete">
-                        <label for="autocomplete-input">search</label>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="search" ng-model="search.amodulecontrollers" autocomplete="off"></div>
         <ul>
-            <li ng-repeat="(_module,_controllers) in aModuleControllers.value track by $index" class="mv+">
-                <b ng-bind="_module"></b>
+            <li ng-repeat="(_module,_controllers) in aModuleControllers.value track by $index" ng-show="(_controllers | filter:{path:search.amodulecontrollers}:false).length > 0" class="mv+">
+                <h5 ng-bind="_module"></h5>
                 <table class="striped ml+ mt">
-                    <tr ng-repeat="_controller in _controllers track by $index">
+                    <tr ng-repeat="_controller in _controllers | filter:{path:search.amodulecontrollers}:false track by $index">
                         <td ng-bind="_controller.class"></td>
                         <td>
-                            <span ng-bind="_controller.path"></span>
-                            <i ng-if="_controller.status == 1" class="material-icons tiny green-text tooltipped" data-tooltip="everything seems fine" data-position="right">check</i>
-                            <i ng-if="_controller.status == -1" class="material-icons tiny red-text tooltipped" data-tooltip="file not found!" data-position="right">close</i>
+                            <span ng-bind-html="_controller.path | highlight:search.amodulecontrollers | html"></span>
+                            <i ng-if="_controller.status == 1" class="material-icons tiny green-text tooltipped" data-tooltip="class exists" data-position="right">check</i>
+                            <i ng-if="_controller.status == -1" class="material-icons tiny red-text tooltipped" data-tooltip="class does not exist!" data-position="right">close</i>
                         </td>
                     </tr>
                 </table>
@@ -72,258 +57,106 @@
         </ul>
     </div>
     <div id="amoduletemplates" class="col s12">
-        <div class="row">
-            <div class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">search</i>
-                        <input type="text" id="autocomplete-input" class="autocomplete">
-                        <label for="autocomplete-input">search</label>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="search" ng-model="search.amoduletemplates" autocomplete="off"></div>
         <ul>
-            <li ng-repeat="(_module,_templates) in aModuleTemplates.value track by $index" class="mv+">
-                <b ng-bind="_module"></b>
-                <ul class="pl+">
+            <li ng-repeat="(_module,_templates) in aModuleTemplates.value track by $index" ng-show="(_templates | filter:{file:search.amoduletemplates}:false).length > 0" class="mv+">
+                <h5 ng-bind="_module"></h5>
+                <table class="striped ml+ mt">
+                    <tr ng-repeat="_tpl in _templates track by $index">
+                        <td ng-bind-html="_tpl.file | highlight:search.amoduletemplates | html"></td>
+                        <td>
+                            <span ng-bind="_tpl.path"></span>
+                            <i ng-if="_tpl.status == 1" class="material-icons tiny green-text tooltipped" data-tooltip="template found" data-position="right">check</i>
+                            <i ng-if="_tpl.status == -1" class="material-icons tiny red-text tooltipped" data-tooltip="template not found!" data-position="right">close</i>
+                            <i class="material-icons tiny tooltipped" data-tooltip="full path of the file: {{_tpl.fullpath}}" data-position="bottom">search</i>
+                        </td>
+                    </tr>
+                </table>
+                [{*<ul class="pl+">
                     <li ng-repeat="_tpl in _templates track by $index" class="mt">
-                        <b ng-bind="_tpl.file + ' >> '"></b>
-                        <span ng-bind="_tpl.path"></span>
-                        <i ng-if="_tpl.status == 1" class="material-icons tiny green-text tooltipped" data-tooltip="everything seems fine" data-position="right">check</i>
-                        <i ng-if="_tpl.status == -1" class="material-icons tiny red-text tooltipped" data-tooltip="file not found!" data-position="right">close</i>
-                        <div>full path: {{_tpl.fullpath}}</div>
+                        <b ng-bind="_tpl.file + ' : '"></b>
+                        <span ng-bind-html="_tpl.path | highlight:search.amoduletemplates | html"></span>
+                        <i ng-if="_tpl.status == 1" class="material-icons tiny green-text tooltipped" data-tooltip="template found" data-position="right">check</i>
+                        <i ng-if="_tpl.status == -1" class="material-icons tiny red-text tooltipped" data-tooltip="template not found!" data-position="right">close</i>
+                        <div class="tooltipped" data-tooltip="full path to the file, where oxid is looking for it according to metadata entry" data-position="top">full path <span ng-bind-html="_tpl.fullpath | highlight:search.amoduletemplates | html"></span></div>
                     </li>
-                </ul>
+                </ul>*}]
             </li>
         </ul>
     </div>
     <div id="atplblocks" class="col s12">
-        <div class="row">
-            <div class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">search</i>
-                        <input type="text" id="autocomplete-input" class="autocomplete">
-                        <label for="autocomplete-input">search</label>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <div class="col s4 input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="theme" ng-model="search.atplblockstheme" autocomplete="off"></div>
+            <div class="col s4 input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="template" ng-model="search.atplblockstemplate" autocomplete="off"></div>
+            <div class="col s4 input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="block name" ng-model="search.atplblocksblock" autocomplete="off"></div>
         </div>
         <h5 ng-if="Object.keys(aTplBlocks.value).length == 0">there are no template blocks available</h5>
-        <div ng-if="Object.keys(aTplBlocks.value).length > 0" ng-repeat="(_module,_blocks) in aTplBlocks.value track by $index" class="card">
-            <div class="card-content">
-                <span class="card-title" ng-bind="_module"></span>
-                <ul>
-                    <li ng-repeat="_block in _blocks track by $index" class="mt row">
-                        <div class="col s2 m1 center-align">
-
+        <ul>
+            <li ng-repeat="(_module,_blocks) in aTplBlocks.value track by $index"
+                ng-if="(_blocks | filter:{OXTHEME:search.atplblockstheme}:false | filter:{OXTEMPLATE:search.atplblockstemplate}:false | filter:{OXBLOCKNAME:search.atplblocksblock}:false).length > 0" class="mv+">
+                <h5 ng-bind="_module"></h5>
+                <table class="striped ml+ mt">
+                    <tr ng-repeat="_block in _blocks | filter:{OXTHEME:search.atplblockstheme}:false | filter:{OXTEMPLATE:search.atplblockstemplate}:false | filter:{OXBLOCKNAME:search.atplblocksblock}:false track by $index" ng-if="(_blocks | filter:{OXTHEME:search.atplblockstheme}:false | filter:{OXTEMPLATE:search.atplblockstemplate}:false | filter:{OXBLOCKNAME:search.atplblocksblock}:false).length > 0">
+                        <td class="center-align">
+                            <span class="pb" ng-if="_block.OXACTIVE">ON</span>
+                            <span class="pb" ng-if="!_block.OXACTIVE">OFF</span>
                             <div class="switch mt">
-                                <span class="pb" ng-if="_block.OXACTIVE">ON</span>
-                                <span class="pb" ng-if="!_block.OXACTIVE">OFF</span>
                                 <label>
                                     <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="_block.OXACTIVE" ng-change="toggleTplBLock(_block)">
                                     <span class="lever"></span>
                                 </label>
                             </div>
-                        </div>
-                        <div class="col s10 m11">
-                            <b>{{_block.OXTEMPLATE}} > {{_block.OXBLOCKNAME}} > pos {{_block.OXPOS}}</b><br/>
-                            <div ng-bind="_block.OXFILE"></div>
+                        </td>
+                        <td>
+                            <div><b>theme:</b> <span ng-bind-html="_block.OXTHEME || '*' | highlight:search.atplblockstheme | html"></span></div>
+                            <div><b>template:</b> <span ng-bind-html="_block.OXTEMPLATE | highlight:search.atplblockstemplate | html"></span></div>
+                            <div><b>block name:</b> <span ng-bind-html="_block.OXBLOCKNAME | highlight:search.atplblocksblock | html"></span> (<b>pos:</b> <span ng-bind="_block.OXPOS"></span>)</div>
                             <div>
-                                <small ng-bind="_block.fullpath"></small>
+                                <b>file: </b>
+                                <span ng-bind="_block.OXFILE"></span>&nbsp;
                                 <i ng-if="_block.status == 1" class="material-icons tiny green-text tooltipped" data-tooltip="everything seems fine" data-position="right">check</i>
                                 <i ng-if="_block.status == -1" class="material-icons tiny red-text tooltipped" data-tooltip="file not found!" data-position="right">close</i>
                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                            <div ng-bind="_block.fullpath"></div>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
     </div>
-</div>
-<!--
-<lx-tabs>
-
-    [{*
-        <lx-tab lx-label="extensions">
-
-            <div class="container px++">
-                <div class="toolbar my+" flex-container="row">
-                    <div flex-item="2">
-                        <button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="load(aModules)"><i class="mdi mdi-refresh"></i> reload</button>
-                    </div>
-                    <div flex-item="">
-                        <lx-search-filter><input type="text" ng-model="search.aModules" placeholder="search..."></lx-search-filter>
-                    </div>
-                </div>
-
-
-                <table class="data-table">
-                    <thead>
-                    <colgroup>
-                        <col width="50%"/>
-                        <col width="50%"/>
-                    </colgroup>
-                    </thead>
-                    <tbody>
-                    <tr class="" ng-repeat="item in aModules.content">
-                        <td align="right" valign="top"><h2 ng-bind-html="item.label  |highlight:search.aModules |html"></h2></td>
+    <div id="blocksorting" class="col s12">
+        <div>
+            <div class="col s6 input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="template" ng-model="search.atplblocksortingtemplate" autocomplete="off"></div>
+            <div class="col s6 input-field"><i class="material-icons prefix">search</i><input type="text" placeholder="block name" ng-model="search.atplblocksortingblock" autocomplete="off"></div>
+        </div>
+        <ul>
+            <li ng-repeat="(_template, _blocknames) in aTplBlockSorting.value track by $index" ng-if="(!search.atplblocksortingtemplate || _template.indexOf(search.atplblocksortingtemplate) >= 0) && (!search.atplblocksortingblock || (Object.keys(_blocknames) | filter:search.atplblocksortingblock:false).length > 0)">
+                <h5 ng-bind-html="_template |highlight:search.atplblocksortingtemplate |html"></h5>
+                <table class="striped">
+                    <tr ng-repeat="(_blockname, _blocks) in _blocknames track by $index" [{* ng-if="search.atplblocksortingblock === '' ||  _blockname.indexOf(search.atplblocksortingblock) >= 0" *}]>
+                        <td width="30%" class="right-align pr++" ng-bind-html="_blockname |highlight:search.atplblocksortingblock |html"></td>
                         <td>
-                            <ul class="list">
-                                <li class="list-row" ng-repeat="subitem in item.items">
-                                    <div class="list-row__primary">
-                                        <i ng-if="subitem.status == 1" lx-tooltip="extension file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
-                                        <i ng-if="subitem.status == -1" lx-tooltip="extension file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
-                                    </div>
-                                    <div class="list-row__content"><span ng-bind-html="subitem.file |highlight:search.aModules |html"></span>
+                            <ul data-as-sortable="aTplBlockSorting.options" data-ng-model="_blocks" data-tempalte="{{_template}}" data-blockname="{{_blockname}}">
+                                <li ng-repeat="_block in _blocks" data-as-sortable-item style="max-width: 600px;" data-oxid="{{_block.OXID}}">
+                                    <div data-as-sortable-item-handle class="p">
+                                        <div class="row m0">
+                                            <div class="col s1"><b ng-bind="$index"></b></div>
+                                            <div class="col s2">pos: {{_block.OXPOS}}</div>
+                                            <div class="col s5">module: {{_block.OXMODULE}}</div>
+                                            <div class="col s4">theme: {{_block.OXTHEME||"*"}}</div>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
                         </td>
                     </tr>
-                    </tbody>
                 </table>
-            </div>
-        </lx-tab>
-    *}]
-        [{* aModuleControllers *}]
-    <lx-tab lx-label="controllers">
-
-        <div class="container px++">
-            <div class="toolbar my+" flex-container="row">
-                <div flex-item="2">
-                    <button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="load(aModuleControllers)"><i class="mdi mdi-refresh"></i> reload</button>
-                </div>
-                <div flex-item="">
-                    <lx-search-filter><input type="text" ng-model="search.aModuleControllers" placeholder="search..."></lx-search-filter>
-                </div>
-            </div>
-
-            <table class="data-table">
-                <thead>
-                <colgroup>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                </colgroup>
-                </thead>
-                <tbody>
-                <tr class="" ng-repeat="item in aModuleFiles.content |filter:{filter:search.aModuleFiles}:false">
-                    <td align="right" valign="top"><h2 ng-bind-html="item.label  |highlight:search.aModuleFiles |html"></h2></td>
-                    <td>
-                        <ul class="list">
-                            <li class="list-row" ng-repeat="subitem in item.items">
-                                <div class="list-row__primary">
-                                    <i ng-if="subitem.status == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
-                                    <i ng-if="subitem.status == -1" lx-tooltip="file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
-                                </div>
-                                <div class="list-row__content">
-                                    <strong ng-bind-html="subitem.file |highlight:search.aModuleFiles |html"></strong>
-                                    <span class="" ng-bind-html="subitem.path |highlight:search.aModuleFiles |html"></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-    </lx-tab>
-
-    [{* aModuleTemplates *}]
-    <lx-tab lx-label="templates">
-        <div class="card">
-            <div class="container toolbar" flex-container="row">
-                <div flex-item="1">
-                    <button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="load( aModuleTemplates )"><i class="mdi mdi-refresh"></i> refresh</button>
-                </div>
-                <div flex-item="4">
-                    <lx-search-filter><input type="text" ng-model="search.aModuleTemplates" placeholder="search..."></lx-search-filter>
-                </div>
-            </div>
-        </div>
-
-        <div class="container card mt+">
-            <table class="data-table">
-                <thead>
-                <colgroup>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                </colgroup>
-                </thead>
-                <tbody>
-                <tr class="" ng-repeat="item in aModuleTemplates.content |filter:{filter:search.aModuleTemplates}:false">
-                    <td align="right" valign="top"><h2 ng-bind-html="item.label  |highlight:search.aModuleTemplates |html"></h2></td>
-                    <td>
-                        <ul class="list">
-                            <li class="list-row" ng-repeat="subitem in item.items">
-                                <div class="list-row__primary">
-                                    <i ng-if="subitem.status == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
-                                    <i ng-if="subitem.status == -1" lx-tooltip="file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
-                                </div>
-                                <div class="list-row__content">
-                                    <strong ng-bind-html="subitem.file |highlight:search.aModuleTemplates |html"></strong>
-                                    <span class="" ng-bind-html="subitem.path |highlight:search.aModuleTemplates |html"></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </lx-tab>
-
-    [{* aTplBLocks *}]
-    <lx-tab lx-label="tpl blocks">
-        <div class="card">
-            <div class="container toolbar" flex-container="row">
-                <div flex-item="1">
-                    <button class="btn btn--l btn--white btn--raised" lx-ripple ng-click="load( aTplBlocks )"><i class="mdi mdi-refresh"></i> refresh</button>
-                </div>
-                <div flex-item="4">
-                    <lx-search-filter><input type="text" ng-model="search.aTplBlocks" placeholder="search..."></lx-search-filter>
-                </div>
-            </div>
-        </div>
-
-        <div class="container card mt+">
-            <table class="data-table">
-                <thead>
-                <colgroup>
-                    <col width="40%"/>
-                    <col width="60%"/>
-                </colgroup>
-                </thead>
-                <tbody>
-                <tr class="" ng-repeat="item in aTplBlocks.content |filter:{filter:search.aTplBlocks}:false">
-                    <td align="right" valign="top"><h2 ng-bind-html="item.label |highlight:search.aTplBlocks |html"></h2></td>
-                    <td>
-                        <ul class="list">
-                            <li class="list-row" ng-repeat="subitem in item.items">
-                                <div class="list-row__primary">
-                                    <i ng-if="subitem.OXACTIVE == 1" ng-click="toggleTplBLock(subitem.OXID);" lx-tooltip="block active" class="icon icon--s icon--green icon--flat mdi mdi-power"></i>
-                                    <i ng-if="subitem.OXACTIVE == 0" ng-click="toggleTplBLock(subitem.OXID);" lx-tooltip="block inactive" class="icon icon--s icon--red icon--flat mdi mdi-power"></i>
-
-                                    <i ng-if="subitem.STATUS == 1" lx-tooltip="file found" class="icon icon--s icon--green icon--flat mdi mdi-checkbox-marked-circle-outline"></i>
-                                    <i ng-if="subitem.STATUS == -1" lx-tooltip="file not found" class="icon icon--s icon--red icon--flat mdi mdi-close-circle-outline"></i>
-                                </div>
-                                <div class="list-row__content">
-                                    <h3 ng-bind-html="subitem.OXTEMPLATE |highlight:search.aTplBlocks |html"></h3>
-                                    <h3 ng-bind-html="subitem.OXBLOCKNAME |highlight:search.aTplBlocks |html"></h3>
-                                    <strong ng-bind-html="subitem.OXFILE |highlight:search.aTplBlocks |html"></strong>
-                                    <span class="display-block fs-body-1 tc-black-2" ng-bind-html="subitem.FILEPATH |highlight:search.aTplBlocks |html"></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </lx-tab>
-
+            </li>
+        </ul>
+    </div>
+</div>
+<!--
+<lx-tabs>
     [{* paths, events *}]
     <lx-tab lx-label="paths & events">
         <div class="card">
@@ -403,11 +236,33 @@
         value: [],
         templates: []
     };
+    $scope.aTplBlockSorting = {
+        title: "block sorting",
+        fnc: "getTplBlockSorting",
+        options: {
+            orderChanged: function (event) {
+                console.log(event.dest.sortableScope.modelValue);
+                var _newBlockOrder = [];
+                event.dest.sortableScope.modelValue.forEach(function(item, index) {
+                    item["OXPOS"] = index;
+                    _newBlockOrder.push(item["OXID"]);
+                })
+
+                $http.post('[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devmetadata"|replace:"&amp;":"&" }]&fnc=updateBlockOrder',_newBlockOrder)
+                    .then(function (res)
+                    {
+                        console.log(res);
+                    });
+            }
+        },
+        value: []
+    };
     $scope.aModulePaths = {
         title: "module paths",
         fnc: "getModulePaths",
         value: []
     };
+
 
     $scope.createTemplatesFilter = function (data)
     {
@@ -431,8 +286,7 @@
                  //if (data.label == 'blocks') $scope.createTemplatesFilter(res.data);
                  //LxNotificationService.success(data.label + ' loaded');
              });
-    }
-    ;
+    };
 
     $scope.toggleTplBLock = function (_block)
     {
@@ -450,6 +304,7 @@
     $scope.load($scope.aModuleControllers);
     $scope.load($scope.aModuleTemplates);
     $scope.load($scope.aTplBlocks);
+    $scope.load($scope.aTplBlockSorting);
     //$scope.load($scope.aModulePaths);
     setTimeout(function ()
     {

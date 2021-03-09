@@ -15,6 +15,8 @@
 
 namespace VanillaThunder\DevUtils\Application\Controller\Admin;
 
+use Doctrine\DBAL\Query\QueryBuilder;
+use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
@@ -243,6 +245,51 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
         exit;
     }
 
+    public function getTplBlockSorting()
+    {
+        /** @var QueryBuilder $queryBuilder */
+        $queryBuilder = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class)->create();
+        $queryBuilder
+            ->select('*')
+            ->from('oxtplblocks')
+            ->where('oxshopid = :shopId')
+            ->orderBy("OXTEMPLATE, OXBLOCKNAME, OXPOS, OXTHEME, OXID")
+            ->setParameters([
+                'shopId' => \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId()
+            ]);
+
+        $blocksData = $queryBuilder->execute();
+        $blocksData = $blocksData->fetchAll(PDO::FETCH_ASSOC);
+
+        $aTplBLocks = [];
+        // erst array umbauen
+        foreach ($blocksData as $block) {
+
+            if (!array_key_exists($block["OXTEMPLATE"], $aTplBLocks)) $aTplBLocks[$block["OXTEMPLATE"]] = [];
+            if (!array_key_exists($block["OXBLOCKNAME"], $aTplBLocks[$block["OXTEMPLATE"]])) $aTplBLocks[$block["OXTEMPLATE"]][$block["OXBLOCKNAME"]]  = [];
+
+            $aTplBLocks[$block["OXTEMPLATE"]][$block["OXBLOCKNAME"]][] = [
+                "OXID" => $block["OXID"],
+                "OXACTIVE" => intval($block["OXACTIVE"]),
+                "OXPOS" => intval($block["OXPOS"]),
+                "OXMODULE" => $block["OXMODULE"],
+                "OXTEMPLATE" => $block["OXTEMPLATE"],
+                "OXTHEME" => $block["OXTHEME"],
+                "OXBLOCKNAME" => $block["OXBLOCKNAME"],
+                "OXFILE" => $block["OXFILE"]
+            ];
+        }
+
+        // clean up
+        foreach($aTplBLocks as $tpl => $blocknames) {
+            foreach ($blocknames as $block => $blocks) if(count($blocks) < 2) unset($aTplBLocks[$tpl][$block]);
+            if(empty($aTplBLocks[$tpl])) unset($aTplBLocks[$tpl]);
+        }
+
+        print json_encode($aTplBLocks);
+        exit;
+    }
+
     public function getModulePaths()
     {
         $oVC = $this->getViewConfig();
@@ -301,5 +348,28 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
 
         print($blocksData ? "ok" : "no");
         exit;
+    }
+
+    public function updateBlockOrder() {
+        $aNewOrder = json_decode(file_get_contents('php://input'));
+        if(empty($aNewOrder)) die("no");
+
+        /** @var QueryBuilder $queryBuilder */
+        $queryBuilderFactory = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class);
+
+        foreach($aNewOrder as $index => $oxid) {
+
+            $queryBuilderFactory->create()
+                ->update("oxtplblocks")
+                ->set("OXPOS", ":oxpos")
+                ->where("OXID = :oxid")
+                ->setParameters([
+                    "oxpos" => $index,
+                    "oxid" => $oxid
+                ])
+                ->execute();
+        }
+
+        die("ok");
     }
 }

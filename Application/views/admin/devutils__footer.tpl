@@ -3,12 +3,13 @@
 [{oxscript include=$oViewConf->getModuleUrl("vt-devutils","out/js/angular.min.js")}]
 [{oxscript include=$oViewConf->getModuleUrl("vt-devutils","out/js/ZeroClipboard.min.js")}]
 [{oxscript include=$oViewConf->getModuleUrl("vt-devutils","out/js/ng-clip.min.js")}]
+[{oxscript include=$oViewConf->getModuleUrl("vt-devutils","out/js/ng-sortable.min.js")}]
 [{oxscript include=$oViewConf->getModuleUrl("vt-devutils","out/js/materialize.min.js")}]
 [{ oxscript }]
 
 <script>
     M.AutoInit();
-    var app = angular.module('devApp', ['ngClipboard'[{$smarty.capture.appdep}] ]);
+    var app = angular.module('devApp', ['ngClipboard','as.sortable'[{$smarty.capture.appdep}] ]);
     app.filter("html", ['$sce', function ($sce)
     {
         return function (htmlCode)
