@@ -91,9 +91,10 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
         if (array_key_exists("settings", $aModule)) {
             $settings = [];
             foreach ($aModule["settings"] as $var) {
+                //if(!array_key_exists($var["group"],$settings)) $settings[$var["group"]] = [];
+                //$settings[$var["group"]][$var["name"]] = $var; //["type"];
                 $settings[$var["name"]] = $var; //["type"];
             }
-            ksort($settings);
             $aModule["settings"] = $settings;
         }
 
@@ -182,7 +183,7 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             ->from('oxconfig')
             ->where('oxshopid = :shopId')
             ->andWhere('oxmodule = :oxmodule')
-            ->orderBy("OXVARNAME")
+            ->orderBy("OXID")
             ->setParameters([
                 'configKey' => $oConfig->getConfigParam("sConfigKey"),
                 'shopId' => Registry::getConfig()->getShopId(),
@@ -195,7 +196,7 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             }
             $aModule["settings"][$var["OXVARNAME"]] = $var;
         }
-        ksort($aModule["settings"]);
+        //ksort($aModule["settings"]);
 
         return $aModule;
     }

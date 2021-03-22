@@ -97,7 +97,7 @@
                 <h5 ng-bind="_module"></h5>
                 <table class="striped ml+ mt">
                     <tr ng-repeat="_block in _blocks | filter:{OXTHEME:search.atplblockstheme}:false | filter:{OXTEMPLATE:search.atplblockstemplate}:false | filter:{OXBLOCKNAME:search.atplblocksblock}:false track by $index" ng-if="(_blocks | filter:{OXTHEME:search.atplblockstheme}:false | filter:{OXTEMPLATE:search.atplblockstemplate}:false | filter:{OXBLOCKNAME:search.atplblocksblock}:false).length > 0">
-                        <td class="center-align">
+                        <td class="center-align" style="width: 100px;">
                             <span class="pb" ng-if="_block.OXACTIVE">ON</span>
                             <span class="pb" ng-if="!_block.OXACTIVE">OFF</span>
                             <div class="switch mt">

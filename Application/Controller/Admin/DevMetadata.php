@@ -140,7 +140,7 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
                     //print $e->getMessage() . "<br/>";
                     //var_dump(strpos($e->getMessage(), $extension."_parent"));
                     try { $status = (class_exists($extension) ? 1 : -1); }
-                    catch (\Throwable $e) { $status = (strpos($e->getMessage(), $extension . "_parent") > 0 ? 1 : -1); }
+                    catch (\Throwable $e) { $status = (strpos($e->getMessage(), "_parent") > 0 ? 1 : -1); }
                 }
                 else $status = file_exists($sModulesDir.DIRECTORY_SEPARATOR.$extension.".php") &&  is_readable($sModulesDir.DIRECTORY_SEPARATOR.$extension.".php");
 

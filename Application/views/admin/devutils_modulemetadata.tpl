@@ -54,32 +54,32 @@
     </thead>
     <tbody>
     <tr>
-        <th class="p-"><h4 class="p- m-">metadata.php</h4><!---[{$oMetadataConf|@var_dump}]--></th>
+        <th class="p-"><h4 class="p- m-">metadata.php</h4></th>
         <th></th>
-        <th class="p-"><h4 class="p- m-">yaml</h4><!--[{$oYamlConf|@var_dump}]--></th>
+        <th class="p-"><h4 class="p- m-">yaml</h4></th>
         <th></th>
-        <th class="p-"><h4 class="p- m-">database</h4><!--[{$oDbConf|@var_dump}]--></th>
+        <th class="p-"><h4 class="p- m-">database</h4></th>
     </tr>
     <tr>
         <td class="p-">
             <div>[{$oMetadataConf.title}]</div><hr/>
             <div>version [{$oMetadataConf.version}]</div><hr/>
             [{* <div>source/modules/[{$oMetadataConf.path}]</div><hr/> *}]
-            <div>[{$oMetadataConf.description}]</div>
+            <div>[{$oMetadataConf.description|@reset}]</div>
         </td>
         <td class="p-"></td>
-        <td class="p- [{if $oYamlConf->getTitle()|@reset !== $oMetadataConf.title || $oYamlConf->getVersion() !== $oMetadataConf.version || $oYamlConf->getDescription()|@reset !== $oMetadataConf.description}]red lighten-5[{/if}]">
+        <td class="p- [{* if $oYamlConf->getTitle()|@reset !== $oMetadataConf.title || $oYamlConf->getVersion() !== $oMetadataConf.version || $oYamlConf->getDescription()|@reset !== $oMetadataConf.description}]red lighten-5[{/if *}]">
             <div [{if $oYamlConf->getTitle()|@reset !== $oMetadataConf.title}]class="red-text"[{/if}]>[{$oYamlConf->getTitle()|@reset}]</div><hr/>
             <div [{if $oYamlConf->getVersion() !== $oMetadataConf.version}]class="red-text"[{/if}]>version [{$oYamlConf->getVersion()}]</div><hr/>
             [{* <div [{if $oYamlConf->getPath() !== $oMetadataConf.path}]class="red-text"[{/if}]>source/modules/[{$oYamlConf->getPath()}]</div><hr/> *}]
-            <div [{if $oYamlConf->getDescription()|@reset !== $oMetadataConf.description}]class="red-text"[{/if}]>[{$oYamlConf->getDescription()|@reset}]</div>
+            <div [{if $oYamlConf->getDescription()|@reset !== $oMetadataConf.description|@reset}]class="red-text"[{/if}]>[{$oYamlConf->getDescription()|@reset}]</div>
         </td>
         <td class="p-"></td>
         <td class="p- [{if $oDbConf.version !== $oMetadataConf.version}]red lighten-5[{/if}]">
-            <div>Title is not cached</div><hr/>
+            <div><i>Title is not cached</i></div><hr/>
             <div [{if $oDbConf.version !== $oMetadataConf.version}]class="red-text"[{/if}]>version [{$oDbConf.version}]</div><hr/>
             [{* <div [{if $oDbConf.path !== $oMetadataConf.path}]class="red-text"[{/if}]>source/modules/[{$oDbConf.path}]</div><hr/> *}]
-            <div>Description is not cached</div>
+            <div><i>Description is not cached</i></div>
         </td>
     </tr>
 
@@ -177,7 +177,8 @@
         <td [{if $oYamlConf->getTemplates()|@count !== $oMetadataConf.templates|@count}]class="red lighten-5"[{/if}]>
             [{if !$oYamlConf->getTemplates()|@count}][{oxmultilang ident="DEVUTILS_NO_ENTRIES"}][{/if}]
             [{foreach from=$oYamlConf->getTemplates() name="data" item="_item"}]
-                <b>[{$_item->getTemplateKey()}]</b><div><small>[{$_item->getTemplatePath()}]</small></div>
+                <b>[{$_item->getTemplateKey()}]</b>
+                <div><small>[{$_item->getTemplatePath()}]</small></div>
                 [{if !$smarty.foreach.data.last}]<hr/>[{/if}]
             [{/foreach}]
         </td>
@@ -185,7 +186,8 @@
         <td [{if $oDbConf.templates|@count !== $oMetadataConf.templates|@count}]class="red lighten-5"[{/if}]>
             [{if !$oDbConf.templates|@count}][{oxmultilang ident="DEVUTILS_NO_ENTRIES"}][{/if}]
             [{foreach from=$oDbConf.templates name="data" key="_key" item="_item"}]
-                <b>[{$_key}]</b><div><small>[{$_item}]</small></div>
+                <b>[{$_key}]</b>
+                <div><small>[{$_item}]</small></div>
                 [{if !$smarty.foreach.data.last}]<hr/>[{/if}]
             [{/foreach}]
         </td>
@@ -195,18 +197,18 @@
     <tr>
         <td>
             [{foreach from=$oMetadataConf.blocks name="data" key="_key" item="_item"}]
-            <div class="[{if !$oDbConf.blocks[$_key]}]green-text[{/if}]">
-                <b>[{$_key}]</b> [{if $_item.check}][{$tplok}][{else}][{$tplnf}][{/if}]
-                <div><small>[template] [{$_item.template}]</small></div>
-                <div><small>[file] [{$_item.file}]</small></div>
-            </div>
+                <div class="[{if !$oDbConf.blocks[$_key]}]green-text[{/if}]">
+                    <b>[{$_key}]</b> [{if $_item.check}][{$tplok}][{else}][{$tplnf}][{/if}]
+                    <div><small>[template] [{$_item.template}]</small></div>
+                    <div><small>[file] [{$_item.file}]</small></div>
+                </div>
                 [{if !$smarty.foreach.data.last}]<hr/>[{/if}]
             [{/foreach}]
         </td>
         <td></td>
         <td [{if $oYamlConf->getTemplateBlocks() && $oYamlConf->getTemplateBlocks()|@count !== $oMetadataConf.blocks|@count}]class="red lighten-5"[{/if}]>
             [{if !$oYamlConf->getTemplateBlocks()|@count}][{oxmultilang ident="DEVUTILS_NO_ENTRIES"}][{/if}]
-            [{foreach from=$oYamlConf->getTemplateBlocks() item="_item"}]
+            [{foreach from=$oYamlConf->getTemplateBlocks() name="data" item="_item"}]
                 <b>[{$_item->getBlockName()}]</b> - pos [{$_item->getPosition()}] / theme [{$_item->getTheme()|default:"*"}]
                 <div><small>[template] [{$_item->getShopTemplatePath()}]</small></div>
                 <div><small>[file] [{$_item->getModuleTemplatePath()}]</small></div>
@@ -229,22 +231,22 @@
     <tr><th colspan="5" class="divider"><h4>settings</h4></th></tr>
     <tr>
         <td>
-            [{foreach from=$oMetadataConf.settings name="data" key="_key" item="_item"}]
-                <div><b>[{$_item.name}]</b> ([{$_item.type}]): [{$_item.value|@var_export}]</div>
+            [{foreach from=$oMetadataConf.settings item="_item"}]
+                <div><b>[{$_item.name}]</b> ([{$_item.type}]) [{* : [{$_item.value|@var_export *}]</div>
             [{/foreach}]
         </td>
         <td></td>
         <td [{if $oYamlConf->getModuleSettings() && $oYamlConf->getModuleSettings()|@count !== $oMetadataConf.settings|@count}]class="red lighten-5"[{/if}]>
             [{if !$oYamlConf->getModuleSettings()|@count}][{oxmultilang ident="DEVUTILS_NO_ENTRIES"}][{/if}]
             [{foreach from=$oYamlConf->getModuleSettings() item="_item"}]
-                <div><b>[{$_item->getName()}]</b> ([{$_item->getType()}]): [{$_item->getValue()|@var_export}]</div>
+                <div><b>[{$_item->getName()}]</b> ([{$_item->getType()}])</div>
             [{/foreach}]
         </td>
         <td></td>
         <td [{if $oDbConf.settings|@count !== $oMetadataConf.settings|@count}]class="red lighten-5"[{/if}]>
             [{foreach from=$oDbConf.settings name="data" key="_key" item="_item"}]
                 <div class="[{if !$oMetadataConf.settings[$_key]}]red-text[{/if}]">
-                    <b>[{$_item.OXVARNAME}]</b> ([{$_item.OXVARTYPE}]): [{$_item.OXVARVALUE|@var_export}]
+                    <b>[{$_item.OXVARNAME}]</b> ([{$_item.OXVARTYPE}])
                 </div>
             [{/foreach}]
         </td>
