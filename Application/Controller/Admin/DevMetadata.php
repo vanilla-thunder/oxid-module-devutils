@@ -17,6 +17,7 @@ namespace VanillaThunder\DevUtils\Application\Controller\Admin;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\Module\Module;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
@@ -139,11 +140,21 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
                     //print $extension."_parent" . "<br/>";
                     //print $e->getMessage() . "<br/>";
                     //var_dump(strpos($e->getMessage(), $extension."_parent"));
-                    try { $status = (class_exists($extension) ? 1 : -1); }
-                    catch (\Throwable $e) { $status = (strpos($e->getMessage(), "_parent") > 0 ? 1 : -1); }
+                    try {
+                        //$status = (class_exists($extension) ? 1 : -1);
+                        //\var_dump($status);
+                    }
+                    catch (Error $e) { var_dump($e);}
+                    catch (\Error $e) { var_dump($e);}
+                    catch (Exception $e) { var_dump($e);}
+                    catch (\Exception $e) { var_dump($e);}
+                    catch (Throwable $e) { var_dump($e);}
+                    catch (\Throwable $e) { var_dump($e);}
+                        //$status = (strpos($e->getMessage(), "_parent") > 0 ? 1 : -1); }
                 }
                 else $status = file_exists($sModulesDir.DIRECTORY_SEPARATOR.$extension.".php") &&  is_readable($sModulesDir.DIRECTORY_SEPARATOR.$extension.".php");
 
+                //die();
                 $items[] = [
                     "class" => $extension,
                     "status" => $status
@@ -200,9 +211,9 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
 
     public function getTplBlocks()
     {
-        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
-        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $bullshitFactory->create();
+        $queryBuilder = $this->getContainer()
+            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
+            ->create();
 
         $queryBuilder
             ->select('*')
@@ -226,15 +237,14 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
             $aTplBLocks[$oxmodule][] = $row;
         }
 
-        $cfg = Registry::getConfig();
-        $anotherBullshit = $bullshitContainer->get(ModuleConfigurationDaoBridgeInterface::class);
+        $oConf = Registry::getConfig();
+        $oViewConf = $oConf->getActiveView()->getViewConfig();
 
         // dann Dateien prüfen
         foreach ($aTplBLocks as $module => $blocks) {
-            $moduleConfiguration = $anotherBullshit->get($module);
-            $sModulePath = $moduleConfiguration->getPath();
+
             foreach ($blocks as $index => $block) {
-                $fullpath = $cfg->getModulesDir() . $sModulePath . DIRECTORY_SEPARATOR . $block["OXFILE"];
+                $fullpath =  $oViewConf->getModulePath($module, $block["OXFILE"]);
                 $aTplBLocks[$module][$index]["OXACTIVE"] = intval($block["OXACTIVE"]);
                 $aTplBLocks[$module][$index]["fullpath"] = $fullpath;
                 $aTplBLocks[$module][$index]["status"] = (file_exists($fullpath) && is_readable($fullpath) ? 1 : -1);
@@ -248,7 +258,10 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
     public function getTplBlockSorting()
     {
         /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class)->create();
+        $queryBuilder = $this->getContainer()
+            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
+            ->create();
+
         $queryBuilder
             ->select('*')
             ->from('oxtplblocks')
@@ -329,10 +342,10 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
             die("nope");
         }
 
-
-        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
-        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $bullshitFactory->create();
+        /** @var QueryBuilder $queryBuilder */
+        $queryBuilder = $this->getContainer()
+            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
+            ->create();
 
         $queryBuilder
             ->update("oxtplblocks")
@@ -354,8 +367,9 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
         $aNewOrder = json_decode(file_get_contents('php://input'));
         if(empty($aNewOrder)) die("no");
 
-        /** @var QueryBuilder $queryBuilder */
-        $queryBuilderFactory = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class);
+        /** @var \OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface $queryBuilderFactory */
+        $queryBuilderFactory = $this->getContainer()
+            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class);
 
         foreach($aNewOrder as $index => $oxid) {
 

@@ -103,7 +103,7 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
 
     public function getYamlConfiguration()
     {
-        $container = ContainerFactory::getInstance()->getContainer();
+        $container = $this->getContainer();
         $shopConfigurationDao = $container->get(ShopConfigurationDaoBridgeInterface::class);
         return $shopConfigurationDao->get(1)->getModuleConfiguration($this->getEditObjectId());
     }
@@ -112,7 +112,7 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
     {
         $sModuleId = $this->getEditObjectId();
         $oConfig = Registry::getConfig();
-        $queryBuilderFactoryInterface = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class);
+        $queryBuilderFactoryInterface = $this->getContainer()->get(QueryBuilderFactoryInterface::class);
 
         $aModule =  [
             "version" => null,
@@ -207,7 +207,7 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
             $sModuleId = $this->getEditObjectId();
             $oModule = $this->getModule($sModuleId);
 
-            $container = ContainerFactory::getInstance()->getContainer();
+            $container = $this->getContainer();
 
             // update yaml config files
             $moduleConfigurationInstallerService = $container->get(ModuleConfigurationInstallerInterface::class);

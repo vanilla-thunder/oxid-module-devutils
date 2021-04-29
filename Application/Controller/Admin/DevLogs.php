@@ -106,11 +106,14 @@ class DevLogs extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetail
         $sShopDir = str_replace('source/', '', $cfg->getConfigParam('sShopDir'));
 
         $aData = file($sApacheLogPath);
-        $aData = array_unique($aData);
-        $aData = array_slice($aData, -300);
+        //$aData = array_unique($aData);
+        $aData = array_slice($aData, -1000);
         $aData = str_replace($sShopDir, "", $aData);
 
-        echo json_encode(['status' => 'ok', 'log' => array_reverse($aData)]);
+        $aLog = [];
+        foreach($aData as $row) if (!preg_match('/\] PHP\s+(\d|Stack)/',$row)) $aLog[] = $row;
+
+        echo json_encode(['status' => 'ok', 'log' => \array_reverse($aLog)]);
         exit;
     }
 

@@ -31,9 +31,9 @@ class DevConfigViewer extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
     public function getConfigSummary()
     {
-        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
-        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $bullshitFactory->create();
+        $queryBuilder = $this->getContainer()
+            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
+            ->create();
 
         $queryBuilder
             ->select('OXMODULE, OXVARNAME, OXVARTYPE, OCTET_LENGTH(OXVARVALUE) as SIZE, OXTIMESTAMP')
@@ -67,9 +67,9 @@ class DevConfigViewer extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
         //$value = \OxidEsales\EshopCommunity\Core\Registry::getConfig()->getConfigParam($oxvarname); // cant halndle multiple oxvarnames with same name but different oxmodule
 
-        $bullshitContainer = ContainerFactory::getInstance()->getContainer();
-        $bullshitFactory = $bullshitContainer->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $bullshitFactory->create();
+        $queryBuilder = $this->getContainer()
+            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
+            ->create();
 
         $queryBuilder
             ->select("OXVARTYPE", $config->getDecodeValueQuery() . " as OXVARVALUE")

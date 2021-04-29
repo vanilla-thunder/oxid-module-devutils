@@ -65,7 +65,7 @@
     {
         if (mail.fnc)
         {
-            var url = '[{ $oViewConf->getBaseDir()|oxaddparams:"cl=devmails&fnc=preview&mail="|replace:"&amp;":"&" }]' + mail.fnc;
+            var url = '[{ $oViewConf->getBaseDir()|oxaddparams:"cl=devmails&fnc=preview"|replace:"&amp;":"&" }]&mail=' + mail.fnc;
             $http.get(url)
                  .then(function (res)
                  {
