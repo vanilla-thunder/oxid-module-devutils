@@ -1,6 +1,6 @@
 <?php
 
-namespace VanillaThunder\DevUtils\Application\Extend;
+namespace VanillaThunder\DevUtils\Application\Extend\Core;
 
 use VanillaThunder\DevUtils\Application\Core\DevSmarty;
 
