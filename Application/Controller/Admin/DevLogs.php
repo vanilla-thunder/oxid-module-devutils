@@ -91,11 +91,20 @@ class DevLogs extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetail
         print json_encode(['status' => 'ok', 'log' => array_reverse($aLog)]);
         exit;
     }
+    public function clearOxidLog() {
+        $sOxidLogPath = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sShopDir') . 'log/oxideshop.log';
+        if (!file_exists($sOxidLogPath) || !is_readable($sOxidLogPath)) {
+            die(json_encode(['status' => "oxideshop.log does not exist or is not readable"]));
+        }
+
+        file_put_contents($sOxidLogPath,'');
+        die(json_encode(['status' => "ok"]));
+    }
 
     public function getApacheLog()
     {
         $sApacheLogPath = ini_get("error_log");
-        if (!$sApacheLogPath ||empty($sApacheLogPath)) {
+        if (!$sApacheLogPath || empty($sApacheLogPath)) {
             die(json_encode(['status' => "apache log is disabled"]));
         }
         if (!file_exists($sApacheLogPath) || !is_readable($sApacheLogPath)) {
@@ -112,6 +121,19 @@ class DevLogs extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetail
 
         echo json_encode(['status' => 'ok', 'log' => array_reverse($aData)]);
         exit;
+    }
+    public function clearApacheLog() {
+
+        $sApacheLogPath = ini_get("error_log");
+        if (!$sApacheLogPath || empty($sApacheLogPath)) {
+            die(json_encode(['status' => "apache log is disabled"]));
+        }
+        if (!file_exists($sApacheLogPath) || !is_readable($sApacheLogPath)) {
+            die(json_encode(['status' => "apache log file does not exist or is not readable"]));
+        }
+
+        file_put_contents($sApacheLogPath,'');
+        die(json_encode(['status' => "ok"]));
     }
 
     protected function _getXdebugErrorLog($aData)
@@ -151,4 +173,5 @@ class DevLogs extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetail
         //echo print_r($aLog);
         exit;
     }
+
 }

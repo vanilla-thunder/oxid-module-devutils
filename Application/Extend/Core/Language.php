@@ -1,5 +1,4 @@
 <?php
-
 /*
  * vanilla-thunder/oxid-module-devutils
  * developent utilities for OXID eShop V6.2 and newer
