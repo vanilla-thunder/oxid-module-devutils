@@ -13,12 +13,20 @@
  * You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses/>
  */
 
-namespace VanillaThunder\DevUtils\Application\Extend;
+namespace VanillaThunder\DevUtils\Application\Extend\Controller;
 
-class Shop extends Shop_parent {
-	
-	public function generateViews() {
-		// do not generate views for disabled subshops
-		//if(Regis)
-	}
+use DemoModules\Multilang\Application\Model\MultilangModel;
+
+/**
+ * Navigation Controller extension for vt-DevUtils Module.
+ *
+ * @mixin \OxidEsales\Eshop\Application\Controller\Admin\NavigationController
+ */
+class NavigationController extends NavigationController_parent
+{
+    public function render()
+    {
+        $r = parent::render();
+        return ($r == "header.tpl") ? "vtdev_navigation_header.tpl" : $r;
+    }
 }

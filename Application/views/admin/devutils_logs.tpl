@@ -8,20 +8,23 @@
         </ul>
     </div>
     <div id="apachelog" class="col s12">
-        <div class="file-field input-fiel pt">
-            <div class="waves-effect waves-light btn" ng-click="getApacheLog()">
-                <i class="material-icons left">refresh</i> reload
+        <div class="row file-field input-field pt">
+            <div class="col s1 waves-effect waves-light btn" ng-click="getApacheLog()">
+                <i class="material-icons">refresh</i>
             </div>
-            <div class="file-path-wrapper">
+            <div class="col s10 file-path-wrapper">
                 <input placeholder="search..." id="search_apachelog" type="text" ng-model="search.apachelog" >
+            </div>
+            <div class="col s1 waves-effect waves-light btn red darken-4" ng-click="clearApacheLog()">
+                <i class="material-icons">delete</i>
             </div>
         </div>
         <table class="striped">
             <tr class="green white-text" ng-if="apachelog.log.length == 0">
-                <td><i class="material-icons left">thumbs_up</i> Apache Log is empty</td>
+                <td><i class="material-icons">thumb_up</i> Apache Log is empty</td>
             </tr>
             <tr class="red white-text" ng-if="apachelog.log.length > 0 && (apachelog.log |filter:search.apachelog:false |limitTo:30).length == 0">
-                <td><i class="material-icons left">thumbs_down</i> nothing left...</td>
+                <td><i class="material-icons left">thumb_down</i> nothing left...</td>
             </tr>
             <tr class="my" ng-repeat="_e in apachelog.log |filter:search.apachelog:false |limitTo:30 track by $index">
                 <td class="p" ng-bind-html="_e |highlight:search.apachelog |html"></td>
@@ -29,19 +32,22 @@
         </table>
     </div>
     <div id="oxidlog" class="col s12">
-        <div class="file-field input-fiel pt">
-            <div class="waves-effect waves-light btn" ng-click="getOxidLog()">
-                <i class="material-icons left">refresh</i> reload
+        <div class="row file-field input-field pt">
+            <div class="col s1 waves-effect waves-light btn" ng-click="getOxidLog()">
+                <i class="material-icons">refresh</i>
             </div>
-            <div class="file-path-wrapper">
+            <div class="col s10 file-path-wrapper">
                 <input placeholder="search..." id="search_oxidlog" type="text" ng-model="search.oxidlog" >
+            </div>
+            <div class="col s1 waves-effect waves-light btn red darken-4" ng-click="clearOxidLog()">
+                <i class="material-icons">delete</i>
             </div>
         </div>
         <table class="striped">
             <tr class="green white-text" ng-if="oxidlog.log.length == 0">
-                <td><i class="material-icons left">thumb_up</i> OXID Log is empty</td>
+                <td><i class="material-icons">thumb_up</i> OXID Log is empty</td>
             </tr>
-            <tr class="red white-text" ng-if="(oxidlog.log |filter:search.oxidlog:false |limitTo:30).length == 0">
+            <tr class="red white-text" ng-if="oxidlog.log.length > 0 && (oxidlog.log |filter:search.oxidlog:false |limitTo:30).length == 0">
                 <td><i class="material-icons left">thumb_down</i> nothing left...</td>
             </tr>
             <tr class="my" ng-repeat="_e in oxidlog.log |filter:search.oxidlog:false |limitTo:30 track by $index">
@@ -154,6 +160,15 @@
                  }
              });
     };
+    $scope.clearApacheLog = function ()
+    {
+        $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devlogs&fnc=clearApacheLog"|replace:"&amp;":"&" }]")
+            .then(function (res)
+            {
+                if (res.data.status === 'ok') $scope.apachelog.log = [] ;
+                else { alert(res.data.status); }
+            });
+    };
     $scope.getApacheLog();
 
     [{* exception log stuff *}]
@@ -175,7 +190,19 @@
                  }
              });
     };
+    $scope.clearOxidLog = function ()
+    {
+        $http.get("[{ $oViewConf->getSelfLink()|oxaddparams:"cl=devlogs&fnc=clearOxidLog"|replace:"&amp;":"&" }]")
+            .then(function (res)
+            {
+                if (res.data.status === 'ok') $scope.oxidlog.log = [] ;
+                else { alert(res.data.status); }
+            });
+    };
     $scope.getOxidLog();
+
+
+
 
     $scope.exceptionmsg = [];
     $scope.stacktrace = function (log)
