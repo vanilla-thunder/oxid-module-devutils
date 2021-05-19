@@ -426,3 +426,5 @@ th.divider h4 {
     padding-top: 0 !important;
     padding-bottom: 0 !important
 }
+
+#devmodulemetadata img { max-width: 100%; }

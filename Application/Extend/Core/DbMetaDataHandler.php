@@ -35,7 +35,8 @@ class DbMetaDataHandler extends DbMetaDataHandler_parent {
         $configFile = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\ConfigFile::class);
 
         $originalSkipViewUsageStatus = $configFile->getVar('blSkipViewUsage');
-        $this->setConfigToDoNotUseViews($config);
+        $config->blSkipViewUsage = null;
+        $config->setConfigParam('blSkipViewUsage', 1);
 
         $this->safeGuardAdditionalMultiLanguageTables();
 
