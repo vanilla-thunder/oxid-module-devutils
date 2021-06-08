@@ -19,10 +19,8 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use OxidEsales\Eshop\Core\DatabaseProvider;
 use OxidEsales\Eshop\Core\Module\Module;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ModuleConfigurationDaoBridgeInterface;
 use PDO;
+use VanillaThunder\DevUtils\Application\Core\DevUtils;
 
 class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
@@ -211,9 +209,7 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
 
     public function getTplBlocks()
     {
-        $queryBuilder = $this->getContainer()
-            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
-            ->create();
+        $queryBuilder = DevUtils::getQueryBuilder();
 
         $queryBuilder
             ->select('*')
@@ -257,10 +253,7 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
 
     public function getTplBlockSorting()
     {
-        /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = $this->getContainer()
-            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
-            ->create();
+        $queryBuilder = DevUtils::getQueryBuilder();
 
         $queryBuilder
             ->select('*')
@@ -342,10 +335,7 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
             die("nope");
         }
 
-        /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = $this->getContainer()
-            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
-            ->create();
+        $queryBuilder = DevUtils::getQueryBuilder();
 
         $queryBuilder
             ->update("oxtplblocks")
@@ -367,13 +357,9 @@ class DevMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
         $aNewOrder = json_decode(file_get_contents('php://input'));
         if(empty($aNewOrder)) die("no");
 
-        /** @var \OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface $queryBuilderFactory */
-        $queryBuilderFactory = $this->getContainer()
-            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class);
-
         foreach($aNewOrder as $index => $oxid) {
 
-            $queryBuilderFactory->create()
+            DevUtils::getQueryBuilder()
                 ->update("oxtplblocks")
                 ->set("OXPOS", ":oxpos")
                 ->where("OXID = :oxid")

@@ -15,6 +15,8 @@
 
 namespace VanillaThunder\DevUtils\Application\Core;
 
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+
 class DevUtils extends \OxidEsales\EshopCommunity\Core\Config
 {
     public function clearTmp()
@@ -69,6 +71,25 @@ class DevUtils extends \OxidEsales\EshopCommunity\Core\Config
         $ret = $oMetaData->updateViews();
 
         return $ret;
+    }
+
+    /**
+     * @return \Doctrine\DBAL\Query\QueryBuilder
+     */
+    public static function getQueryBuilder() {
+        $sShopVersion = \OxidEsales\Eshop\Core\ShopVersion::getVersion();
+
+        if ( version_compare($sShopVersion,"6.2.0") < 0) {
+            // < 6.2
+            return $queryBuilder = ContainerFactory::getInstance()->getContainer()
+                ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
+                ->create();
+        } else {
+            // >= 6.2
+            return $queryBuilder = ContainerFactory::getInstance()->getContainer()
+                ->get(\OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface::class)
+                ->create();
+        }
     }
 
 }

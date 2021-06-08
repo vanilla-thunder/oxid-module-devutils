@@ -18,6 +18,7 @@ namespace VanillaThunder\DevUtils\Application\Controller\Admin;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use PDO;
+use VanillaThunder\DevUtils\Application\Core\DevUtils;
 
 class DevConfigViewer extends \OxidEsales\Eshop\Application\Controller\Admin\AdminController
 {
@@ -31,9 +32,7 @@ class DevConfigViewer extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
     public function getConfigSummary()
     {
-        $queryBuilder = $this->getContainer()
-            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
-            ->create();
+        $queryBuilder = DevUtils::getQueryBuilder();
 
         $queryBuilder
             ->select('OXMODULE, OXVARNAME, OXVARTYPE, OCTET_LENGTH(OXVARVALUE) as SIZE, OXTIMESTAMP')
@@ -67,9 +66,7 @@ class DevConfigViewer extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
         //$value = \OxidEsales\EshopCommunity\Core\Registry::getConfig()->getConfigParam($oxvarname); // cant halndle multiple oxvarnames with same name but different oxmodule
 
-        $queryBuilder = $this->getContainer()
-            ->get(\OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface::class)
-            ->create();
+        $queryBuilder = DevUtils::getQueryBuilder();
 
         $queryBuilder
             ->select("OXVARTYPE", $config->getDecodeValueQuery() . " as OXVARVALUE")

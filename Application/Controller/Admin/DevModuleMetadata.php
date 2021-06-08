@@ -26,6 +26,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Install\DataObject\OxidE
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Install\Service\ModuleConfigurationInstallerInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
 use PDO;
+use VanillaThunder\DevUtils\Application\Core\DevUtils;
 
 class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
@@ -160,7 +161,7 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
         $aModule["templates"] = array_key_exists($sModuleId, $aDbTemplates) ? $aDbTemplates[$sModuleId] : [];
 
         // blocks
-        $queryBuilder = $queryBuilderFactoryInterface->create();
+        $queryBuilder = DevUtils::getQueryBuilder();
         $queryBuilder
             ->select('OXTHEME, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE ')
             ->from('oxtplblocks')
@@ -177,7 +178,7 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
         }
 
         // settings
-        $queryBuilder = $queryBuilderFactoryInterface->create();
+        $queryBuilder = DevUtils::getQueryBuilder();
         $queryBuilder
             ->select('OXVARNAME, OXVARTYPE, DECODE( OXVARVALUE, :configKey) AS OXVARVALUE')
             ->from('oxconfig')
