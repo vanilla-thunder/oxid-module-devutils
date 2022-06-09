@@ -127,19 +127,19 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
         ];
 
         // version
-        $aModuleVersions = Registry::getConfig()->getConfigParam("aModuleVersions");
+        $aModuleVersions = Registry::getConfig()->getConfigParam("aModuleVersions") ?? [];
         $aModule["version"] = array_key_exists($sModuleId, $aModuleVersions) ? $aModuleVersions[$sModuleId] : "unknown";
 
         // path
-        $aModulePaths = Registry::getConfig()->getConfigParam("aModulePaths");
+        $aModulePaths = Registry::getConfig()->getConfigParam("aModulePaths") ?? [];
         $aModule["path"] = array_key_exists($sModuleId, $aModulePaths) ? $aModulePaths[$sModuleId] : "unknown";
 
         // events
-        $aModuleEvents = Registry::getConfig()->getConfigParam("aModuleEvents");
+        $aModuleEvents = Registry::getConfig()->getConfigParam("aModuleEvents") ?? [];
         $aModule["events"] = array_key_exists($sModuleId, $aModuleEvents) ? $aModuleEvents[$sModuleId] : [];
 
         // extensions
-        $aModuleExtensions = Registry::getConfig()->getConfigParam("aModuleExtensions");
+        $aModuleExtensions = Registry::getConfig()->getConfigParam("aModuleExtensions") ?? [];
         if (array_key_exists($sModuleId, $aModuleExtensions)) {
             $aActiveModuleExtensions = Registry::getConfig()->getConfigParam("aModules");
             foreach ($aModuleExtensions[$sModuleId] as $sModuleExtension) {
@@ -153,11 +153,11 @@ class DevModuleMetadata extends \OxidEsales\Eshop\Application\Controller\Admin\A
         }
 
         // controllers
-        $aDbControllers = Registry::getConfig()->getConfigParam("aModuleControllers");
+        $aDbControllers = Registry::getConfig()->getConfigParam("aModuleControllers") ?? [];
         $aModule["controllers"] = array_key_exists($sModuleId, $aDbControllers) ? $aDbControllers[$sModuleId] : [];
 
         // templates
-        $aDbTemplates = Registry::getConfig()->getConfigParam("aModuleTemplates");
+        $aDbTemplates = Registry::getConfig()->getConfigParam("aModuleTemplates") ?? [];
         $aModule["templates"] = array_key_exists($sModuleId, $aDbTemplates) ? $aDbTemplates[$sModuleId] : [];
 
         // blocks
