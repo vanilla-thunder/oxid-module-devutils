@@ -62,17 +62,37 @@
     </tr>
     <tr>
         <td class="p-">
-            <div>[{$oMetadataConf.title}]</div><hr/>
+            [{if is_array($oMetadataConf.title)}]
+                [{foreach from=$oMetadataConf.title key="_lang" item="_title"}]
+                    <div><b>[{$_lang}]:</b> [{$_title}]</div>
+                [{/foreach}]
+            [{else}]
+                <div>[{$oMetadataConf.title}]</div>
+            [{/if}]
+            <hr/>
             <div>version [{$oMetadataConf.version}]</div><hr/>
             [{* <div>source/modules/[{$oMetadataConf.path}]</div><hr/> *}]
-            <div>[{$oMetadataConf.description|@reset}]</div>
+            [{if is_array($oMetadataConf.description)}]
+                [{foreach from=$oMetadataConf.description key="_lang" item="_desc"}]
+                    <div><b>[{$_lang}]:</b> [{$_desc}]</div>
+                [{/foreach}]
+            [{else}]
+                <div>[{$oMetadataConf.description}]</div>
+            [{/if}]
         </td>
         <td class="p-"></td>
         <td class="p- [{* if $oYamlConf->getTitle()|@reset !== $oMetadataConf.title || $oYamlConf->getVersion() !== $oMetadataConf.version || $oYamlConf->getDescription()|@reset !== $oMetadataConf.description}]red lighten-5[{/if *}]">
-            <div [{if $oYamlConf->getTitle()|@reset !== $oMetadataConf.title}]class="red-text"[{/if}]>[{$oYamlConf->getTitle()|@reset}]</div><hr/>
-            <div [{if $oYamlConf->getVersion() !== $oMetadataConf.version}]class="red-text"[{/if}]>version [{$oYamlConf->getVersion()}]</div><hr/>
+            [{foreach from=$oYamlConf->getTitle() key="_lang" item="_title"}]
+                <div><b>[{$_lang}]:</b> [{$_title}]</div>
+            [{/foreach}]
+            <hr/>
+            <div [{if $oYamlConf->getVersion() !== $oMetadataConf.version}]class="red-text"[{/if}]>
+                version [{$oYamlConf->getVersion()}]
+            </div><hr/>
             [{* <div [{if $oYamlConf->getPath() !== $oMetadataConf.path}]class="red-text"[{/if}]>source/modules/[{$oYamlConf->getPath()}]</div><hr/> *}]
-            <div [{if $oYamlConf->getDescription()|@reset !== $oMetadataConf.description|@reset}]class="red-text"[{/if}]>[{$oYamlConf->getDescription()|@reset}]</div>
+            [{foreach from=$oYamlConf->getDescription() key="_lang" item="_desc"}]
+                <div><b>[{$_lang}]:</b> [{$_desc}]</div>
+            [{/foreach}]
         </td>
         <td class="p-"></td>
         <td class="p- [{if $oDbConf.version !== $oMetadataConf.version}]red lighten-5[{/if}]">
@@ -83,6 +103,7 @@
         </td>
     </tr>
 
+    [{*
     <tr><th colspan="5" class="divider"><h4>events</h4></th></tr>
     <tr>
         <td>
@@ -158,15 +179,19 @@
             [{/foreach}]
         </td>
     </tr>
+    *}]
 
     [{assign var="tplok" value="DEVUTILS_TPL_OK"|oxmultilangassign}]
     [{assign var="tplnf" value="DEVUTILS_TPL_NF"|oxmultilangassign}]
 
     <tr><th colspan="5" class="divider"><h4>templates</h4></th></tr>
+    [{assign var="aMetadataTplFiles" value=$oMetadataConf.templates|@array_column:"file"}]
     <tr>
         <td>
             [{foreach from=$oMetadataConf.templates name="data" key="_key" item="_item"}]
-                <div [{* class="[{if !$oDbConf.templates[$_key]}]green-text[{/if}]"*}]>
+                <div [{if !array_key_exists($_key,$oDbConf.templates)
+                        || !in_array($_item.file,$oDbConf.templates)}]class="green lighten-5"[{/if}]>
+
                     <b>[{$_key}]</b> [{if $_item.check}][{$tplok}][{else}][{$tplnf}][{/if}]
                     <div><small>[{$_item.file}]</small></div>
                     [{if !$smarty.foreach.data.last}]<hr/>[{/if}]
@@ -174,21 +199,51 @@
             [{/foreach}]
         </td>
         <td></td>
-        <td [{if $oYamlConf->getTemplates()|@count !== $oMetadataConf.templates|@count}]class="red lighten-5"[{/if}]>
+        <td>
+            [{if $oYamlConf->getTemplates()|@count !== $oMetadataConf.templates|@count}]
+                <div class="orange-text">
+                    <h4>⚠ <small>amount of templates is different from metadata.php</small></h4>
+                </div>
+                <hr/>
+            [{/if}]
             [{if !$oYamlConf->getTemplates()|@count}][{oxmultilang ident="DEVUTILS_NO_ENTRIES"}][{/if}]
+
             [{foreach from=$oYamlConf->getTemplates() name="data" item="_item"}]
-                <b>[{$_item->getTemplateKey()}]</b>
-                <div><small>[{$_item->getTemplatePath()}]</small></div>
-                [{if !$smarty.foreach.data.last}]<hr/>[{/if}]
+                <div [{if !array_key_exists($_item->getTemplateKey(),$oMetadataConf.templates)
+                        || !in_array($_item->getTemplatePath(),$aMetadataTplFiles)}]class="red lighten-5"[{/if}]>
+
+                    <b [{if !array_key_exists($_item->getTemplateKey(),$oMetadataConf.templates)}]class="red-text"[{/if}]>
+                        [{$_item->getTemplateKey()}]
+                    </b>
+                    <div [{if !in_array($_item->getTemplatePath(),$aMetadataTplFiles)}]class="red-text"[{/if}]>
+                        <small>[{$_item->getTemplatePath()}]</small>
+                    </div>
+                    [{if !$smarty.foreach.data.last}]<hr/>[{/if}]
+                </div>
             [{/foreach}]
         </td>
         <td></td>
-        <td [{if $oDbConf.templates|@count !== $oMetadataConf.templates|@count}]class="red lighten-5"[{/if}]>
+        <td>
+            [{if $oDbConf.templates|@count !== $oMetadataConf.templates|@count}]
+                <div class="orange-text">
+                    <h4>⚠ <small>amount of templates is different from metadata.php</small></h4>
+                </div>
+                <hr/>
+            [{/if}]
             [{if !$oDbConf.templates|@count}][{oxmultilang ident="DEVUTILS_NO_ENTRIES"}][{/if}]
+
             [{foreach from=$oDbConf.templates name="data" key="_key" item="_item"}]
-                <b>[{$_key}]</b>
-                <div><small>[{$_item}]</small></div>
-                [{if !$smarty.foreach.data.last}]<hr/>[{/if}]
+                <div [{if !array_key_exists($_key,$oMetadataConf.templates)
+                        || !in_array($_item,$aMetadataTplFiles)}]class="red lighten-5"[{/if}]>
+
+                    <b [{if !array_key_exists($_key,$oMetadataConf.templates)}]class="red-text"[{/if}]>
+                        [{$_key}]
+                    </b>
+                    <div [{if !in_array($_item,$aMetadataTplFiles)}]class="red-text"[{/if}]>
+                        <small>[{$_item}]</small>
+                    </div>
+                    [{if !$smarty.foreach.data.last}]<hr/>[{/if}]
+                </div>
             [{/foreach}]
         </td>
     </tr>
@@ -251,7 +306,7 @@
             [{/foreach}]
         </td>
     </tr>
-
+[{*
     <tr><th colspan="5" class="divider"><h4>smarty plugin directories</h4></th></tr>
     <tr>
         <td>
@@ -270,7 +325,7 @@
         <td></td>
         <td></td>
     </tr>
-
+*}]
 
     </tbody>
 </table>
